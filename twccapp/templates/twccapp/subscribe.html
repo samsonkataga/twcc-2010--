@@ -1,0 +1,70 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Newsletter Subscription - TWCC{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <img src="{% static 'twccapp/images/logo.png' %}" alt="TWCC Logo" height="60" class="mb-3">
+                        <h2>Subscribe to Our Newsletter</h2>
+                        <p class="text-muted">Stay updated with TWCC news and events</p>
+                    </div>
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="subscriber" class="form-label visually-hidden">Email Address</label>
+                            <input type="email" 
+                                   class="form-control form-control-lg" 
+                                   id="subscriber" 
+                                   name="subscriber" 
+                                   placeholder="Enter your email address" 
+                                   required
+                                   aria-label="Email address">
+                            <div class="invalid-feedback">
+                                Please provide a valid email address.
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-lg" type="submit">
+                                <i class="fas fa-envelope me-2"></i> Subscribe
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="mt-4 text-center">
+                        <small class="text-muted">
+                            We respect your privacy. Unsubscribe at any time.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Client-side validation
+(function () {
+    'use strict'
+    
+    const form = document.querySelector('.needs-validation')
+    
+    form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+        }
+        
+        form.classList.add('was-validated')
+    }, false)
+})()
+</script>
+{% endblock %}

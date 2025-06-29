@@ -1,0 +1,63 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Our Services - TWCC{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Our Services</h2>
+            <p class="lead">Empowering women entrepreneurs through comprehensive support services</p>
+        </div>
+        
+        <div class="row">
+            {% for service in services %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="{{ service.icon_class }} fa-3x text-primary mb-3"></i>
+                        <h4>{{ service.name }}</h4>
+                        <p>{{ service.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="mb-4">Membership Benefits</h2>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-transparent">
+                        <i class="fas fa-check-circle text-primary me-2"></i> Access to business training and workshops
+                    </li>
+                    <li class="list-group-item bg-transparent">
+                        <i class="fas fa-check-circle text-primary me-2"></i> Networking opportunities with other women entrepreneurs
+                    </li>
+                    <li class="list-group-item bg-transparent">
+                        <i class="fas fa-check-circle text-primary me-2"></i> Business advisory services
+                    </li>
+                    <li class="list-group-item bg-transparent">
+                        <i class="fas fa-check-circle text-primary me-2"></i> Access to funding opportunities
+                    </li>
+                    <li class="list-group-item bg-transparent">
+                        <i class="fas fa-check-circle text-primary me-2"></i> Participation in trade fairs and exhibitions
+                    </li>
+                    <li class="list-group-item bg-transparent">
+                        <i class="fas fa-check-circle text-primary me-2"></i> Monthly business newsletters
+                    </li>
+                </ul>
+                <a href="{% url 'register' %}" class="btn btn-primary mt-4">Become a Member</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% static 'twccapp/images/logo.png' %}" alt="Membership Benefits" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

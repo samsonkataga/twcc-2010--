@@ -1,0 +1,33 @@
+{% extends 'twccapp/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">TWCC Videos</h1>
+    
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for video in videos %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'video_detail' video.pk %}">
+                    {% if video.thumbnail %}
+                    <img src="{{ video.thumbnail.url }}" class="card-img-top" alt="{{ video.title }}">
+                    {% else %}
+                    <div class="ratio ratio-16x9 bg-light">
+                        <img src="https://img.youtube.com/vi/{{ video.youtube_url|slice:'-11:' }}/hqdefault.jpg" 
+                             class="card-img-top" alt="{{ video.title }}">
+                    </div>
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ video.title }}</h5>
+                    <p class="card-text">{{ video.description|truncatewords:20 }}</p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="{% url 'video_detail' video.pk %}" class="btn btn-primary">Watch Video</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

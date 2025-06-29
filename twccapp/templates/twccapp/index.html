@@ -1,0 +1,77 @@
+<!-- twccapp/templates/twccapp/index.html -->
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Home - TWCC{% endblock %}
+
+{% block content %}
+<section class="hero-section text-center text-white py-5" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{% static 'twccapp/images/logo.png' %}'); background-size: cover;">
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold">Welcome to Tanzania Women Chamber of Commerce</h1>
+        <p class="lead">Empowering Women in Business and Trade</p>
+        <a href="{% url 'register' %}" class="btn btn-primary btn-lg mt-3">Join Us Today</a>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                        <h3>Business Growth</h3>
+                        <p>We provide resources and training to help your business grow and thrive in Tanzania's economy.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-handshake fa-3x text-primary mb-3"></i>
+                        <h3>Networking</h3>
+                        <p>Connect with other women entrepreneurs and build valuable business relationships.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-gavel fa-3x text-primary mb-3"></i>
+                        <h3>Advocacy</h3>
+                        <p>We advocate for policies that support women in business at all levels of government.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Latest News & Updates</h2>
+        <div class="row">
+            {% for news_item in latest_news %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    {% if news_item.image %}
+                    <img src="{{ news_item.image.url }}" class="card-img-top" alt="{{ news_item.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ news_item.title }}</h5>
+                        <p class="card-text">{{ news_item.summary|truncatewords:20 }}</p>
+                        <a href="{% url 'news_detail' news_item.id %}" class="btn btn-primary">Read More</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        {{ news_item.date_posted|date:"F j, Y" }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'news' %}" class="btn btn-outline-primary">View All News</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

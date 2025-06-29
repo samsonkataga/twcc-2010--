@@ -1,0 +1,131 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Member Dashboard - TWCC{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body text-center">
+                        {% if member.profile_picture %}
+                        <img src="{{ member.profile_picture.url }}" alt="Profile" class="rounded-circle mb-3" width="120" height="120">
+                        {% else %}
+                        <img src="{% static 'twccapp/images/default-profile.png' %}" alt="Profile" class="rounded-circle mb-3" width="120" height="120">
+                        {% endif %}
+                        <h5>{{ user.get_full_name|default:user.username }}</h5>
+                        <p class="text-muted">{{ member.business_name }}</p>
+                    </div>
+                </div>
+                
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-title">Member Menu</h6>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'dashboard' %}">
+                                    <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-user me-2"></i> My Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-briefcase me-2"></i> My Business
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-calendar me-2"></i> Events
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-file-alt me-2"></i> Resources
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" href="{% url 'logout' %}">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Welcome, {{ user.first_name|default:user.username }}!</h4>
+                        <p class="card-text">You're viewing your TWCC member dashboard.</p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calendar-check fa-3x text-primary mb-3"></i>
+                                <h5>Upcoming Events</h5>
+                                <p class="card-text">Check out our upcoming workshops and networking events.</p>
+                                <a href="#" class="btn btn-outline-primary">View Events</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-file-alt fa-3x text-primary mb-3"></i>
+                                <h5>Resources</h5>
+                                <p class="card-text">Access business guides, templates and other resources.</p>
+                                <a href="#" class="btn btn-outline-primary">View Resources</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                                <h5>Member Directory</h5>
+                                <p class="card-text">Connect with other women entrepreneurs.</p>
+                                <a href="#" class="btn btn-outline-primary">View Directory</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Recent Announcements</h5>
+                        <div class="list-group">
+                            {% for announcement in announcements %}
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ announcement.title }}</h6>
+                                    <small>{{ announcement.date_posted|timesince }} ago</small>
+                                </div>
+                                <p class="mb-1">{{ announcement.summary }}</p>
+                            </a>
+                            {% empty %}
+                            <div class="text-center py-4">
+                                <p>No announcements available</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

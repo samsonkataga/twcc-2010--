@@ -1,0 +1,35 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}News & Updates - TWCC{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>News & Updates</h2>
+            <p class="lead">Stay informed about our latest activities and opportunities</p>
+        </div>
+        
+        <div class="row">
+            {% for news_item in news_list %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    {% if news_item.image %}
+                    <img src="{{ news_item.image.url }}" class="card-img-top" alt="{{ news_item.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ news_item.title }}</h5>
+                        <p class="card-text">{{ news_item.summary }}</p>
+                        <a href="{% url 'news_detail' news_item.id %}" class="btn btn-primary">Read More</a>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <small class="text-muted">Posted on {{ news_item.date_posted|date:"F j, Y" }}</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

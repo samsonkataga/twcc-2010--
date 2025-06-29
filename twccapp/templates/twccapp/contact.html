@@ -1,0 +1,226 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - TWCC{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h2 class="mb-4">Contact Us</h2>
+                <p>Have questions or want to learn more about TWCC? Reach out to us using the form below.</p>
+                
+                
+                <form method="post" class="needs-validation" novalidate>
+    {% csrf_token %}
+    
+    <!-- Name Field -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <label for="name" class="form-label fw-bold">Name <span class="text-danger">*</span></label>
+            <input type="text" 
+                   class="form-control form-control-lg" 
+                   id="name" 
+                   name="name" 
+                   required
+                   placeholder="Enter your full name">
+            <div class="invalid-feedback">
+                Please provide your name.
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Field -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <label for="email" class="form-label fw-bold">Email <span class="text-danger">*</span></label>
+            <div class="input-group">
+                <span class="input-group-text bg-light">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <input type="email" 
+                       class="form-control form-control-lg" 
+                       id="email" 
+                       name="email" 
+                       required
+                       placeholder="your@email.com">
+            </div>
+            <div class="invalid-feedback">
+                Please provide a valid email address.
+            </div>
+        </div>
+    </div>
+
+    <!-- Subject Field -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <label for="subject" class="form-label fw-bold">Subject <span class="text-danger">*</span></label>
+            <input type="text" 
+                   class="form-control form-control-lg" 
+                   id="subject" 
+                   name="subject" 
+                   required
+                   placeholder="What's this about?">
+            <div class="invalid-feedback">
+                Please provide a subject.
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Field -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <label for="message" class="form-label fw-bold">Message <span class="text-danger">*</span></label>
+            <textarea class="form-control form-control-lg" 
+                      id="message" 
+                      name="message" 
+                      rows="5" 
+                      required
+                      placeholder="Type your message here..."></textarea>
+            <div class="invalid-feedback">
+                Please write your message.
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="row mt-4">
+        <div class="col-md-12 d-grid">
+            <button type="submit" class="btn btn-primary btn-lg py-3">
+                <i class="fas fa-paper-plane me-2"></i> SEND MESSAGE
+            </button>
+        </div>
+    </div>
+</form>
+                        <!-- <div class = row>
+                            <div class="col-md-12">
+                                <label for = "message">Message</label>
+                                <input type="text" name="message">
+                            </div>
+                        </div>
+
+                        <label for="{{ form.name.id_for_label }}">Name</label>
+                        {{ form.name }}
+
+                        <label for="{{ form.email.id_for_label }}">Email</label>
+                        {{ form.email }}
+
+                        <label for="{{ form.subject.id_for_label }}">Subject</label>
+                        {{ form.subject }}
+
+                        <label for="{{ form.message.id_for_label }}">Message</label>
+                        {{ form.message }}
+
+                        <button type="submit">SEND</button> -->
+                    </form>
+            </div>
+            <div class="col-lg-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Our Contact Information</h4>
+                        
+                        <div class="mb-4">
+                            <h5><i class="fas fa-map-marker-alt text-primary me-2"></i> Address</h5>
+                            <p>TWCC Headquarters<br>
+                            Haille Sellasie road-Masaki<br>
+                            P.O. Box 5591<br>
+                            Dar es Salaam, Tanzania</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5><i class="fas fa-phone text-primary me-2"></i> Phone</h5>
+                            <p>+255 757 823 982</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5><i class="fas fa-envelope text-primary me-2"></i> Email</h5>
+                            <p>info@twcc-tz.org</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5><i class="fas fa-clock text-primary me-2"></i> Working Hours</h5>
+                            <p>Monday - Friday: 8:00 AM - 5:00 PM<br>
+                            Saturday: Closed<br>
+                            Sunday: Closed</p>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Follow Us</h5>
+                            <div class="social-icons">
+                                <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en" class="text-decoration-none me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                                <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en" class="text-decoration-none me-3"><i class="fab fa-twitter fa-2x"></i></a>
+                                <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en" class="text-decoration-none me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                                <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en" class="text-decoration-none"><i class="fab fa-linkedin fa-2x"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center">
+            <h3 class="mb-4">Visit Our Offices</h3>
+            <div class="map-container ratio ratio-16x9">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.0102840111554!2d39.27166097499507!3d-6.7685991932282015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4ba0f7a8df9f%3A0x1997e31d3d215f46!2sTanzania%20Women%20Chamber%20of%20Commerce!5e0!3m2!1sen!2stz!4v1751152170157!5m2!1sen!2stz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Form validation
+(function () {
+    'use strict'
+    
+    var forms = document.querySelectorAll('.needs-validation')
+    
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+</script>
+
+
+<!-- Optional CSS for additional styling -->
+<style>
+    .form-control-lg {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #ced4da;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control-lg:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+    
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875em;
+    }
+    
+    .was-validated .form-control:invalid {
+        border-color: #dc3545;
+    }
+    
+    .was-validated .form-control:valid {
+        border-color: #198754;
+    }
+</style>
+{% endblock %}

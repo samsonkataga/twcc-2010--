@@ -1,0 +1,31 @@
+{% extends 'twccapp/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="card-title mb-4">{{ video.title }}</h1>
+                    
+                    <div class="ratio ratio-16x9 mb-4">
+                        <iframe src="{{ video.get_embed_url }}" 
+                                title="{{ video.title }}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                    </div>
+                    
+                    <div class="card-text mb-4">
+                        {{ video.description|linebreaks }}
+                    </div>
+                    
+                    <div class="text-muted">
+                        <small>Posted on {{ video.created_at|date:"F j, Y" }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
