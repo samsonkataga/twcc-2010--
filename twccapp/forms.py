@@ -2,15 +2,16 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Member, ContactMessage, Subscriber
-from .models import Video
+from .models import VideoUpdate
 from django.contrib.auth.models import User
 
-class VideoForm(forms.ModelForm):
+class VideoUpdateForm(forms.ModelForm):
     class Meta:
-        model = Video
-        fields = ['title', 'youtube_url', 'description', 'thumbnail']
+        model = VideoUpdate
+        fields = ['title', 'video_url']
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 4}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'video_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://www.youtube.com/watch?v=...'})
         }
 
 

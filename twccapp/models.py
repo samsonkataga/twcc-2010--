@@ -83,19 +83,28 @@ class ContactMessage(models.Model):
         return f"{self.name} - {self.subject}"
 
 
-class Video(models.Model):
+class VideoUpdate(models.Model):
     title = models.CharField(max_length=200)
-    youtube_url = models.URLField()
-    description = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    thumbnail = models.ImageField(upload_to='video_thumbnails/', blank=True, null=True)
+    video_url = models.URLField()
+    embed_code = models.TextField(blank=True)
+    posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(default=timezone.now)
+    is_active = models.BooleanField(default=True)
 
-    def get_embed_url(self):
-        # Convert YouTube URL to embed format
-        video_id = self.youtube_url.split('v=')[1]
-        if '&' in video_id:
-            video_id = video_id.split('&')[0]
-        return f"https://www.youtube.com/embed/{video_id}"
+    def save(self, *args, **kwargs):
+        # Convert YouTube URL to embed code if needed
+        if 'youtube.com' in self.video_url or 'youtu.be' in self.video_url:
+            video_id = self.extract_youtube_id(self.video_url)
+            self.embed_code = f'<iframe src="https://www.youtube.com/embed/{video_id}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+        super().save(*args, **kwargs)
+
+    @staticmethod
+    def extract_youtube_id(url):
+        # Extract YouTube ID from various URL formats
+        import re
+        pattern = r'(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})'
+        match = re.search(pattern, url)
+        return match.group(1) if match else None
 
     def __str__(self):
         return self.title

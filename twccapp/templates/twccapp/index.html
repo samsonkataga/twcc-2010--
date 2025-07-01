@@ -115,4 +115,38 @@
         </div>
     </div>
 </section>
+
+<section id="video-updates" class="py-5 {% if not videos %}d-none{% endif %}">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="display-5">
+                    <i class="fab fa-youtube text-danger me-2"></i>Video Updates
+                </h2>
+                <p class="lead">Watch our latest videos and streams</p>
+            </div>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for video in videos %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="ratio ratio-16x9">
+                        {{ video.embed_code|safe }}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ video.title }}</h5>
+                        <p class="card-text text-muted">
+                            Posted on: {{ video.date_posted|date:"F j, Y" }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        
+    </div>
+</section>
 {% endblock %}

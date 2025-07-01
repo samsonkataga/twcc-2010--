@@ -2,19 +2,36 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, Service, FAQ, ContactMessage, Video, SliderImage
+from .models import News, Service, FAQ, ContactMessage, VideoUpdate, SliderImage
 from django.contrib.auth.decorators import login_required
-from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoForm 
+from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
 
 
 
 def index(request):
     latest_news = News.objects.all().order_by('-date_posted')[:3]
     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
+    videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:6]
+    
+    # Handle video form submission if it's a POST request
+    if request.method == 'POST' and 'video_url' in request.POST and is_admin(request.user):
+        form = VideoUpdateForm(request.POST)
+        if form.is_valid():
+            video = form.save(commit=False)
+            video.posted_by = request.user
+            video.save()
+            messages.success(request, 'Video added successfully!')
+            return redirect('index')
+    else:
+        form = VideoUpdateForm()
+    
     context = {
         'latest_news': latest_news,
         'slider_images': slider_images,
+        'videos': videos,
+        'video_form': form
     }
     return render(request, 'twccapp/index.html', context)
 
