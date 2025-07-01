@@ -3,6 +3,24 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
+from django.utils.html import mark_safe
+
+class SliderImage(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='slider_images/')
+    caption = models.CharField(max_length=255, blank=True)
+    is_active = models.BooleanField(default=True)
+    order = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['order']
+        
+    def __str__(self):
+        return self.title
+        
+    def image_tag(self):
+        return mark_safe(f'<img src="{self.image.url}" width="150" />')
+    image_tag.short_description = 'Image Preview'
 
 
 

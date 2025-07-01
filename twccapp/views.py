@@ -3,13 +3,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, Service, FAQ, ContactMessage, Video
+from .models import News, Service, FAQ, ContactMessage, Video, SliderImage
 from django.contrib.auth.decorators import login_required
 from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoForm 
 
+
+
 def index(request):
     latest_news = News.objects.all().order_by('-date_posted')[:3]
-    return render(request, 'twccapp/index.html', {'latest_news': latest_news})
+    slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
+    context = {
+        'latest_news': latest_news,
+        'slider_images': slider_images,
+    }
+    return render(request, 'twccapp/index.html', context)
 
 def about(request):
     return render(request, 'twccapp/about.html')

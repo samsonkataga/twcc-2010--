@@ -1,7 +1,13 @@
 # twccapp/admin.py
 from django.contrib import admin
-from .models import Member, News, Service, FAQ, ContactMessage, Subscriber
-from .models import Video
+from .models import Member, News, Service, FAQ, ContactMessage, Subscriber,SliderImage, Video
+
+
+class SliderImageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'caption', 'order', 'is_active', 'image_tag')
+    list_editable = ('order', 'is_active')
+    
+admin.site.register(SliderImage, SliderImageAdmin)
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):

@@ -13,6 +13,47 @@
     </div>
 </section>
 
+<!-- Image Slider Section -->
+<section class="slider-section">
+    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
+        {% if slider_images %}
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            {% for image in slider_images %}
+            <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
+                    {% if forloop.first %}class="active" aria-current="true"{% endif %} 
+                    aria-label="Slide {{ forloop.counter }}"></button>
+            {% endfor %}
+        </div>
+        
+        <!-- Slides -->
+        <div class="carousel-inner">
+            {% for image in slider_images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" style="height: 65vh; object-fit: cover; object-position: center;">
+                <div class="carousel-caption">
+                    <div class="caption-container p-3">
+                        <h3 class="caption-title">{{ image.title }}</h3>
+                        <p class="caption-text">{{ image.caption }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+        {% endif %}
+    </div>
+</section>
+
 <section class="py-5">
     <div class="container">
         <div class="row">
