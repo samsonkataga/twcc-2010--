@@ -24,7 +24,7 @@ class Member(models.Model):
     profile_picture = models.ImageField(upload_to='members/', null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user.get_full_name()} - {self.business_name}"
+        return f"{self.user.username} - {self.business_name}"
 
 class News(models.Model):
     title = models.CharField(max_length=200)

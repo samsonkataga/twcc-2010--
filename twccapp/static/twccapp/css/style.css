@@ -79,3 +79,22 @@ footer {
 }
 
 
+
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{% static 'twccapp/images/logo.png' %}');
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 400px;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        background-size: 80% auto; /* Adjust as needed for mobile */
+    }
+}
+
+@media (min-width: 769px) {
+    .hero-section {
+        background-size: contain;
+    }
+}

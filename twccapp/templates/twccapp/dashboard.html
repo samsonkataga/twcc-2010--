@@ -13,7 +13,7 @@
                         {% if member.profile_picture %}
                         <img src="{{ member.profile_picture.url }}" alt="Profile" class="rounded-circle mb-3" width="120" height="120">
                         {% else %}
-                        <img src="{% static 'twccapp/images/default-profile.png' %}" alt="Profile" class="rounded-circle mb-3" width="120" height="120">
+                        <img src="{% static 'twccapp/images/logo.jpg' %}" alt="Profile" class="rounded-circle mb-3" width="120" height="120">
                         {% endif %}
                         <h5>{{ user.get_full_name|default:user.username }}</h5>
                         <p class="text-muted">{{ member.business_name }}</p>

@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import News, Service, FAQ, ContactMessage, Video
 from django.contrib.auth.decorators import login_required
-from .forms import MemberRegistrationForm, ContactForm, SubscribeForm, VideoForm 
+from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoForm 
 
 def index(request):
     latest_news = News.objects.all().order_by('-date_posted')[:3]
@@ -47,18 +47,20 @@ def contact(request):
 
 def register(request):
     if request.method == 'POST':
-        user_form = UserCreationForm(request.POST)
+        user_form = CustomUserCreationForm(request.POST)
         member_form = MemberRegistrationForm(request.POST, request.FILES)
+        
         if user_form.is_valid() and member_form.is_valid():
             user = user_form.save()
             member = member_form.save(commit=False)
             member.user = user
             member.save()
             login(request, user)
-            return redirect('dashboard')
+            return redirect('dashboard')  # Make sure you have this URL defined
     else:
-        user_form = UserCreationForm()
+        user_form = CustomUserCreationForm()
         member_form = MemberRegistrationForm()
+    
     return render(request, 'twccapp/register.html', {
         'user_form': user_form,
         'member_form': member_form
