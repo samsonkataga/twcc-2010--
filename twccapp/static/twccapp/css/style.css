@@ -101,133 +101,107 @@ footer {
 
 
 
-/* ===== SLIDER RESPONSIVE STYLING ===== */
+/* Slider Section for Official Images */
+.slider-section {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
 .carousel {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.carousel-inner {
-  position: relative;
-  width: 100%;
-}
-
-.carousel-item {
-  position: relative;
-  display: none;
-  align-items: center;
-  width: 100%;
-  transition: transform 0.6s ease;
-}
-
-.carousel-item.active {
-  display: flex;
-}
-
-/* Image styling with smart cropping */
 .carousel-item img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  object-position: center center;
-}
-
-/* Responsive height control */
-@media (min-width: 1200px) {
-  .carousel-item img {
     height: 65vh;
-  }
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
-  .carousel-item img {
-    height: 55vh;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  .carousel-item img {
-    height: 45vh;
-  }
-}
-
-@media (max-width: 767px) {
-  .carousel-item img {
-    height: 50vh; /* Slightly taller on mobile for better visibility */
-    object-position: top center; /* Focus on top portion where faces usually are */
-  }
-}
-
-@media (max-width: 575px) {
-  .carousel-item img {
-    height: 40vh;
-    object-position: top center;
-  }
-}
-
-/* Caption styling */
 .carousel-caption {
-  position: absolute;
-  right: 5%;
-  bottom: 10%;
-  left: 5%;
-  padding: 1.25rem;
-  color: white;
-  text-align: left;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 5px;
-  max-width: 90%;
+    bottom: 15%;
+    left: 5%;
+    right: 5%;
+    text-align: left;
+    padding: 0;
 }
 
-.carousel-caption h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+.caption-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    padding: 15px;
+    max-width: 600px;
 }
 
-.carousel-caption p {
-  font-size: 1rem;
-  margin-bottom: 0;
+.caption-title {
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
-/* Mobile caption adjustments */
-@media (max-width: 767px) {
-  .carousel-caption {
-    bottom: 5%;
-    padding: 0.75rem;
-    max-width: 95%;
-  }
-  
-  .carousel-caption h3 {
-    font-size: 1.1rem;
-  }
-  
-  .carousel-caption p {
-    font-size: 0.8rem;
-    display: none; /* Hide caption on small devices if space is tight */
-  }
+.caption-text {
+    color: #f8f9fa;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
-/* Indicator and control buttons */
-.carousel-indicators {
-  bottom: 10px;
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .carousel-item img {
+        height: 50vh;
+    }
+    
+    .carousel-caption {
+        bottom: 10%;
+    }
+    
+    .caption-container {
+        max-width: 80%;
+    }
 }
 
-.carousel-control-prev,
-.carousel-control-next {
-  width: 8%;
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 40vh;
+    }
+    
+    .carousel-caption {
+        bottom: 5%;
+    }
+    
+    .caption-title {
+        font-size: 1.3rem;
+    }
+    
+    .caption-text {
+        font-size: 0.9rem;
+    }
 }
 
-/* Touch-friendly controls on mobile */
-@media (max-width: 767px) {
-  .carousel-control-prev,
-  .carousel-control-next {
-    width: 15%;
-  }
+@media (max-width: 576px) {
+    .carousel-item img {
+        height: 35vh;
+    }
+    
+    .caption-container {
+        padding: 10px;
+        max-width: 90%;
+    }
+    
+    .caption-title {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+    
+    .caption-text {
+        font-size: 0.8rem;
+        display: none; /* Hide caption on very small screens */
+    }
 }
+
 /* Video Updates Section */
 #video-updates .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
