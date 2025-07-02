@@ -1,0 +1,70 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Publications</h1>
+    
+    {% if user.is_staff %}
+    <div class="mb-4">
+        <a href="/admin/twccapp/publication/add/" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add New Publication (Admin)
+        </a>
+    </div>
+    {% endif %}
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="mb-3">Articles</h2>
+            {% for article in articles %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'publication_detail' article.pk %}">{{ article.title }}</a>
+                    </h5>
+                    <p class="card-text">{{ article.content|truncatewords:30 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            By {{ article.author }} on {{ article.created_at|date:"M d, Y" }}
+                        </small>
+                        {% if article.document %}
+                        <a href="{{ article.document.url }}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-info">No articles available.</div>
+            {% endfor %}
+        </div>
+        
+        <div class="col-md-6">
+            <h2 class="mb-3">Documentation</h2>
+            {% for doc in documentations %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'publication_detail' doc.pk %}">{{ doc.title }}</a>
+                    </h5>
+                    <p class="card-text">{{ doc.content|truncatewords:30 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            By {{ doc.author }} on {{ doc.created_at|date:"M d, Y" }}
+                        </small>
+                        {% if doc.document %}
+                        <a href="{{ doc.document.url }}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-info">No documentation available.</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

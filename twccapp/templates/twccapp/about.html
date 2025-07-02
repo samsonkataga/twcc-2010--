@@ -4,30 +4,160 @@
 {% block title %}About Us - TWCC{% endblock %}
 
 {% block content %}
-<section class="py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h2 class="mb-4">Tanzania Women Chamber of Commerce</h2>
-                <p>The Tanzania Women Chamber of Commerce (TWCC) is a non-profit organization dedicated to empowering women entrepreneurs across Tanzania. Established in 2005, we have grown to become the leading voice for women in business.</p>
-                <p>Our mission is to create an enabling environment for women to participate fully in economic activities through advocacy, capacity building, and networking opportunities.</p>
-                
-                <h3 class="mt-5">Our Vision</h3>
-                <p>To be the premier organization championing women's economic empowerment and business growth in Tanzania.</p>
-                
-                <h3 class="mt-5">Our Values</h3>
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-check-circle text-primary me-2"></i> Integrity</li>
-                    <li><i class="fas fa-check-circle text-primary me-2"></i> Inclusivity</li>
-                    <li><i class="fas fa-check-circle text-primary me-2"></i> Professionalism</li>
-                    <li><i class="fas fa-check-circle text-primary me-2"></i> Innovation</li>
-                </ul>
-            </div>
-            <div class="col-lg-6">
-                <img src="{% static 'twccapp/images/logo.png' %}" alt="TWCC Members" class="img-fluid rounded shadow">
-            </div>
+<!-- Hero Header Section -->
+<section class="twcc-header py-5 position-relative overflow-hidden">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Logo/Title Column -->
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="title-container">
+          <h1 class="twcc-title">
+            <span class="twcc-word">Tanzania</span>
+            <span class="twcc-word">Women</span>
+            <span class="twcc-word">Chamber</span>
+            <span class="twcc-word">of</span>
+            <span class="twcc-word">Commerce</span>
+          </h1>
+          <div class="divider-line"></div>
+          <p class="twcc-tagline mt-3">Empowering Women Entrepreneurs Across Tanzania</p>
         </div>
+      </div>
+      
+      <!-- Image Column -->
+      <div class="col-lg-6">
+        <div class="header-image-container">
+          <img src="{% static 'twccapp/images/logo.png' %}" 
+               alt="TWCC Members" 
+               class="img-fluid rounded-3 shadow-lg header-image">
+          <div class="image-overlay"></div>
+        </div>
+      </div>
     </div>
+  </div>
+  
+  <!-- Decorative Elements -->
+  <div class="position-absolute bottom-0 start-0 w-100 h-50 bg-light z-n1 opacity-10"></div>
+</section>
+
+<!-- About TWCC Section -->
+<section class="twcc-about py-5 bg-white">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Content Column -->
+      <div class="col-lg-6 order-lg-1 mb-5 mb-lg-0">
+        <h2 class="display-4 fw-bold text-primary mb-4">About TWCC</h2>
+        <p class="lead mb-4">The Tanzania Women Chamber of Commerce (TWCC) is a non-profit organization dedicated to empowering women entrepreneurs across Tanzania. Established in 2005, we have grown to become the leading voice for women in business.</p>
+        
+        <div class="mission-vision-box p-4 bg-light rounded-3 shadow-sm mb-4">
+          <h3 class="h4 text-primary"><i class="bi bi-bullseye me-2"></i>Our Mission</h3>
+          <p>To create an enabling environment for women to participate fully in economic activities through advocacy, capacity building, and networking opportunities.</p>
+        </div>
+        
+        <div class="mission-vision-box p-4 bg-light rounded-3 shadow-sm">
+          <h3 class="h4 text-primary"><i class="bi bi-eye me-2"></i>Our Vision</h3>
+          <p>To be the premier organization championing women's economic empowerment and business growth in Tanzania.</p>
+        </div>
+      </div>
+      
+      <!-- Image Column -->
+      <div class="col-lg-6 order-lg-0">
+        <div class="about-image position-relative">
+          <img src="{% static 'twccapp/images/logo3.jpeg' %}" 
+               alt="TWCC Members Meeting" 
+               class="img-fluid rounded-3 shadow-lg">
+          <div class="image-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Values Section -->
+<section class="values-section py-5 position-relative">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center mb-5">
+        <h2 class="display-4 fw-bold text-white mb-3">Our Values</h2>
+        <div class="divider mx-auto bg-white"></div>
+      </div>
+    </div>
+    
+    <div class="row g-4">
+      <!-- Integrity -->
+      <div class="col-md-6 col-lg-3">
+        <div class="value-card text-center p-4 h-100">
+          <div class="value-icon mx-auto mb-4">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h3 class="h4 mb-3">Integrity</h3>
+          <p>We uphold the highest standards of honesty and ethical conduct in all our dealings.</p>
+        </div>
+      </div>
+      
+      <!-- Inclusivity -->
+      <div class="col-md-6 col-lg-3">
+        <div class="value-card text-center p-4 h-100">
+          <div class="value-icon mx-auto mb-4">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <h3 class="h4 mb-3">Inclusivity</h3>
+          <p>We embrace diversity and create opportunities for all women in business.</p>
+        </div>
+      </div>
+      
+      <!-- Professionalism -->
+      <div class="col-md-6 col-lg-3">
+        <div class="value-card text-center p-4 h-100">
+          <div class="value-icon mx-auto mb-4">
+            <i class="bi bi-award-fill"></i>
+          </div>
+          <h3 class="h4 mb-3">Professionalism</h3>
+          <p>We maintain excellence and competence in all our programs and services.</p>
+        </div>
+      </div>
+      
+      <!-- Innovation -->
+      <div class="col-md-6 col-lg-3">
+        <div class="value-card text-center p-4 h-100">
+          <div class="value-icon mx-auto mb-4">
+            <i class="bi bi-lightbulb-fill"></i>
+          </div>
+          <h3 class="h4 mb-3">Innovation</h3>
+          <p>We foster creative solutions to advance women's economic participation.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Stats -->
+    <div class="row mt-5 pt-4">
+      <div class="col-12">
+        <div class="stats-box bg-white rounded-3 shadow-lg p-4">
+          <div class="row text-center">
+            <div class="col-md-3">
+              <h3 class="display-5 fw-bold text-primary">18+</h3>
+              <p class="mb-0">Years of Service</p>
+            </div>
+            <div class="col-md-3">
+              <h3 class="display-5 fw-bold text-primary">12K+</h3>
+              <p class="mb-0">Members</p>
+            </div>
+            <div class="col-md-3">
+              <h3 class="display-5 fw-bold text-primary">27</h3>
+              <p class="mb-0">Regional Chapters</p>
+            </div>
+            <div class="col-md-3">
+              <h3 class="display-5 fw-bold text-primary">1M+</h3>
+              <p class="mb-0">Women Served</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Decorative Elements -->
+  <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary z-n1"></div>
+  <div class="position-absolute bottom-0 end-0 w-50 h-50 bg-secondary opacity-10 z-n1"></div>
 </section>
 
 <section class="py-5 bg-light">
@@ -40,7 +170,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Dkt. Mwajuma Hamza</h5>
                         <p class="text-muted">Executive Director</p>
-                        <p class="card-text">With over 20 years experience in business development and women empowerment.</p>
+                        <p class="card-text">With over 0 years experience in business development and women empowerment.</p>
                     </div>
                 </div>
             </div>

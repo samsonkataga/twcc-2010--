@@ -1,0 +1,50 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <article class="publication-detail">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>{{ publication.title }}</h1>
+            {% if user.is_staff %}
+            <a href="/admin/twccapp/publication/{{ publication.id }}/change/" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-edit"></i> Edit (Admin)
+            </a>
+            {% endif %}
+        </div>
+        
+        <div class="publication-meta mb-4">
+            <p class="text-muted">
+                {% if publication.is_article %}
+                <span class="badge bg-primary">Article</span>
+                {% else %}
+                <span class="badge bg-success">Documentation</span>
+                {% endif %}
+                Published by {{ publication.author }} on {{ publication.created_at|date:"F d, Y" }}
+                {% if publication.updated_at != publication.created_at %}
+                <br>Last updated on {{ publication.updated_at|date:"F d, Y" }}
+                {% endif %}
+            </p>
+        </div>
+        
+        <div class="publication-content mb-4">
+            {{ publication.content|linebreaks }}
+        </div>
+        
+        {% if publication.document %}
+        <div class="publication-download mb-4">
+            <a href="{{ publication.document.url }}" class="btn btn-primary">
+                <i class="fas fa-file-download"></i> Download Document
+            </a>
+            <small class="text-muted ms-2">{{ publication.document.name|cut:"publications/documents/" }}</small>
+        </div>
+        {% endif %}
+        
+        <div class="publication-footer">
+            <a href="{% url 'publications_list' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Publications
+            </a>
+        </div>
+    </article>
+</div>
+{% endblock %}

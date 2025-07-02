@@ -108,3 +108,29 @@ class VideoUpdate(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Publication(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    document = models.FileField(upload_to='publications/documents/', blank=True, null=True)
+    is_article = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('publication_detail', kwargs={'pk': self.pk})
+
+class GalleryImage(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='gallery/images/')
+    description = models.TextField(blank=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
