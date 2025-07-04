@@ -665,7 +665,7 @@ footer {
 /* Subtext styles */
 .typing-subtext {
   font-size: 1.2rem;
-  color: #555;
+  color: green;
   border-right: 3px solid #4CAF50; /* Different cursor color */
   white-space: nowrap;
   overflow: hidden;
@@ -696,14 +696,14 @@ h1 {
             place-items: center;
             text-align: center;
         }
-        /*p {
+        p {
             color: green;
             font-weight: bold;
             margin: 0;
             display: grid;
             place-items: center;
             text-align: center;
-        }*/
+        }
 
 
 .leadership-grid {
