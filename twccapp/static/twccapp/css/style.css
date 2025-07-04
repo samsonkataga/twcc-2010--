@@ -1,7 +1,7 @@
 /* twccapp/static/twccapp/css/style.css */
 :root {
     --primary-color: #2c3e50;
-    --secondary-color: #3498db;
+    --secondary-color: green;
     --light-color: #ecf0f1;
     --dark-color: #2c3e50;
 }
@@ -63,17 +63,79 @@ body {
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-.faq-item {
+/*.faq-item {
     margin-bottom: 1rem;
 }
 
 .faq-question {
     font-weight: 600;
     color: var(--secondary-color);
+}*/
+
+/* FAQ Container */
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* FAQ Item */
+.faq-item {
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* FAQ Question */
+.faq-question {
+  width: 100%;
+  padding: 15px 20px;
+  text-align: left;
+  background: #f8f9fa;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.faq-question:hover {
+  background: #e9ecef;
+}
+
+/* FAQ Answer */
+.faq-answer {
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background: white;
+}
+
+.faq-answer p {
+  padding: 20px;
+  margin: 0;
+}
+
+/* Arrow Icon */
+.arrow-icon {
+  transition: transform 0.3s ease;
+}
+
+/* Active State */
+.faq-item.active .faq-answer {
+  max-height: 500px; /* Adjust based on your longest answer */
+  padding: 0;
+}
+
+.faq-item.active .arrow-icon {
+  transform: rotate(180deg);
 }
 
 footer {
-    background-color: green;
+    background-color: #3498db;
     color: white;
     padding: 2rem 0;
 }
@@ -370,11 +432,11 @@ footer {
   white-space: nowrap;
 }
 
-.twcc-word:nth-child(1) { color: #0a2463; } /* Tanzania */
+.twcc-word:nth-child(1) { color: #3a86ff; } /* Tanzania */
 .twcc-word:nth-child(2) { color: #3a86ff; } /* Women */
-.twcc-word:nth-child(3) { color: #0a2463; } /* Chamber */
+.twcc-word:nth-child(3) { color: #3a86ff; } /* Chamber */
 .twcc-word:nth-child(4) { color: #3a86ff; } /* of */
-.twcc-word:nth-child(5) { color: #0a2463; } /* Commerce */
+.twcc-word:nth-child(5) { color: #3a86ff; } /* Commerce */
 
 .twcc-word::after {
   content: '';
@@ -537,4 +599,113 @@ footer {
 
 .stats-box h3 {
   color: #0a2463;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+  .twcc-about .display-4 {
+    font-size: 2.2rem;
+  }
+  
+  .values-section .display-4 {
+    font-size: 2.5rem;
+  }
+  
+  .value-card {
+    margin-bottom: 20px;
+  }
+  
+  .stats-box .col-md-3 {
+    margin-bottom: 20px;
+  }
+}
+
+.typing-container {
+            text-align: center;
+        }
+        
+         .main-heading {
+            color: blue;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            border-right: 3px solid blue;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        
+        .typing-subtext {
+            color: green;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-right: 3px solid green;
+            white-space: nowrap;
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+
+h1 {
+            color: blue;
+            margin: 0 0 10px 0;
+            display: grid;
+            font-weight: bold;
+            place-items: center;
+            text-align: center;
+        }
+        /*p {
+            color: green;
+            font-weight: bold;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }*/
+
+
+.leadership-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .leader-card {
+        width: 250px;
+        text-align: center;
+    }
+    .leader-card img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+
+.partner-logo {
+    padding: 10px;
+    transition: transform 0.3s;
+}
+
+.partner-logo:hover {
+    transform: scale(1.05);
+}
+
+
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    position: fixed;
+    top: 56px; /* Adjust based on your navbar height */
+    left: 0;
+    right: 0;
+    background: #0d6efd; /* Match your navbar color */
+    z-index: 1000;
+    padding: 20px;
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  
+  .navbar-nav {
+    padding-bottom: 20px;
+  }
 }

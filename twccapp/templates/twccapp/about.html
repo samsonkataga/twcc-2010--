@@ -19,7 +19,7 @@
             <span class="twcc-word">Commerce</span>
           </h1>
           <div class="divider-line"></div>
-          <p class="twcc-tagline mt-3">Empowering Women Entrepreneurs Across Tanzania</p>
+          <p class="twcc-tagline mt-3">Empowering Women in Business Together.</p>
         </div>
       </div>
       
@@ -46,16 +46,16 @@
       <!-- Content Column -->
       <div class="col-lg-6 order-lg-1 mb-5 mb-lg-0">
         <h2 class="display-4 fw-bold text-primary mb-4">About TWCC</h2>
-        <p class="lead mb-4">The Tanzania Women Chamber of Commerce (TWCC) is a non-profit organization dedicated to empowering women entrepreneurs across Tanzania. Established in 2005, we have grown to become the leading voice for women in business.</p>
+        <p class="lead mb-4">The Tanzania Women Chamber of Commerce (TWCC) is a non-profit organization dedicated to empowering women entrepreneurs across Tanzania. Established in December 2005, we have grown to become the leading voice for women in business.</p>
         
         <div class="mission-vision-box p-4 bg-light rounded-3 shadow-sm mb-4">
           <h3 class="h4 text-primary"><i class="bi bi-bullseye me-2"></i>Our Mission</h3>
-          <p>To create an enabling environment for women to participate fully in economic activities through advocacy, capacity building, and networking opportunities.</p>
+          <p>To prepare Tanzanian women to unite in advocating for their rights and growing their businesses by utilizing opportunities and strategies both locally and internationally.</p>
         </div>
         
         <div class="mission-vision-box p-4 bg-light rounded-3 shadow-sm">
           <h3 class="h4 text-primary"><i class="bi bi-eye me-2"></i>Our Vision</h3>
-          <p>To be the premier organization championing women's economic empowerment and business growth in Tanzania.</p>
+          <p>To be a hub and catalyst in economically empowering the Tanzanian woman entrepreneurs.</p>
         </div>
       </div>
       
@@ -134,19 +134,19 @@
         <div class="stats-box bg-white rounded-3 shadow-lg p-4">
           <div class="row text-center">
             <div class="col-md-3">
-              <h3 class="display-5 fw-bold text-primary">18+</h3>
+              <h3 class="display-5 fw-bold text-primary">20+</h3>
               <p class="mb-0">Years of Service</p>
-            </div>
-            <div class="col-md-3">
-              <h3 class="display-5 fw-bold text-primary">12K+</h3>
-              <p class="mb-0">Members</p>
             </div>
             <div class="col-md-3">
               <h3 class="display-5 fw-bold text-primary">27</h3>
               <p class="mb-0">Regional Chapters</p>
             </div>
             <div class="col-md-3">
-              <h3 class="display-5 fw-bold text-primary">1M+</h3>
+              <h3 class="display-5 fw-bold text-primary">20K+</h3>
+              <p class="mb-0">Members</p>
+            </div>
+            <div class="col-md-3">
+              <h3 class="display-5 fw-bold text-primary">5M+</h3>
               <p class="mb-0">Women Served</p>
             </div>
           </div>
@@ -161,40 +161,16 @@
 </section>
 
 <section class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">Our Leadership</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card text-center border-0 shadow">
-                    <img src="{% static 'twccapp/images/logo1.jpg' %}" class="card-img-top rounded-circle w-50 mx-auto mt-3" alt="Chairperson">
-                    <div class="card-body">
-                        <h5 class="card-title">Dkt. Mwajuma Hamza</h5>
-                        <p class="text-muted">Executive Director</p>
-                        <p class="card-text">With over 0 years experience in business development and women empowerment.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card text-center border-0 shadow">
-                    <img src="{% static 'twccapp/images/logo1.jpg' %}" class="card-img-top rounded-circle w-50 mx-auto mt-3" alt="Vice Chair">
-                    <div class="card-body">
-                        <h5 class="card-title">Fatma Singano</h5>
-                        <p class="text-muted">Human resources</p>
-                        <p class="card-text">Entrepreneur and advocate for women's financial inclusion.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card text-center border-0 shadow">
-                    <img src="{% static 'twccapp/images/logo2.jpg' %}" class="card-img-top rounded-circle w-50 mx-auto mt-3" alt="Secretary">
-                    <div class="card-body">
-                        <h5 class="card-title">Andrew ndunguru</h5>
-                        <p class="text-muted">Executive Secretary</p>
-                        <p class="card-text">Business strategist with passion for women's economic empowerment.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="leadership-grid">
+    {% for leader in leaders %}
+    <div class="leader-card">
+        <img src="{{ leader.image.url }}" 
+             alt="{{ leader.name }}" 
+             onerror="this.style.display='none'">
+        <h3>{{ leader.name }}</h3>
+        <p class="position">{{ leader.position }}</p>
     </div>
+    {% endfor %}
+</div>
 </section>
 {% endblock %}

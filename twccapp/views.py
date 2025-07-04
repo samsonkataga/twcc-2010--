@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, Service, FAQ, ContactMessage, VideoUpdate, SliderImage, Publication, GalleryImage
+from .models import News, Service, FAQ, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication, GalleryImage
 from django.contrib.auth.decorators import login_required
 from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
 
@@ -26,9 +26,58 @@ def gallery_view(request):
     images = GalleryImage.objects.all().order_by('-uploaded_at')
     return render(request, 'twccapp/gallery.html', {'images': images})
 
+# def index(request):
+#     latest_news = News.objects.all().order_by('-date_posted')[:3]
+#     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
+#     videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:6]
+    
+#     # Handle video form submission if it's a POST request
+#     if request.method == 'POST' and 'video_url' in request.POST and is_admin(request.user):
+#         form = VideoUpdateForm(request.POST)
+#         if form.is_valid():
+#             video = form.save(commit=False)
+#             video.posted_by = request.user
+#             video.save()
+#             messages.success(request, 'Video added successfully!')
+#             return redirect('index')
+#     else:
+#         form = VideoUpdateForm()
+    
+#     context = {
+#         'latest_news': latest_news,
+#         'slider_images': slider_images,
+#         'videos': videos,
+#         'video_form': form
+#     }
+#     return render(request, 'twccapp/index.html', context)
+
+
+
 def index(request):
     latest_news = News.objects.all().order_by('-date_posted')[:3]
     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
+    
+    context = {
+        'latest_news': latest_news,
+        'slider_images': slider_images,
+    }
+    return render(request, 'twccapp/index.html', context)
+
+def about(request):
+    leaders = Leadership.objects.filter(is_active=True).order_by('order')[:6]
+    return render(request, 'twccapp/about.html', {'leaders': leaders})
+
+def services(request):
+    services = Service.objects.all()
+    partners = Partner.objects.all().order_by('order')
+    context = {
+        'services': services,
+        'partners': partners
+    }
+    return render(request, 'twccapp/services.html', context)
+
+def news(request):
+    news_list = News.objects.all().order_by('-date_posted')
     videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:6]
     
     # Handle video form submission if it's a POST request
@@ -39,28 +88,16 @@ def index(request):
             video.posted_by = request.user
             video.save()
             messages.success(request, 'Video added successfully!')
-            return redirect('index')
+            return redirect('news')
     else:
         form = VideoUpdateForm()
     
     context = {
-        'latest_news': latest_news,
-        'slider_images': slider_images,
+        'news_list': news_list,
         'videos': videos,
         'video_form': form
     }
-    return render(request, 'twccapp/index.html', context)
-
-def about(request):
-    return render(request, 'twccapp/about.html')
-
-def services(request):
-    services = Service.objects.all()
-    return render(request, 'twccapp/services.html', {'services': services})
-
-def news(request):
-    news_list = News.objects.all().order_by('-date_posted')
-    return render(request, 'twccapp/news.html', {'news_list': news_list})
+    return render(request, 'twccapp/news.html', context)
 
 def news_detail(request, pk):
     news_item = News.objects.get(pk=pk)
@@ -98,6 +135,8 @@ def register(request):
             member = member_form.save(commit=False)
             member.user = user  # This connects the Member to the User
             member.save()  # Now both user and member are saved
+            messages.success(request, 'Registration successful! Welcome to our site.')
+            return redirect('login')
             
             # Login the user
             login(request, user)
@@ -122,7 +161,8 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('dashboard')
+            messages.success(request, 'Login successful! Welcome back!')
+            return redirect('index')
     else:
         form = AuthenticationForm()
     return render(request, 'twccapp/login.html', {'form': form})
@@ -143,7 +183,7 @@ def subscribe(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Thank you for subscribing!')
-            return redirect('subscribe')  # Redirect back to the same page
+            return redirect('index')  # Redirect back to the same page
     else:
         form = SubscribeForm()
     
@@ -168,3 +208,6 @@ def video_upload(request):
     else:
         form = VideoForm()
     return render(request, 'twccapp/videos_upload.html', {'form': form})
+
+
+

@@ -17,16 +17,19 @@
                     {% for faq in faqs %}
                     <div class="accordion-item mb-3 border-0 shadow-sm">
                         <h3 class="accordion-header" id="heading{{ forloop.counter }}">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-                                    data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" 
+                            <button class="accordion-button collapsed py-3" type="button" 
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#collapse{{ forloop.counter }}" 
+                                    aria-expanded="false" 
                                     aria-controls="collapse{{ forloop.counter }}">
-                                {{ faq.question }}
+                                <span class="fw-semibold">{{ faq.question }}</span>
                             </button>
                         </h3>
                         <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" 
-                             aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                {{ faq.answer }}
+                             aria-labelledby="heading{{ forloop.counter }}" 
+                             data-bs-parent="#faqAccordion">
+                            <div class="accordion-body pt-0">
+                                {{ faq.answer|linebreaks }}
                             </div>
                         </div>
                     </div>
@@ -46,4 +49,25 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Ensure Bootstrap 5 accordion works properly
+document.addEventListener('DOMContentLoaded', function() {
+    // This is just a backup - Bootstrap should handle this automatically
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Toggle aria-expanded attribute
+            const expanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !expanded);
+            
+            // Toggle the collapsed class
+            this.classList.toggle('collapsed');
+        });
+    });
+});
+</script>
 {% endblock %}

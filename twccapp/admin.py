@@ -1,6 +1,7 @@
 # twccapp/admin.py
 from django.contrib import admin
-from .models import Member, News, Service, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+from django.utils.safestring import mark_safe 
+from .models import Member, Partner, News, Leadership, Service, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
 
 
 class SliderImageAdmin(admin.ModelAdmin):
@@ -58,3 +59,27 @@ class GalleryImageAdmin(admin.ModelAdmin):
 
 admin.site.register(Publication, PublicationAdmin)
 admin.site.register(GalleryImage, GalleryImageAdmin)
+
+@admin.register(Leadership)  # Preferred modern syntax
+class LeadershipAdmin(admin.ModelAdmin):
+    list_display = ('name', 'position', 'order', 'is_active', 'image_tag')
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('name', 'position')
+    readonly_fields = ('image_tag',)
+    
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'position', 'bio', 'image', 'image_tag', 'order', 'is_active')
+        }),
+    )
+
+
+@admin.register(Partner)
+class PartnerAdmin(admin.ModelAdmin):
+    list_display = ('logo_preview', 'order')
+    list_editable = ('order',)
+    
+    def logo_preview(self, obj):
+        return mark_safe(f'<img src="{obj.logo.url}" style="max-height: 50px;" />')
+    logo_preview.short_description = 'Logo Preview'

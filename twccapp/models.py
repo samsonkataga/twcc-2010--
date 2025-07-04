@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.utils.html import mark_safe
+from django.db import models
 
 class SliderImage(models.Model):
     title = models.CharField(max_length=200)
@@ -134,3 +135,37 @@ class GalleryImage(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Leadership(models.Model):
+    name = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)
+    bio = models.TextField()
+    image = models.ImageField(upload_to='leadership/')
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name_plural = "Leadership Team"
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.name} - {self.position}"
+
+    def image_tag(self):
+        if self.image:
+            return mark_safe(f'<img src="{self.image.url}" width="50" />')
+        return "No Image"
+    image_tag.short_description = 'Image Preview'
+
+
+class Partner(models.Model):
+    logo = models.ImageField(upload_to='partners/')
+    order = models.PositiveIntegerField(default=0)  # For manual ordering
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name_plural = 'Partners'
+
+    def __str__(self):
+        return f"Partner #{self.id}"
