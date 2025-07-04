@@ -620,7 +620,7 @@ footer {
   }
 }
 
-.typing-container {
+/*.typing-container {
             text-align: center;
         }
         
@@ -643,7 +643,50 @@ footer {
             display: grid;
             place-items: center;
             text-align: center;
-        }
+        }*/
+
+/* Typing animation container */
+.header-typing-container {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Main heading styles */
+.main-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a73e8; /* TWCC blue */
+  margin-bottom: 0.5rem;
+  border-right: 3px solid #1a73e8; /* Cursor effect */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Subtext styles */
+.typing-subtext {
+  font-size: 1.2rem;
+  color: #555;
+  border-right: 3px solid #4CAF50; /* Different cursor color */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .main-heading {
+    font-size: 1.5rem;
+    white-space: normal; /* Allow text wrapping */
+    border-right: none; /* Remove cursor on mobile if needed */
+  }
+  
+  .typing-subtext {
+    font-size: 1rem;
+    white-space: normal;
+    border-right: none;
+  }
+}
+
+
 
 h1 {
             color: blue;
