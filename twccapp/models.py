@@ -5,6 +5,8 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.utils.html import mark_safe
 from django.db import models
+from django.db.models.signals import post_save  # Add this import
+from django.dispatch import receiver  
 
 class SliderImage(models.Model):
     title = models.CharField(max_length=200)
@@ -45,6 +47,11 @@ class Member(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.business_name}"
 
+    @receiver(post_save, sender=User)
+    def create_member_profile(sender, instance, created, **kwargs):
+        if created:
+            Member.objects.create(user=instance)
+
 class News(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
@@ -54,7 +61,7 @@ class News(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.title
+        return self.title 
 
 class Service(models.Model):
     name = models.CharField(max_length=200)

@@ -1,6 +1,7 @@
 # twccapp/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.models import User  # Add this import
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -122,25 +123,70 @@ def contact(request):
     
     return render(request, 'twccapp/contact.html', {'form': form})
 
+# def register(request):
+#     if request.method == 'POST':
+#         user_form = CustomUserCreationForm(request.POST)
+#         member_form = MemberRegistrationForm(request.POST, request.FILES)
+        
+#         if user_form.is_valid() and member_form.is_valid():
+#             # Save user first
+#             user = user_form.save()
+            
+#             # Save member with user reference
+#             member = member_form.save(commit=False)
+#             member.user = user  # This connects the Member to the User
+#             member.save()  # Now both user and member are saved
+#             messages.success(request, 'Registration successful! Welcome to our site.')
+#             return redirect('login')
+            
+#             # Login the user
+#             login(request, user)
+#             return redirect('dashboard')
+#         else:
+#             # Print form errors for debugging
+#             print("User form errors:", user_form.errors)
+#             print("Member form errors:", member_form.errors)
+#     else:
+#         user_form = CustomUserCreationForm()
+#         member_form = MemberRegistrationForm()
+    
+#     return render(request, 'twccapp/register.html', {
+#         'user_form': user_form,
+#         'member_form': member_form
+#     })
+
+
 def register(request):
     if request.method == 'POST':
         user_form = CustomUserCreationForm(request.POST)
         member_form = MemberRegistrationForm(request.POST, request.FILES)
         
         if user_form.is_valid() and member_form.is_valid():
+            # Check if user already exists
+            if User.objects.filter(username=user_form.cleaned_data['username']).exists():
+                messages.error(request, 'Username already exists')
+                return redirect('register')
+            
+            if User.objects.filter(email=user_form.cleaned_data['email']).exists():
+                messages.error(request, 'Email already exists')
+                return redirect('register')
+            
             # Save user first
             user = user_form.save()
             
-            # Save member with user reference
-            member = member_form.save(commit=False)
-            member.user = user  # This connects the Member to the User
-            member.save()  # Now both user and member are saved
-            messages.success(request, 'Registration successful! Welcome to our site.')
-            return redirect('login')
-            
-            # Login the user
-            login(request, user)
-            return redirect('dashboard')
+            # Check if member profile already exists (shouldn't happen, but just in case)
+            if not hasattr(user, 'member'):
+                # Save member with user reference
+                member = member_form.save(commit=False)
+                member.user = user
+                member.save()
+                
+                messages.success(request, 'Registration successful! Welcome to our site.')
+                login(request, user)
+                return redirect('dashboard')
+            else:
+                messages.error(request, 'Profile already exists for this user')
+                return redirect('login')
         else:
             # Print form errors for debugging
             print("User form errors:", user_form.errors)
@@ -153,7 +199,6 @@ def register(request):
         'user_form': user_form,
         'member_form': member_form
     })
-
 
 def user_login(request):
     if request.method == 'POST':
@@ -171,10 +216,33 @@ def user_logout(request):
     logout(request)
     return redirect('index')
 
+# def dashboard(request):
+#     if not request.user.is_authenticated:
+#         return redirect('login')
+#     return render(request, 'twccapp/dashboard.html')
+
+@login_required
 def dashboard(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    return render(request, 'twccapp/dashboard.html')
+    try:
+        member = request.user.member
+    except Member.DoesNotExist:
+        messages.warning(request, "Please complete your member profile")
+        return redirect('complete_profile')
+    
+    # Calculate profile completion percentage
+    required_fields = ['profile_picture', 'business_name', 'business_type', 
+                     'registration_number', 'phone_number', 'address']
+    completed = sum(1 for field in required_fields if getattr(member, field))
+    profile_completion = int((completed / len(required_fields)) * 100)
+    
+    context = {
+        'member': member,
+        'profile_completion': profile_completion,
+        'upcoming_events': Event.objects.filter(attendees=request.user, start_date__gte=timezone.now()),
+        'unread_notifications': Notification.objects.filter(user=request.user, read=False),
+        'recent_activities': Activity.objects.filter(user=request.user).order_by('-timestamp')[:5]
+    }
+    return render(request, 'twccapp/dashboard.html', context)
 
 
 def subscribe(request):
