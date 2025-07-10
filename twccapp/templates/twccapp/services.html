@@ -8,17 +8,23 @@
     <div class="container">
         <div class="text-center mb-5">
             <h2>Our Services</h2>
-            <p class="lead">Empowering women entrepreneurs through comprehensive support services</p>
+            <p class="lead">Stay informed and get to know our services</p>
         </div>
         
         <div class="row">
-            {% for service in services %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 border-0 shadow">
-                    <div class="card-body text-center">
-                        <i class="{{ service.icon_class }} fa-3x text-primary mb-3"></i>
-                        <h4>{{ service.name }}</h4>
-                        <p>{{ service.description }}</p>
+            {% for services_item in services_list %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    {% if services_item.image %}
+                    <img src="{{ services_item.image.url }}" class="card-img-top" alt="{{ services_item.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ services_item.title }}</h5>
+                        <p class="card-text">{{ services_item.summary }}</p>
+                        <a href="{% url 'services_detail' services_item.id %}" class="btn btn-primary">Read More</a>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <small class="text-muted">Posted on {{ services_item.date_posted|date:"F j, Y" }}</small>
                     </div>
                 </div>
             </div>

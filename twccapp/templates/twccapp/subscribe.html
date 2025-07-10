@@ -16,14 +16,14 @@
                     </div>
 
                     <form method="post" class="needs-validation" novalidate>
-                        {% csrf_token %}
+                         {% csrf_token %}
                         
                         <div class="mb-3">
                             <label for="subscriber" class="form-label visually-hidden">Email Address</label>
                             <input type="email" 
                                    class="form-control form-control-lg" 
                                    id="subscriber" 
-                                   name="subscriber" 
+                                   name="email" 
                                    placeholder="Enter your email address" 
                                    required
                                    aria-label="Email address">

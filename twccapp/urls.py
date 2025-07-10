@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('about/', views.about, name='about'),
     path('services/', views.services, name='services'),
+    path('services/<int:pk>/', views.services_detail, name='services_detail'),
     path('news/', views.news, name='news'),
     path('news/<int:pk>/', views.news_detail, name='news_detail'),
     path('faqs/', views.faqs, name='faqs'),
@@ -18,6 +19,7 @@ urlpatterns = [
     path('publications/', views.publications_list, name='publications_list'),
     path('publications/<int:pk>/', views.publication_detail, name='publication_detail'),
     path('gallery/', views.gallery_view, name='gallery'),
+    path('projects-programs/', views.projects_programs, name='projects_programs'),
    
     
 ]

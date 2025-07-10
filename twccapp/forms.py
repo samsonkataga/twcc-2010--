@@ -18,7 +18,7 @@ class VideoUpdateForm(forms.ModelForm):
 class SubscribeForm(forms.ModelForm):
     class Meta:
         model = Subscriber
-        fields = ['subscriber']
+        fields = ['email']
 
 class ContactForm(forms.ModelForm):
     class Meta:

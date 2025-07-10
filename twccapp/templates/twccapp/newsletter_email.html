@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <p>Dear {{ subscriber.email|default:"Valued Member" }},</p>
+    
+    <p>We're pleased to share with you our latest newsletter: <strong>{{ newsletter.title }}</strong></p>
+    
+    {% if newsletter.description %}
+    <p>{{ newsletter.description }}</p>
+    {% endif %}
+    
+    <p>The newsletter PDF is attached to this email.</p>
+    
+    <p>Best regards,<br>
+    Tanzania Women Chamber of Commerce</p>
+</body>
+</html>

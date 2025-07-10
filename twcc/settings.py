@@ -136,3 +136,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL = 'auth.User'
+
+CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
+CSRF_USE_SESSIONS = False  # Try this if issues persist
+CSRF_COOKIE_HTTPONLY = False  # For debugging only
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.twcc-tz.org'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'katagasamson@twcc-tz.org'
+EMAIL_HOST_PASSWORD = 'Sam@#360'  # Use environment variables in production
+DEFAULT_FROM_EMAIL = 'TWCC <info@twcc-tz.org>'

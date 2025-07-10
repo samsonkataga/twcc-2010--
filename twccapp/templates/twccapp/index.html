@@ -97,6 +97,9 @@ and growth of women entrepreneurs.
           <button class="nav-link" data-bs-toggle="pill" data-bs-target="#values" type="button">
             <i class="bi bi-heart me-2"></i> CORE VALUES
           </button>
+          <button class="nav-link" data-bs-toggle="pill" data-bs-target="#governance" type="button">
+            <i class="bi bi-people me-2"></i> OUR GOVERNANCE
+          </button>
         </div>
       </div>
       
@@ -133,6 +136,41 @@ and growth of women entrepreneurs.
               </div>
             </div>
           </div>
+
+          <div class="tab-pane fade" id="governance" role="tabpanel">
+  <h2 class="text-primary mb-4"><i class="bi bi-people-fill me-2"></i>OUR GOVERNANCE</h2>
+  <p class="lead">The Tanzania Women Chamber of Commerce is led by visionary women committed to empowering Tanzanian businesswomen through advocacy, mentorship, and strategic partnerships.</p>
+  
+  <div class="row mt-4 g-4">
+    <div class="col-md-6">
+      <div class="governance-card p-3 bg-light rounded">
+        <img src="{% static 'twccapp/images/mercy.jpg' %}" alt="Mercy Sila" class="rounded-circle mb-3" width="120" height="120">
+        <h3 class="text-primary">Mercy Sila</h3>
+        <h5>National Chairperson</h5>
+        <p class="mt-2">A seasoned business leader with over 15 years experience in entrepreneurship and women's economic empowerment. As founder of several successful enterprises, she brings practical business acumen to her leadership role. Mercy has been instrumental in establishing regional chapters across Tanzania and forging international partnerships for TWCC.</p>
+        <div class="social-links mt-3">
+          <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en"><i class="bi bi-linkedin text-primary"></i></a>
+          <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en"><i class="bi bi-twitter text-primary mx-2"></i></a>
+          <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en"><i class="bi bi-facebook text-primary"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="governance-card p-3 bg-light rounded">
+        <img src="{% static 'twccapp/images/mwajuma.jpg' %}" alt="Dr. Mwajuma Hamza" class="rounded-circle mb-3" width="120" height="120">
+        <h3 class="text-primary">Dr. Mwajuma Hamza</h3>
+        <h5>Executive Director</h5>
+        <p class="mt-2">An accomplished academic and policy expert with a PhD in Gender and Development Economics. Dr. Hamza has served as advisor to multiple government ministries on women's economic inclusion policies. Her strategic leadership has positioned TWCC as a key stakeholder in national economic planning, particularly in sectors where women entrepreneurs are underrepresented.</p>
+        <div class="social-links mt-3">
+          <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en"><i class="bi bi-linkedin text-primary"></i></a>
+          <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en"><i class="bi bi-twitter text-primary mx-2"></i></a>
+          <a href="https://www.instagram.com/tzwomenchamber_twcc/?hl=en"><i class="bi bi-globe text-primary"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
           
           <!-- Values Tab -->
           <div class="tab-pane fade" id="values" role="tabpanel">
@@ -187,6 +225,10 @@ and growth of women entrepreneurs.
         </div>
       </div>
     </div>
+
+
+    <!-- governance -->
+
     
   
   <!-- Decorative Elements -->
@@ -269,6 +311,21 @@ and growth of women entrepreneurs.
     </div>
   </div>
 </section>
+
+<div class="container py-4">
+    <h3 class="text-center mb-4">Our Partners & Donors</h3>
+    
+    <div class="d-flex flex-wrap justify-content-center gap-4">
+        {% for partner in partners %}
+        <div class="partner-logo">
+            <img src="{{ partner.logo.url }}" 
+                 alt="Partner Logo"
+                 class="img-fluid"
+                 style="height: 80px; width: auto;">
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 <!-- <section class="py-5 bg-light">
     <div class="container">

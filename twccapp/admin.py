@@ -1,8 +1,30 @@
 # twccapp/admin.py
 from django.contrib import admin
 from django.utils.safestring import mark_safe 
-from .models import Member, Partner, News, Leadership, Service, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+from .models import Member, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
 
+@admin.register(Newsletter)
+class NewsletterAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'is_published')
+    list_filter = ('is_published',)
+    actions = ['send_to_subscribers']
+    
+    def send_to_subscribers(self, request, queryset):
+        for newsletter in queryset:
+            if newsletter.is_published and newsletter.pdf_file:
+                newsletter.send_to_subscribers = True
+                newsletter.save()
+        self.message_user(request, "Selected newsletters will be sent to subscribers")
+    send_to_subscribers.short_description = "Send to subscribers"
+
+
+
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active', 'created_at')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'description')
 
 class SliderImageAdmin(admin.ModelAdmin):
     list_display = ('title', 'caption', 'order', 'is_active', 'image_tag')
@@ -22,7 +44,7 @@ class NewsAdmin(admin.ModelAdmin):
     search_fields = ('title', 'content')
     list_filter = ('date_posted',)
 
-admin.site.register(Service)
+admin.site.register(Services)
 admin.site.register(FAQ)
 admin.site.register(ContactMessage)
 admin.site.register(Subscriber)

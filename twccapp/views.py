@@ -1,14 +1,18 @@
 # twccapp/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.contrib.auth.models import User  # Add this import
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, Service, FAQ, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication, GalleryImage
+from .models import News, Newsletter, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication, GalleryImage
 from django.contrib.auth.decorators import login_required
 from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
-
+from django.views.decorators.csrf import csrf_exempt
+from .utils import send_newsletter_email
 
 
 def publications_list(request):
@@ -57,10 +61,12 @@ def gallery_view(request):
 def index(request):
     latest_news = News.objects.all().order_by('-date_posted')[:3]
     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
+    partners = Partner.objects.all().order_by('order')
     
     context = {
         'latest_news': latest_news,
         'slider_images': slider_images,
+        'partners': partners,
     }
     return render(request, 'twccapp/index.html', context)
 
@@ -69,13 +75,17 @@ def about(request):
     return render(request, 'twccapp/about.html', {'leaders': leaders})
 
 def services(request):
-    services = Service.objects.all()
+    services_list = Services.objects.all().order_by('-date_posted')
     partners = Partner.objects.all().order_by('order')
     context = {
-        'services': services,
+        'services_list': services_list,
         'partners': partners
     }
     return render(request, 'twccapp/services.html', context)
+
+def services_detail(request, pk):
+    services_item = Services.objects.get(pk=pk)
+    return render(request, 'twccapp/services_detail.html', {'services_item': services_item})
 
 def news(request):
     news_list = News.objects.all().order_by('-date_posted')
@@ -183,7 +193,7 @@ def register(request):
                 
                 messages.success(request, 'Registration successful! Welcome to our site.')
                 login(request, user)
-                return redirect('dashboard')
+                return redirect('login')
             else:
                 messages.error(request, 'Profile already exists for this user')
                 return redirect('login')
@@ -245,18 +255,89 @@ def dashboard(request):
     return render(request, 'twccapp/dashboard.html', context)
 
 
+# def subscribe(request):
+#     if request.method == 'POST':
+#         form = SubscribeForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Thank you for subscribing!')
+#             return redirect('index')  # Redirect back to the same page
+#     else:
+#         form = SubscribeForm()
+    
+#     return render(request, 'twccapp/subscribe.html', {'form': form})
+
+# @csrf_exempt
+# def subscribe(request):
+#     if request.method == 'POST':
+#         form = SubscribeForm(request.POST)
+#         if form.is_valid():
+#             subscriber = form.save()
+            
+#             try:
+#                 # Send welcome email
+#                 send_mail(
+#                     subject="Welcome to TWCC!",
+#                     message="Hello and thank you for subscribing to Tanzania Women Chamber of Commerce!",
+#                     from_email=settings.DEFAULT_FROM_EMAIL,
+#                     recipient_list=[subscriber.email],
+#                     html_message=render_to_string('twccapp/welcome.html', {
+#                         'subscriber': subscriber
+#                     }),
+#                     fail_silently=False,
+#                 )
+                
+#                 messages.success(request, 'Thank you for subscribing! A welcome message has been sent to your email.')
+#                 return redirect('index')
+                
+#             except Exception as e:
+#                 # Log the error but still show success to user
+#                 print(f"Failed to send welcome email: {str(e)}")
+#                 messages.success(request, 'Thank you for subscribing!')
+#                 return redirect('index')
+    
+#     # GET request or invalid form
+#     form = SubscribeForm()
+#     return render(request, 'twccapp/subscribe.html', {'form': form})
+
+@csrf_exempt
 def subscribe(request):
     if request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Thank you for subscribing!')
-            return redirect('index')  # Redirect back to the same page
-    else:
-        form = SubscribeForm()
+            subscriber = form.save()
+            
+            try:
+                # Send welcome email
+                send_mail(
+                    subject="Welcome to TWCC!",
+                    message="Hello and thank you for subscribing to Tanzania Women Chamber of Commerce!",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[subscriber.email],
+                    html_message=render_to_string('twccapp/newsletter_email.html', {
+                        'subscriber': subscriber
+                    }),
+                    fail_silently=False,
+                )
+                
+                # Send latest newsletter if exists
+                latest_newsletter = Newsletter.objects.filter(
+                    is_published=True
+                ).order_by('-created_at').first()
+                
+                if latest_newsletter and latest_newsletter.pdf_file:
+                    send_newsletter_email(subscriber, latest_newsletter)
+                
+                messages.success(request, 'Thank you for subscribing! A welcome message has been sent to your email.')
+                return redirect('index')
+                
+            except Exception as e:
+                print(f"Failed to send email: {str(e)}")
+                messages.success(request, 'Thank you for subscribing!')
+                return redirect('index')
     
+    form = SubscribeForm()
     return render(request, 'twccapp/subscribe.html', {'form': form})
-
 
 def video_list(request):
     videos = Video.objects.all().order_by('-created_at')
@@ -278,4 +359,8 @@ def video_upload(request):
     return render(request, 'twccapp/videos_upload.html', {'form': form})
 
 
+def projects_programs(request):
+    # Get all active projects/programs from database
+    projects = Project.objects.filter(is_active=True).order_by('-created_at')
+    return render(request, 'twccapp/projects_programs.html', {'projects': projects})
 

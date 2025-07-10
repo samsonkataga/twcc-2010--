@@ -161,16 +161,19 @@
 </section>
 
 <section class="py-5 bg-light">
-    <div class="leadership-grid">
-    {% for leader in leaders %}
-    <div class="leader-card">
-        <img src="{{ leader.image.url }}" 
-             alt="{{ leader.name }}" 
-             onerror="this.style.display='none'">
-        <h3>{{ leader.name }}</h3>
-        <p class="position">{{ leader.position }}</p>
+    <div class="container text-center mb-4">
+        <h2 class="section-title">Leadership and Staffs</h2>
     </div>
-    {% endfor %}
-</div>
+    <div class="leadership-grid">
+        {% for leader in leaders %}
+        <div class="leader-card">
+            <img src="{{ leader.image.url }}" 
+                 alt="{{ leader.name }}" 
+                 onerror="this.style.display='none'">
+            <h3>{{ leader.name }}</h3>
+            <p class="position">{{ leader.position }}</p>
+        </div>
+        {% endfor %}
+    </div>
 </section>
 {% endblock %}

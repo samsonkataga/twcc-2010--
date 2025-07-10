@@ -7,11 +7,24 @@ from django.utils.html import mark_safe
 from django.db import models
 from django.db.models.signals import post_save  # Add this import
 from django.dispatch import receiver  
+from django.core.validators import FileExtensionValidator
+
+
+
+class Project(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to='projects/', blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title
 
 class SliderImage(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=100, blank=True)
     image = models.ImageField(upload_to='slider_images/')
-    caption = models.CharField(max_length=255, blank=True)
+    caption = models.CharField(max_length=755, blank=True)
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
     
@@ -22,17 +35,17 @@ class SliderImage(models.Model):
         return self.title
         
     def image_tag(self):
-        return mark_safe(f'<img src="{self.image.url}" width="150" />')
+        return mark_safe(f'<img src="{self.image.url}" width="100" />')
     image_tag.short_description = 'Image Preview'
 
 
 
 class Subscriber(models.Model):
-    subscriber = models.EmailField(unique=True)
+    email = models.EmailField(unique=True) 
     subscribed_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.subscriber
+        return self.email
 
 class Member(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -63,13 +76,16 @@ class News(models.Model):
     def __str__(self):
         return self.title 
 
-class Service(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-    icon_class = models.CharField(max_length=50, default='fas fa-cog')
+class Services(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    summary = models.TextField(default=True)
+    image = models.ImageField(upload_to='news/', null=True, blank=True)
+    date_posted = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.name
+        return self.title 
 
 class FAQ(models.Model):
     question = models.CharField(max_length=200)
@@ -176,3 +192,24 @@ class Partner(models.Model):
 
     def __str__(self):
         return f"Partner #{self.id}"
+
+
+
+class Newsletter(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    pdf_file = models.FileField(
+        upload_to='newsletters/',
+        validators=[FileExtensionValidator(['pdf'])],
+        help_text='Upload PDF newsletter'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_published = models.BooleanField(default=False)
+    send_to_subscribers = models.BooleanField(default=False, 
+        help_text='Send to all subscribers when published')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-created_at']
