@@ -11,6 +11,15 @@ from django.core.validators import FileExtensionValidator
 
 
 
+class CompanyProfile(models.Model):
+    title = models.CharField(max_length=200)
+    pdf_file = models.FileField(upload_to='company_profiles/')
+    is_active = models.BooleanField(default=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -77,10 +86,20 @@ class News(models.Model):
         return self.title 
 
 class Services(models.Model):
+    ICON_CHOICES = [
+        ('fa-money-bill-wave', 'Financial (money bill)'),
+        ('fa-handshake', 'Networking (handshake)'),
+        ('fa-chart-line', 'Capacity (growth chart)'),
+        ('fa-bullhorn', 'Advocacy (megaphone)'),
+        ('fa-users', 'Team (users)'),
+        ('fa-globe', 'Global (globe)'),
+        # Add more icons as needed
+    ]
+
     title = models.CharField(max_length=200)
+    icon = models.CharField(max_length=50, choices=ICON_CHOICES, default='fa-handshake')
     content = models.TextField()
     summary = models.TextField(default=True)
-    image = models.ImageField(upload_to='news/', null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
@@ -149,28 +168,57 @@ class Publication(models.Model):
     def get_absolute_url(self):
         return reverse('publication_detail', kwargs={'pk': self.pk})
 
-class GalleryImage(models.Model):
-    title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='gallery/images/')
-    description = models.TextField(blank=True)
-    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+# class GalleryImage(models.Model):
+#     title = models.CharField(max_length=200)
+#     image = models.ImageField(upload_to='gallery/images/')
+#     description = models.TextField(blank=True)
+#     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+#     uploaded_at = models.DateTimeField(auto_now_add=True) # Changed from auto_now_add
+    
+#     def __str__(self):
+#         return self.title
 
-    def __str__(self):
-        return self.title
+# class Leadership(models.Model):
+#     name = models.CharField(max_length=100)
+#     position = models.CharField(max_length=100)
+#     bio = models.TextField()
+#     image = models.ImageField(upload_to='leadership/')
+#     order = models.PositiveIntegerField(default=0)
+#     is_active = models.BooleanField(default=True)
+
+#     class Meta:
+#         verbose_name_plural = "Leadership Team"
+#         ordering = ['order']
+
+#     def __str__(self):
+#         return f"{self.name} - {self.position}"
+
+#     def image_tag(self):
+#         if self.image:
+#             return mark_safe(f'<img src="{self.image.url}" width="50" />')
+#         return "No Image"
+#     image_tag.short_description = 'Image Preview'
+
 
 
 class Leadership(models.Model):
+    CATEGORY_CHOICES = [
+        ('board', 'Board of Directors'),
+        ('leadership', 'Leadership Team'),
+        ('staff', 'Staff Members'),
+    ]
+    
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     bio = models.TextField()
     image = models.ImageField(upload_to='leadership/')
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='staff')
     order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Leadership Team"
-        ordering = ['order']
+        ordering = ['category', 'order']
 
     def __str__(self):
         return f"{self.name} - {self.position}"
@@ -180,6 +228,7 @@ class Leadership(models.Model):
             return mark_safe(f'<img src="{self.image.url}" width="50" />')
         return "No Image"
     image_tag.short_description = 'Image Preview'
+
 
 
 class Partner(models.Model):
@@ -213,3 +262,30 @@ class Newsletter(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+
+class Advertisement(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='advertisements/', blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self):
+        return self.title
+        
+    class Meta:
+        ordering = ['-created_at']
+
+
+
+
+class GalleryImage(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='gallery/')
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

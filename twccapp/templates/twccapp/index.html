@@ -20,42 +20,137 @@
 
 <!-- Image Slider Section -->
 <section class="slider-section">
-    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
-        {% if slider_images %}
-        <!-- Indicators -->
-        <div class="carousel-indicators">
-            {% for image in slider_images %}
-            <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
-                    {% if forloop.first %}class="active" aria-current="true"{% endif %} 
-                    aria-label="Slide {{ forloop.counter }}"></button>
-            {% endfor %}
-        </div>
-        
-        <!-- Slides -->
-        <div class="carousel-inner">
-            {% for image in slider_images %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" style="height: 65vh; object-fit: cover; object-position: center;">
-                <div class="carousel-caption">
-                    <div class="caption-container p-3">
-                        <h3 class="caption-title">{{ image.title }}</h3>
-                        <p class="caption-text">{{ image.caption }}</p>
+    <div class="container-fluid px-0">
+        <div class="row g-0">
+            <!-- Advertisement Column - Left Side (20% width) -->
+            <!-- <div class="col-md-2 advert-column">
+                <div class="advert-container">
+                    {% if advertisements %}
+                        {% for ad in advertisements %}
+                        <div class="advert-item">
+                            <div class="advert-content">
+                                <h5 class="advert-title">{{ ad.title }}</h5>
+                                {% if ad.image %}
+                                <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="img-fluid advert-image">
+                                {% endif %}
+                                {% if ad.url %}
+                                <a href="{{ ad.url }}" class="stretched-link" target="_blank"></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="advert-placeholder">
+                            <p></p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div> -->
+
+        <div class="col-md-2 advert-column">
+    <div class="advert-container advert-scroll-container">
+        {% if advertisements %}
+            <!-- First set of ads (original) -->
+            <div class="advert-scroll-content">
+                {% for ad in advertisements %}
+                <div class="advert-item">
+                    <div class="advert-content position-relative">
+                        <h5 class="advert-title">{{ ad.title }}</h5>
+                        {% if ad.image %}
+                        <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="img-fluid advert-image mb-2">
+                        {% endif %}
+                         <a href="{{ ad.get_absolute_url }}" class="btn btn-sm btn-outline-primary read-more-btn">
+                Read More <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+                        
+                        {% if ad.pdf_file %}
+                            <a href="{{ ad.get_absolute_url }}" class="btn btn-sm btn-danger w-100 pdf-btn" target="_blank">
+                                <i class="fas fa-file-pdf me-1"></i> View PDF
+                            </a>
+                        {% elif ad.url %}
+                            <a href="{{ ad.url }}" class="stretched-link" target="_blank"></a>
+                            <span class="badge bg-primary link-indicator">
+                                <i class="fas fa-external-link-alt me-1"></i> Click Here
+                            </span>
+                        {% endif %}
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-        
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+            
+            <!-- Second set of ads (duplicate for seamless looping) -->
+            <div class="advert-scroll-content" aria-hidden="true">
+                {% for ad in advertisements %}
+                <div class="advert-item">
+                    <div class="advert-content position-relative">
+                        <h5 class="advert-title">{{ ad.title }}</h5>
+                        {% if ad.image %}
+                        <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="img-fluid advert-image mb-2">
+                        {% endif %}
+                        
+                        {% if ad.pdf_file %}
+                            <a href="{{ ad.get_absolute_url }}" class="btn btn-sm btn-danger w-100 pdf-btn" target="_blank">
+                                <i class="fas fa-file-pdf me-1"></i> View PDF
+                            </a>
+                        {% elif ad.url %}
+                            <a href="{{ ad.url }}" class="stretched-link" target="_blank"></a>
+                            <span class="badge bg-primary link-indicator">
+                                <i class="fas fa-external-link-alt me-1"></i> External Link
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="advert-placeholder">
+                <p>No active advertisements</p>
+            </div>
         {% endif %}
+    </div>
+</div>
+            
+            <!-- Slider Column - Right Side (80% width) -->
+            <div class="col-md-10">
+                <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
+                    {% if slider_images %}
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        {% for image in slider_images %}
+                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="{{ forloop.counter0 }}" 
+                                {% if forloop.first %}class="active" aria-current="true"{% endif %} 
+                                aria-label="Slide {{ forloop.counter }}"></button>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Slides -->
+                   <div class="carousel-inner">
+    {% for image in slider_images %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" style="height: 65vh; object-fit: cover; object-position: center;">
+        <div class="carousel-caption" style="bottom: 5px; padding: 0; display: block !important;">
+            <div class="caption-container p-1" style="background: rgba(0,0,0,0.3); border-radius: 3px;">
+                <h3 class="caption-title" style="font-size: 0.8rem; margin-bottom: 0.2rem; line-height: 1.1;">{{ image.title }}</h3>
+                <p class="caption-text" style="font-size: 0.6rem; margin-bottom: 0; line-height: 1.1;">{{ image.caption }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+                    
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -68,19 +163,30 @@
         <h1 class="display-4 fw-bold text-primary mb-3">Who We Are</h1>
         <div class="divider mx-auto"></div>
       </div>
-      <p>TWCC is an apex and umbrella organization uniting
-sectoral business women associations, companies,
-cooperatives, groups and sole proprietors who have
-agreed to form a united front to advocate, lobby
-and network for the wellbeing of their businesses
-and growth of women entrepreneurs.
-<h2 style="color: #1a73e8; text-align: center; font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">WE EMPOWER YOU</h2>
-<p style="line-height: 1.6; margin-bottom: 1rem;">
-  Our organization has vast experience in working with international organizations, such as UN agencies, development partners and donors, government institutions, ministries, departments, trade facilitation and regulatory authorities, financial institutions, local and international investors, media companies, etc.
-</p>
-<p style="line-height: 1.6;">
-  In addition, TWCC celebrates achievements in assisting women from other countries to establish their own Chambers of Commerce, such as South Sudan, Chad, Somalia, and more.
-</p>
+      <div style="background-color: #f8f9fa; padding: 1.5rem; border-left: 4px solid #e67e22; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0;">
+    <p style="margin: 0;">
+      The <strong style="color: #2a5a78;">Tanzania Women Chamber of Commerce (TWCC)</strong> is the leading apex organization for women's economic empowerment in Tanzania, established in 2005. As the primary umbrella body for women in business across Tanzania, TWCC works to drive economic growth, policy reforms, and capacity-building initiatives for women entrepreneurs. The Chamber supports women through advocacy for a favorable business environment, training, mentorship, market linkages, and financial services. TWCC also collaborates with financial institutions to develop products tailored to women's needs and connects them with financial opportunities.
+    </p>
+  </div>
+
+  <!-- Second Paragraph -->
+  <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 250px; background-color: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.05);">
+      <h3 style="color: #e67e22; margin-top: 0; font-size: 1.2rem;">Global Partnerships</h3>
+      <p style="margin-bottom: 0;">
+        Our organization has vast experience working with international organizations, including UN agencies, development partners and donors, government institutions, ministries, departments, trade facilitation and regulatory authorities, financial institutions, local and international investors, and media companies.
+      </p>
+    </div>
+    
+    <!-- Third Paragraph -->
+    <div style="flex: 1; min-width: 250px; background-color: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: relative;">
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #2a5a78, #e67e22); border-radius: 8px 8px 0 0;"></div>
+      <h3 style="color: #2a5a78; margin-top: 0.5rem; font-size: 1.2rem;">International Impact</h3>
+      <p style="margin-bottom: 0;">
+        TWCC celebrates achievements in assisting women from other countries to establish their own Chambers of Commerce, including South Sudan, Chad, Somalia, and more.
+      </p>
+    </div>
+  </div>
     </div>
     
     <!-- Content with Navigation Tabs -->
@@ -110,9 +216,22 @@ and growth of women entrepreneurs.
           <div class="tab-pane fade show active" id="vision" role="tabpanel">
             <h2 class="text-primary mb-4"><i class="bi bi-eye-fill me-2"></i>OUR VISION</h2>
             <p class="lead">To be a hub and catalyst in economically empowering the Tanzanian woman entrepreneurs.</p>
-            <div class="vision-image mt-4">
-              <img src="{% static 'twccapp/images/logo3.jpeg' %}" alt="Vision Illustration" class="img-fluid rounded" style="max-width: 60%; height: auto;">
-            </div>
+             <div class="row mt-4 g-4">
+    <div class="col-md-6">
+      <div class="mission-card p-3 bg-light rounded">
+        <i class="bi bi-globe text-primary fs-3"></i>
+        <h4 class="mt-2">Global Reach</h4>
+        <p>Connecting women with international platforms to amplify their impact.</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mission-card p-3 bg-light rounded">
+        <i class="bi bi-graph-up-arrow text-primary fs-3"></i>
+        <h4 class="mt-2">Economic Empowerment</h4>
+        <p>Providing tools and resources for sustainable business growth.</p>
+      </div>
+    </div>
+  </div>
           </div>
           
           <!-- Mission Tab -->
@@ -272,6 +391,14 @@ and growth of women entrepreneurs.
 <!-- Statistics Section -->
 <section class="py-5 bg-light">
   <div class="container">
+    <!-- Section Header -->
+    <div class="text-center mb-5">
+      <h2 class="display-4 font-weight-bold text-primary">
+        <i class="bi bi-bar-chart-fill me-2"></i>Our Impact
+      </h2>
+      <p class="lead">Measuring our progress and achievements</p>
+    </div>
+  <div class="container">
     <div class="row text-center">
       <!-- Project Count -->
       <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
@@ -312,7 +439,58 @@ and growth of women entrepreneurs.
   </div>
 </section>
 
-<div class="container py-4">
+<section id="video-updates" class="py-5 {% if not videos %}d-none{% endif %}">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="display-5">
+                    <i class="fab fa-youtube text-danger me-2"></i>Video Updates
+                </h2>
+                <p class="lead">Watch our latest videos and streams</p>
+            </div>
+        </div>
+
+        <!-- Horizontal Scrolling Container -->
+        <div class="video-scroll-container" style="overflow: hidden;">
+            <div class="video-scroll-wrapper d-flex" style="animation: scrollLeft 30s linear infinite;">
+                <!-- Video Grid -->
+                <div class="d-flex" style="flex-wrap: nowrap;">
+                    {% for video in videos %}
+                    <div class="col" style="flex: 0 0 auto; width: 350px; margin-right: 20px;"> <!-- Adjust width as needed -->
+                        <div class="card h-100 shadow-sm">
+                            <div class="ratio ratio-16x9">
+                                {{ video.embed_code|safe }}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ video.title }}</h5>
+                                <p class="card-text text-muted">
+                                    Posted on: {{ video.date_posted|date:"F j, Y" }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes scrollLeft {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+    .video-scroll-container {
+        width: 100%;
+        overflow: hidden;
+    }
+    .video-scroll-wrapper {
+        width: max-content; /* Allows content to overflow */
+    }
+</style>
+
+<!-- <div class="container py-4">
     <h3 class="text-center mb-4">Our Partners & Donors</h3>
     
     <div class="d-flex flex-wrap justify-content-center gap-4">
@@ -325,7 +503,79 @@ and growth of women entrepreneurs.
         </div>
         {% endfor %}
     </div>
+</div> -->
+
+
+
+
+<div class="container py-4">
+    <h3 class="text-center mb-4">Our Partners & Donors</h3>
+    
+    <!-- Scrolling Container -->
+    <div class="partners-scroll-container" style="overflow: hidden; position: relative;">
+        <!-- Scrolling Content - Duplicate for seamless loop -->
+        <div class="partners-scroll-wrapper d-flex" style="animation: scrollRight 30s linear infinite;">
+            <!-- Original Logos -->
+            {% for partner in partners %}
+            <div class="partner-logo mx-3">
+                <img src="{{ partner.logo.url }}" 
+                     alt="{{ partner.name }} Logo"
+                     class="img-fluid"
+                     style="height: 80px; width: auto; object-fit: contain;">
+            </div>
+            {% endfor %}
+            
+            <!-- Duplicated Logos (for seamless looping) -->
+            {% for partner in partners %}
+            <div class="partner-logo mx-3">
+                <img src="{{ partner.logo.url }}" 
+                     alt="{{ partner.name }} Logo"
+                     class="img-fluid"
+                     style="height: 80px; width: auto; object-fit: contain;">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+
+<style>
+  /* Option 1: Keep animation but make it slower on mobile */
+@media (max-width: 768px) {
+    .partners-scroll-wrapper {
+        animation: scrollRight 60s linear infinite !important; /* Slower speed */
+        flex-wrap: nowrap; /* Prevent wrapping */
+    }
+}
+
+/* Option 2: Completely remove the mobile override */
+/* Delete the entire @media block */
+
+
+    @keyframes scrollRight {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .partners-scroll-wrapper {
+        display: flex;
+        width: max-content;
+    }
+    .partner-logo {
+        flex: 0 0 auto;
+    }
+    /* Pause on hover */
+    .partners-scroll-wrapper:hover {
+        animation-play-state: paused;
+    }
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+        .partners-scroll-wrapper {
+            animation: none !important;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100% !important;
+        }
+    }
+</style>
 
 <!-- <section class="py-5 bg-light">
     <div class="container">
@@ -355,37 +605,5 @@ and growth of women entrepreneurs.
     </div>
 </section> -->
 
-<section id="video-updates" class="py-5 {% if not videos %}d-none{% endif %}">
-    <div class="container">
-        <div class="row mb-4">
-            <div class="col-12 text-center">
-                <h2 class="display-5">
-                    <i class="fab fa-youtube text-danger me-2"></i>Video Updates
-                </h2>
-                <p class="lead">Watch our latest videos and streams</p>
-            </div>
-        </div>
 
-        <!-- Video Grid -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            {% for video in videos %}
-            <div class="col">
-                <div class="card h-100 shadow-sm">
-                    <div class="ratio ratio-16x9">
-                        {{ video.embed_code|safe }}
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ video.title }}</h5>
-                        <p class="card-text text-muted">
-                            Posted on: {{ video.date_posted|date:"F j, Y" }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-        
-    </div>
-</section>
 {% endblock %}

@@ -1,7 +1,7 @@
 # twccapp/admin.py
 from django.contrib import admin
 from django.utils.safestring import mark_safe 
-from .models import Member, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+from .models import Member, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
 
 @admin.register(Newsletter)
 class NewsletterAdmin(admin.ModelAdmin):
@@ -17,7 +17,11 @@ class NewsletterAdmin(admin.ModelAdmin):
         self.message_user(request, "Selected newsletters will be sent to subscribers")
     send_to_subscribers.short_description = "Send to subscribers"
 
-
+@admin.register(Advertisement)
+class AdvertisementAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active', 'created_at')
+    list_filter = ('is_active',)
+    search_fields = ('title',)
 
 
 @admin.register(Project)
@@ -68,19 +72,19 @@ class PublicationAdmin(admin.ModelAdmin):
             obj.author = request.user
         super().save_model(request, obj, form, change)
 
-class GalleryImageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'uploaded_by', 'uploaded_at')
-    list_filter = ('uploaded_at',)
-    search_fields = ('title', 'description')
-    readonly_fields = ('uploaded_at',)
+# class GalleryImageAdmin(admin.ModelAdmin):
+#     list_display = ('title', 'uploaded_by', 'uploaded_at')
+#     list_filter = ('uploaded_at',)
+#     search_fields = ('title', 'description')
+#     readonly_fields = ('uploaded_at',)
     
-    def save_model(self, request, obj, form, change):
-        if not obj.pk:  # Only set uploaded_by during creation
-            obj.uploaded_by = request.user
-        super().save_model(request, obj, form, change)
+#     def save_model(self, request, obj, form, change):
+#         if not obj.pk:  # Only set uploaded_by during creation
+#             obj.uploaded_by = request.user
+#         super().save_model(request, obj, form, change)
 
 admin.site.register(Publication, PublicationAdmin)
-admin.site.register(GalleryImage, GalleryImageAdmin)
+# admin.site.register(GalleryImage, GalleryImageAdmin)
 
 @admin.register(Leadership)  # Preferred modern syntax
 class LeadershipAdmin(admin.ModelAdmin):
@@ -105,3 +109,10 @@ class PartnerAdmin(admin.ModelAdmin):
     def logo_preview(self, obj):
         return mark_safe(f'<img src="{obj.logo.url}" style="max-height: 50px;" />')
     logo_preview.short_description = 'Logo Preview'
+
+
+
+@admin.register(GalleryImage)
+class GalleryImageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'uploaded_by', 'uploaded_at')
+    readonly_fields = ('uploaded_at',)

@@ -1,4 +1,5 @@
 # twccapp/views.py
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.conf import settings
@@ -8,12 +9,16 @@ from django.contrib.auth.models import User  # Add this import
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, Newsletter, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication, GalleryImage
+from .models import News, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
 from django.contrib.auth.decorators import login_required
 from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
 from django.views.decorators.csrf import csrf_exempt
 from .utils import send_newsletter_email
 
+
+def gallery_view(request):
+    images = GalleryImage.objects.all().order_by('-uploaded_at')
+    return render(request, 'twccapp/gallery.html', {'images': images})
 
 def publications_list(request):
     articles = Publication.objects.filter(is_article=True).order_by('-created_at')
@@ -27,9 +32,9 @@ def publication_detail(request, pk):
     publication = get_object_or_404(Publication, pk=pk)
     return render(request, 'twccapp/publication_detail.html', {'publication': publication})
 
-def gallery_view(request):
-    images = GalleryImage.objects.all().order_by('-uploaded_at')
-    return render(request, 'twccapp/gallery.html', {'images': images})
+# def gallery_view(request):
+#     images = GalleryImage.objects.all().order_by('-uploaded_at')
+#     return render(request, 'twccapp/gallery.html', {'images': images})
 
 # def index(request):
 #     latest_news = News.objects.all().order_by('-date_posted')[:3]
@@ -58,21 +63,75 @@ def gallery_view(request):
 
 
 
+# def index(request):
+#     latest_news = News.objects.all().order_by('-date_posted')[:3]
+#     videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:6]
+#     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
+#     partners = Partner.objects.all().order_by('order')
+
+#     # Handle video form submission if it's a POST request
+#     if request.method == 'POST' and 'video_url' in request.POST and is_admin(request.user):
+#         form = VideoUpdateForm(request.POST)
+#         if form.is_valid():
+#             video = form.save(commit=False)
+#             video.posted_by = request.user
+#             video.save()
+#             messages.success(request, 'Video added successfully!')
+#             return redirect('news')
+#     else:
+#         form = VideoUpdateForm()
+    
+#     context = {
+#         'latest_news': latest_news,
+#         'slider_images': slider_images,
+#         'videos': videos,
+#         'video_form': form,
+#         'partners': partners,
+
+#     }
+#     return render(request, 'twccapp/index.html', context)
+
 def index(request):
     latest_news = News.objects.all().order_by('-date_posted')[:3]
+    videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:6]
     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
     partners = Partner.objects.all().order_by('order')
+    advertisements = Advertisement.objects.filter(is_active=True).order_by('-created_at')[:5]  # Show 5 most recent ads
+
+    # Handle video form submission if it's a POST request
+    if request.method == 'POST':
+        if 'video_url' in request.POST and is_admin(request.user):
+            form = VideoUpdateForm(request.POST)
+            if form.is_valid():
+                video = form.save(commit=False)
+                video.posted_by = request.user
+                video.save()
+                messages.success(request, 'Video added successfully!')
+                return redirect('news')
+        # Handle ad form submission if needed
+        # You can add similar logic for ad creation here
+    else:
+        form = VideoUpdateForm()
     
     context = {
         'latest_news': latest_news,
         'slider_images': slider_images,
+        'videos': videos,
+        'video_form': form,
         'partners': partners,
+        'advertisements': advertisements,  # Add ads to context
     }
     return render(request, 'twccapp/index.html', context)
 
+
 def about(request):
     leaders = Leadership.objects.filter(is_active=True).order_by('order')[:6]
-    return render(request, 'twccapp/about.html', {'leaders': leaders})
+    profile = CompanyProfile.objects.filter(is_active=True).first()
+    context = {
+        'company_profile': profile,
+        'leaders' : leaders
+    }
+    return render(request, 'twccapp/about.html', context)
 
 def services(request):
     services_list = Services.objects.all().order_by('-date_posted')

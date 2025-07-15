@@ -256,5 +256,65 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<script>
+  // Function to show Board of Directors
+  function showDirectors() {
+    document.getElementById('directorsSection').style.display = 'flex';
+    document.getElementById('staffSection').style.display = 'none';
+    document.getElementById('directorsBtn').classList.add('active');
+    document.getElementById('staffBtn').classList.remove('active');
+  }
+  
+  // Function to show Staff Members
+  function showStaff() {
+    document.getElementById('staffSection').style.display = 'flex';
+    document.getElementById('directorsSection').style.display = 'none';
+    document.getElementById('staffBtn').classList.add('active');
+    document.getElementById('directorsBtn').classList.remove('active');
+  }
+  
+  // Function to show member bio in modal
+  function showBio(button) {
+    const card = button.closest('.card');
+    document.getElementById('memberName').textContent = card.querySelector('.card-title').textContent;
+    document.getElementById('memberBio').innerHTML = card.querySelector('.member-bio').innerHTML;
+    new bootstrap.Modal(document.getElementById('memberModal')).show();
+  }
+</script>
+
+<script>
+    // This script would be used with WebSockets or similar real-time technology
+    // to instantly show new ads as they're added by admin
+    document.addEventListener('DOMContentLoaded', function() {
+        // In a real implementation, this would connect to your real-time backend
+        // For demonstration, we'll simulate a new ad appearing after 5 seconds
+        setTimeout(function() {
+            // This is just for demonstration - remove in production
+            simulateNewAd();
+        }, 5000);
+        
+        function simulateNewAd() {
+            const container = document.querySelector('.advert-container');
+            if (!container) return;
+            
+            const newAd = document.createElement('div');
+            newAd.className = 'advert-item new-ad';
+            newAd.innerHTML = `
+                <div class="advert-content">
+                    <h5 class="advert-title">Advertisements</h5>
+                    <p></p>
+                </div>
+            `;
+            
+            container.insertBefore(newAd, container.firstChild);
+            
+            // Remove the animation class after it's done
+            setTimeout(() => {
+                newAd.classList.remove('new-ad');
+            }, 500);
+        }
+    });
+</script>
+
 </body>
 </html>
