@@ -285,7 +285,19 @@ class GalleryImage(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='gallery/')
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    order = models.PositiveIntegerField(default=0)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+
+
+class NewsletterPDF(models.Model):
+    title = models.CharField(max_length=100)
+    pdf_file = models.FileField(upload_to='newsletters/')
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title

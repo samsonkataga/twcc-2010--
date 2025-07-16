@@ -1,5 +1,6 @@
 # twccapp/views.py
 import os
+from django.http import Http404 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.conf import settings
@@ -9,7 +10,7 @@ from django.contrib.auth.models import User  # Add this import
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
+from .models import News, NewsletterPDF, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
 from django.contrib.auth.decorators import login_required
 from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
 from django.views.decorators.csrf import csrf_exempt
@@ -96,6 +97,7 @@ def index(request):
     videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:6]
     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
     partners = Partner.objects.all().order_by('order')
+    profile = CompanyProfile.objects.filter(is_active=True).first()
     advertisements = Advertisement.objects.filter(is_active=True).order_by('-created_at')[:5]  # Show 5 most recent ads
 
     # Handle video form submission if it's a POST request
@@ -115,6 +117,7 @@ def index(request):
     
     context = {
         'latest_news': latest_news,
+        'company_profile': profile,
         'slider_images': slider_images,
         'videos': videos,
         'video_form': form,
@@ -125,7 +128,7 @@ def index(request):
 
 
 def about(request):
-    leaders = Leadership.objects.filter(is_active=True).order_by('order')[:6]
+    leaders = Leadership.objects.filter(is_active=True).order_by('order')[:30]
     profile = CompanyProfile.objects.filter(is_active=True).first()
     context = {
         'company_profile': profile,
@@ -148,7 +151,7 @@ def services_detail(request, pk):
 
 def news(request):
     news_list = News.objects.all().order_by('-date_posted')
-    videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:6]
+    videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:20]
     
     # Handle video form submission if it's a POST request
     if request.method == 'POST' and 'video_url' in request.POST and is_admin(request.user):
@@ -422,4 +425,6 @@ def projects_programs(request):
     # Get all active projects/programs from database
     projects = Project.objects.filter(is_active=True).order_by('-created_at')
     return render(request, 'twccapp/projects_programs.html', {'projects': projects})
+
+
 

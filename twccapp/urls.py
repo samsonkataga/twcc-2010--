@@ -21,4 +21,5 @@ urlpatterns = [
     path('gallery/', views.gallery_view, name='gallery'),
     path('publications/<int:pk>/', views.publication_detail, name='publication_detail'),
     path('projects-programs/', views.projects_programs, name='projects_programs'),
+   
 ]

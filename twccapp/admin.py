@@ -1,7 +1,24 @@
 # twccapp/admin.py
 from django.contrib import admin
 from django.utils.safestring import mark_safe 
-from .models import Member, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+from .models import Member, NewsletterPDF, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+
+@admin.register(NewsletterPDF)
+class NewsletterPDFAdmin(admin.ModelAdmin):
+    list_display = ('title', 'updated_at')
+    readonly_fields = ('updated_at',)
+
+
+
+@admin.register(CompanyProfile)
+class CompanyProfileAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active', 'uploaded_at')  # Fields to display in the admin list view
+    list_filter = ('is_active', 'uploaded_at')            # Add filters for these fields
+    search_fields = ('title',)                           # Enable search by title
+    date_hierarchy = 'uploaded_at'  
+
+
+
 
 @admin.register(Newsletter)
 class NewsletterAdmin(admin.ModelAdmin):
