@@ -19,7 +19,9 @@ urlpatterns = [
     path('publications/', views.publications_list, name='publications_list'),
     path('publications/<int:pk>/', views.publication_detail, name='publication_detail'),
     path('gallery/', views.gallery_view, name='gallery'),
+    path('gallery/<int:pk>/', views.gallery_detail, name='gallery_detail'),
     path('publications/<int:pk>/', views.publication_detail, name='publication_detail'),
     path('projects-programs/', views.projects_programs, name='projects_programs'),
+    path('projects/<int:pk>/', views.project_detail, name='project_detail'),
    
 ]

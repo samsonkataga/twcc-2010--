@@ -4,13 +4,6 @@
 {% block content %}
 <div class="container py-5">
     <h1 class="mb-4">Image Gallery</h1>
-    
-    {% if user.is_staff %}
-    <div class="mb-4">
-        
-    </div>
-    {% endif %}
-    
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for image in images %}
         <div class="col">
@@ -18,7 +11,8 @@
                 <img src="{{ image.image.url }}" class="card-img-top img-fluid" alt="{{ image.title }}" style="height: 200px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title">{{ image.title }}</h5>
-                    <p class="card-text">{{ image.description }}</p>
+                    <p class="card-text">{{ image.summary|truncatechars:100 }}</p>
+                    <a href="{% url 'gallery_detail' image.id %}" class="btn btn-sm btn-outline-primary">Read More</a>
                 </div>
                 <div class="card-footer bg-transparent">
                     <small class="text-muted">

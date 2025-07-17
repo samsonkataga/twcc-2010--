@@ -281,8 +281,21 @@ class Advertisement(models.Model):
 
 
 
+# class GalleryImage(models.Model):
+#     title = models.CharField(max_length=200)
+#     image = models.ImageField(upload_to='gallery/')
+#     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+#     order = models.PositiveIntegerField(default=0)
+#     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return self.title
+
+
 class GalleryImage(models.Model):
     title = models.CharField(max_length=200)
+    content = models.TextField(default='Default content')  # Add default value
+    summary = models.TextField(default='Default summary') 
     image = models.ImageField(upload_to='gallery/')
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     order = models.PositiveIntegerField(default=0)
@@ -291,6 +304,8 @@ class GalleryImage(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['order', '-uploaded_at']
 
 
 
@@ -298,6 +313,18 @@ class NewsletterPDF(models.Model):
     title = models.CharField(max_length=100)
     pdf_file = models.FileField(upload_to='newsletters/')
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Project(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    summary = models.TextField(default='Default summary text')  # Added default value
+    image = models.ImageField(upload_to='projects/', null=True, blank=True)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.title

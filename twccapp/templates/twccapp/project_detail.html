@@ -1,0 +1,36 @@
+<!-- twccapp/templates/twccapp/project_detail.html -->
+{% extends 'twccapp/base.html' %}
+
+{% block content %}
+<div class="container project-detail-container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <article class="project-article">
+                <div class="project-header mb-4">
+                    <h1 class="project-title">{{ project.title }}</h1>
+                    <div class="project-meta">
+                        <span class="author"></span>
+                        <span class="date">on {{ project.date_posted|date:"F d, Y" }}</span>
+                    </div>
+                </div>
+                
+                {% if project.image %}
+                <div class="project-featured-image mb-4">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded">
+                </div>
+                {% endif %}
+                
+                <div class="project-content">
+                    {{ project.content|linebreaks }}
+                </div>
+                
+                <div class="text-center mt-5">
+                    <a href="{% url 'projects_programs' %}" class="btn btn-primary back-to-projects-btn">
+                        Back to Projects
+                    </a>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock %}

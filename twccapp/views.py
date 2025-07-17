@@ -17,9 +17,20 @@ from django.views.decorators.csrf import csrf_exempt
 from .utils import send_newsletter_email
 
 
+# def gallery_view(request):
+#     images = GalleryImage.objects.all().order_by('-uploaded_at')
+#     return render(request, 'twccapp/gallery.html', {'images': images})
+
+
 def gallery_view(request):
-    images = GalleryImage.objects.all().order_by('-uploaded_at')
+    images = GalleryImage.objects.all().order_by('order', '-uploaded_at')
     return render(request, 'twccapp/gallery.html', {'images': images})
+
+def gallery_detail(request, pk):
+    image = get_object_or_404(GalleryImage, pk=pk)
+    return render(request, 'twccapp/gallery_detail.html', {'galleryimage': image})
+
+
 
 def publications_list(request):
     articles = Publication.objects.filter(is_article=True).order_by('-created_at')
@@ -421,10 +432,23 @@ def video_upload(request):
     return render(request, 'twccapp/videos_upload.html', {'form': form})
 
 
+# def projects_programs(request):
+#     # Get all active projects/programs from database
+#     projects = Project.objects.filter(is_active=True).order_by('-created_at')
+#     return render(request, 'twccapp/projects_programs.html', {'projects': projects})
+
+
+
 def projects_programs(request):
-    # Get all active projects/programs from database
-    projects = Project.objects.filter(is_active=True).order_by('-created_at')
+    # Get all projects from database ordered by date
+    projects = Project.objects.all().order_by('-date_posted')
     return render(request, 'twccapp/projects_programs.html', {'projects': projects})
+
+def project_detail(request, pk):
+    # Get single project detail
+    project = get_object_or_404(Project, pk=pk)
+    return render(request, 'twccapp/project_detail.html', {'project': project})
+
 
 
 

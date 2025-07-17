@@ -1,40 +1,33 @@
 {% extends 'twccapp/base.html' %}
-{% load static %}
-
-{% block title %}{{ gallery_item.title }} - TWCC{% endblock %}
 
 {% block content %}
-<section class="py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <article>
-                    <h1 class="mb-4">{{ gallery_item.title }}</h1>
-                    
-                    <div class="mb-4 text-muted">
-                        <span>Posted on {{ gallery_item.date_posted|date:"F j, Y" }}</span>
-                        {% if gallery_item.author %}
-                        <span class="mx-2">|</span>
-                        <span>By {{ gallery_item.author.get_full_name }}</span>
-                        {% endif %}
+<div class="container gallery-detail-container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <article class="gallery-item">
+                <div class="gallery-header mb-4">
+                    <h1 class="gallery-title">{{ galleryimage.title }}</h1>
+                    <div class="gallery-meta">
+                        <span class="author">Uploaded </span>
+                        <span class="date">on {{ galleryimage.uploaded_at|date:"F d, Y" }}</span>
                     </div>
-                    
-                    {% if gallery_item.image %}
-                    <img src="{{ gallery_item.image.url }}" alt="{{ gallery_item.title }}" class="img-fluid mb-4 rounded">
-                    {% endif %}
-                    
-                    <div class="gallery-content">
-                        {{ gallery_item.content|linebreaks }}
-                    </div>
-                    
-                    <div class="mt-5">
-                        <a href="{% url 'gallery' %}" class="btn btn-outline-primary">
-                            <i class="fas fa-arrow-left me-2"></i>Back to Gallery
-                        </a>
-                    </div>
-                </article>
-            </div>
+                </div>
+                
+                <div class="gallery-featured-image mb-4">
+                    <img src="{{ galleryimage.image.url }}" alt="{{ galleryimage.title }}" class="img-fluid rounded">
+                </div>
+                
+                <div class="gallery-content">
+                    {{ galleryimage.content|linebreaks }}
+                </div>
+                
+                <div class="text-center mt-5">
+                    <a href="{% url 'gallery' %}" class="btn btn-primary back-to-gallery-btn">
+                        Back to Gallery
+                    </a>
+                </div>
+            </article>
         </div>
     </div>
-</section>
+</div>
 {% endblock %}

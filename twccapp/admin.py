@@ -41,11 +41,28 @@ class AdvertisementAdmin(admin.ModelAdmin):
     search_fields = ('title',)
 
 
+# @admin.register(Project)
+# class ProjectAdmin(admin.ModelAdmin):
+#     list_display = ('title', 'is_active', 'created_at')
+#     list_filter = ('is_active',)
+#     search_fields = ('title', 'description')
+
+
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title', 'is_active', 'created_at')
-    list_filter = ('is_active',)
-    search_fields = ('title', 'description')
+    list_display = ('title', 'author', 'date_posted')
+    search_fields = ('title', 'content', 'summary')
+    list_filter = ('date_posted', 'author')
+    
+    def save_model(self, request, obj, form, change):
+        if not obj.author:  # Set author if empty
+            obj.author = request.user
+        super().save_model(request, obj, form, change)
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk:  # Only set author if creating new project
+            obj.author = request.user
+        super().save_model(request, obj, form, change)
 
 class SliderImageAdmin(admin.ModelAdmin):
     list_display = ('title', 'caption', 'order', 'is_active', 'image_tag')
@@ -129,7 +146,19 @@ class PartnerAdmin(admin.ModelAdmin):
 
 
 
+# @admin.register(GalleryImage)
+# class GalleryImageAdmin(admin.ModelAdmin):
+#     list_display = ('title', 'uploaded_by', 'uploaded_at')
+#     readonly_fields = ('uploaded_at',)
+
+
 @admin.register(GalleryImage)
 class GalleryImageAdmin(admin.ModelAdmin):
     list_display = ('title', 'uploaded_by', 'uploaded_at')
-    readonly_fields = ('uploaded_at',)
+    search_fields = ('title', 'content', 'summary')
+    list_filter = ('uploaded_at', 'uploaded_by')
+    
+    def save_model(self, request, obj, form, change):
+        if not obj.uploaded_by:  # Set uploaded_by if empty
+            obj.uploaded_by = request.user
+        super().save_model(request, obj, form, change)
