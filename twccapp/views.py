@@ -105,7 +105,7 @@ def publication_detail(request, pk):
 
 def index(request):
     latest_news = News.objects.all().order_by('-date_posted')[:3]
-    videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:6]
+    videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:10]
     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
     partners = Partner.objects.all().order_by('order')
     profile = CompanyProfile.objects.filter(is_active=True).first()
@@ -139,7 +139,7 @@ def index(request):
 
 
 def about(request):
-    leaders = Leadership.objects.filter(is_active=True).order_by('order')[:30]
+    leaders = Leadership.objects.filter(is_active=True).order_by('order')[:50]
     profile = CompanyProfile.objects.filter(is_active=True).first()
     context = {
         'company_profile': profile,
@@ -266,10 +266,10 @@ def register(request):
                 
                 messages.success(request, 'Registration successful! Welcome to our site.')
                 login(request, user)
-                return redirect('login')
+                return redirect('index')
             else:
                 messages.error(request, 'Profile already exists for this user')
-                return redirect('login')
+                return redirect('index')
         else:
             # Print form errors for debugging
             print("User form errors:", user_form.errors)

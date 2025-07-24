@@ -47,68 +47,7 @@
                 </div>
             </div> -->
 
-        <div class="col-md-2 advert-column">
-    <div class="advert-container advert-scroll-container">
-        {% if advertisements %}
-            <!-- First set of ads (original) -->
-            <div class="advert-scroll-content">
-                {% for ad in advertisements %}
-                <div class="advert-item">
-                    <div class="advert-content position-relative">
-                        <h5 class="advert-title">{{ ad.title }}</h5>
-                        {% if ad.image %}
-                        <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="img-fluid advert-image mb-2">
-                        {% endif %}
-                         <a href="{{ ad.get_absolute_url }}" class="btn btn-sm btn-outline-primary read-more-btn">
-                Read More <i class="fas fa-arrow-right ms-1"></i>
-            </a>
-                        
-                        {% if ad.pdf_file %}
-                            <a href="{{ ad.get_absolute_url }}" class="btn btn-sm btn-danger w-100 pdf-btn" target="_blank">
-                                <i class="fas fa-file-pdf me-1"></i> View PDF
-                            </a>
-                        {% elif ad.url %}
-                            <a href="{{ ad.url }}" class="stretched-link" target="_blank"></a>
-                            <span class="badge bg-primary link-indicator">
-                                <i class="fas fa-external-link-alt me-1"></i> Click Here
-                            </span>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            
-            <!-- Second set of ads (duplicate for seamless looping) -->
-            <div class="advert-scroll-content" aria-hidden="true">
-                {% for ad in advertisements %}
-                <div class="advert-item">
-                    <div class="advert-content position-relative">
-                        <h5 class="advert-title">{{ ad.title }}</h5>
-                        {% if ad.image %}
-                        <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="img-fluid advert-image mb-2">
-                        {% endif %}
-                        
-                        {% if ad.pdf_file %}
-                            <a href="{{ ad.get_absolute_url }}" class="btn btn-sm btn-danger w-100 pdf-btn" target="_blank">
-                                <i class="fas fa-file-pdf me-1"></i> View PDF
-                            </a>
-                        {% elif ad.url %}
-                            <a href="{{ ad.url }}" class="stretched-link" target="_blank"></a>
-                            <span class="badge bg-primary link-indicator">
-                                <i class="fas fa-external-link-alt me-1"></i> External Link
-                            </span>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="advert-placeholder">
-                <p>No active advertisements</p>
-            </div>
-        {% endif %}
-    </div>
-</div>
+        
             
             <!-- Slider Column - Right Side (80% width) -->
             <div class="col-md-10">
@@ -153,6 +92,188 @@
         </div>
     </div>
 </section>
+
+
+<section class="advertisement-section">
+    <div class="advertisement-ticker-container">
+        <div class="advertisement-ticker">
+            {% if advertisements %}
+                <div class="advertisement-track">
+                    <!-- Single set of ads -->
+                    {% for ad in advertisements %}
+                    <div class="advertisement-card">
+                        <div class="ad-content">
+                            {% if ad.image %}
+                            <div class="ad-image-container">
+                                <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="ad-image">
+                            </div>
+                            {% endif %}
+                            <div class="ad-text-content">
+                                <h4 class="ad-title">{{ ad.title }}</h4>
+                                <div class="ad-actions">
+                                    <a href="{{ ad.get_absolute_url }}" class="btn btn-primary btn-sm">
+                                        Read More <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                    {% if ad.pdf_file %}
+                                        <a href="{{ ad.get_absolute_url }}" class="btn btn-danger btn-sm" target="_blank">
+                                            <i class="fas fa-file-pdf"></i> PDF
+                                        </a>
+                                    {% elif ad.url %}
+                                        <a href="{{ ad.url }}" class="btn btn-info btn-sm" target="_blank">
+                                            <i class="fas fa-external-link-alt"></i> Visit
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-ads-message">
+                    <p>No advertisements available at this time</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Advertisement Ticker Styles */
+    .advertisement-section {
+        margin: 20px 0;
+    }
+    
+    .advertisement-ticker-container {
+        width: 100%;
+        background: #f8f9fa;
+        padding: 15px 0;
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .advertisement-ticker {
+        width: 100%;
+        position: relative;
+    }
+
+    .advertisement-track {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        width: max-content;
+        animation: scrollAds 30s linear infinite;
+        padding: 5px 0;
+    }
+
+    .advertisement-card {
+        flex: 0 0 auto;
+        width: 280px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .advertisement-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .ad-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .ad-image-container {
+        height: 150px;
+        overflow: hidden;
+    }
+
+    .ad-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .advertisement-card:hover .ad-image {
+        transform: scale(1.05);
+    }
+
+    .ad-text-content {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .ad-title {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #333;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .ad-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: auto;
+    }
+
+    .ad-actions .btn {
+        flex: 1;
+        padding: 5px 10px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .no-ads-message {
+        text-align: center;
+        padding: 20px;
+        color: #6c757d;
+        font-style: italic;
+    }
+
+    /* Pause animation on hover */
+    .advertisement-track:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes scrollAds {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .advertisement-card {
+            width: 240px;
+        }
+        
+        .ad-image-container {
+            height: 120px;
+        }
+        
+        .ad-title {
+            font-size: 14px;
+        }
+    }
+</style>
 
 <!-- Our Guiding Principles Section -->
 <section class="principles-section py-5 position-relative">
@@ -336,7 +457,7 @@
         <ul class="icon-list">
           <li><span>👥</span> Unite women entrepreneurs across formal and informal sectors</li>
           <li><span>📈</span> Provide capacity-building and mentorship programs</li>
-          <li><span>⚖️</span> Advocate for women-friendly business policies</li>
+          <li><span>⚖</span> Advocate for women-friendly business policies</li>
           <li><span>🤝</span> Foster public-private partnerships for resources</li>
           <li><span>🌍</span> Reduce poverty through economic empowerment</li>
         </ul>
