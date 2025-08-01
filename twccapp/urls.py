@@ -25,5 +25,8 @@ urlpatterns = [
     path('projects/<int:pk>/', views.project_detail, name='project_detail'),
     path('youth_wing/', views.youth_wing, name='youth_wing'),
     path('youth-wing/<int:pk>/', views.youth_program_detail, name='youth_program_detail'),
+    path('governance/', views.governance, name='governance'),
+    path('impact/', views.impact, name='impact'),
+    path('history/', views.history, name='history'),
    
 ]

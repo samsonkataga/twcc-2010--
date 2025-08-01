@@ -1,0 +1,442 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Our Impact - TWCC{% endblock %}
+
+{% block content %}
+<!-- Hero Header Section -->
+<section class="twcc-header py-5 position-relative overflow-hidden">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Title Column -->
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="title-container">
+          <h1 class="twcc-title">
+            <span class="twcc-word">Our</span>
+            <span class="twcc-word">Impact</span>
+          </h1>
+          <div class="divider-line"></div>
+          <p class="twcc-tagline mt-3">Transforming Women's Economic Participation</p>
+        </div>
+      </div>
+      
+      <!-- Image Column -->
+      <div class="col-lg-6">
+        <div class="header-image-container">
+          <img src="{% static 'twccapp/images/impact.jpg' %}" 
+               alt="TWCC Impact" 
+               class="img-fluid rounded-3 shadow-lg header-image">
+          <div class="image-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Impact Stats Section -->
+<section class="impact-stats py-5 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold mb-3">By The Numbers</h2>
+        <div class="divider mx-auto bg-white"></div>
+      </div>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-number" data-count="20000">0</div>
+          <div class="stat-label">Active Members</div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-number" data-count="28">0</div>
+          <div class="stat-label">Regional Chapters</div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-number" data-count="5000">0</div>
+          <div class="stat-label">Businesses Supported</div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-number" data-count="1000000">0</div>
+          <div class="stat-label">Lives Impacted</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Impact Areas Section -->
+<section class="impact-areas py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold text-primary">Areas of Impact</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+    </div>
+    
+    <div class="row g-4">
+      <!-- Economic Empowerment -->
+      <div class="col-md-6">
+        <div class="impact-card">
+          <div class="impact-icon">
+            <i class="bi bi-cash-stack"></i>
+          </div>
+          <div class="impact-content">
+            <h3>Economic Empowerment</h3>
+            <ul>
+              <li>Facilitated $5M+ in business financing for women entrepreneurs</li>
+              <li>500+ women trained in financial literacy annually</li>
+              <li>Established 120 women-led business cooperatives</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Policy Advocacy -->
+      <div class="col-md-6">
+        <div class="impact-card">
+          <div class="impact-icon">
+            <i class="bi bi-megaphone"></i>
+          </div>
+          <div class="impact-content">
+            <h3>Policy Advocacy</h3>
+            <ul>
+              <li>Influenced 15+ gender-sensitive business policies</li>
+              <li>Representation in 8 national economic policy committees</li>
+              <li>Successfully advocated for reduced business license fees for women</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Capacity Building -->
+      <div class="col-md-6">
+        <div class="impact-card">
+          <div class="impact-icon">
+            <i class="bi bi-journal-bookmark"></i>
+          </div>
+          <div class="impact-content">
+            <h3>Capacity Building</h3>
+            <ul>
+              <li>10,000+ women trained in business skills since 2010</li>
+              <li>200+ mentorship partnerships established</li>
+              <li>Digital skills training for 3,000 women entrepreneurs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Market Access -->
+      <div class="col-md-6">
+        <div class="impact-card">
+          <div class="impact-icon">
+            <i class="bi bi-shop"></i>
+          </div>
+          <div class="impact-content">
+            <h3>Market Access</h3>
+            <ul>
+              <li>Connected 800+ businesses to regional markets</li>
+              <li>Organized 25 annual trade fairs</li>
+              <li>Established export partnerships for 120 women-led businesses</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Success Stories Section -->
+<section class="success-stories py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold text-primary">Success Stories</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+    </div>
+    
+    <div class="row g-4">
+      {% for story in success_stories %}
+      <div class="col-lg-4 col-md-6">
+        <div class="story-card">
+          <div class="story-image">
+            {% if story.image %}
+            <img src="{{ story.image.url }}" alt="{{ story.title }}" class="img-fluid">
+            {% else %}
+            <div class="no-image">
+              <i class="bi bi-person-square"></i>
+            </div>
+            {% endif %}
+          </div>
+          <div class="story-content">
+            <h3>{{ story.title }}</h3>
+            <p class="story-excerpt">{{ story.excerpt }}</p>
+            <a href="{% url 'impact' story.id %}" class="btn btn-outline-primary">Read Full Story</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-12 text-center">
+        <a href="{% url 'impact' %}" class="btn btn-primary px-4">View All Success Stories</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Partners Section -->
+<section class="partners-section py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold text-primary">Our Partners</h2>
+        <div class="divider mx-auto"></div>
+        <p class="lead">Collaborating for greater impact</p>
+      </div>
+    </div>
+    
+    <div class="row align-items-center justify-content-center">
+      <div class="col-6 col-md-3 col-lg-2 mb-4">
+        <img src="{% static 'twccapp/images/partner1.png' %}" alt="Partner 1" class="img-fluid">
+      </div>
+      <div class="col-6 col-md-3 col-lg-2 mb-4">
+        <img src="{% static 'twccapp/images/partner2.png' %}" alt="Partner 2" class="img-fluid">
+      </div>
+      <div class="col-6 col-md-3 col-lg-2 mb-4">
+        <img src="{% static 'twccapp/images/partner3.png' %}" alt="Partner 3" class="img-fluid">
+      </div>
+      <div class="col-6 col-md-3 col-lg-2 mb-4">
+        <img src="{% static 'twccapp/images/partner4.png' %}" alt="Partner 4" class="img-fluid">
+      </div>
+      <div class="col-6 col-md-3 col-lg-2 mb-4">
+        <img src="{% static 'twccapp/images/partner5.png' %}" alt="Partner 5" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Impact Stats Styles */
+  .impact-stats {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .impact-stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(42,90,120,0.9) 0%, rgba(230,126,34,0.8) 100%);
+    z-index: -1;
+  }
+  
+  .stat-card {
+    text-align: center;
+    padding: 30px 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+  
+  .stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  
+  /* Impact Card Styles */
+  .impact-card {
+    display: flex;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    height: 100%;
+  }
+  
+  .impact-icon {
+    width: 80px;
+    background: linear-gradient(to bottom, #2a5a78, #e67e22);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+  }
+  
+  .impact-content {
+    padding: 25px;
+    flex: 1;
+  }
+  
+  .impact-content h3 {
+    color: #2a5a78;
+    margin-bottom: 15px;
+  }
+  
+  .impact-content ul {
+    padding-left: 20px;
+  }
+  
+  .impact-content li {
+    margin-bottom: 8px;
+    position: relative;
+  }
+  
+  .impact-content li::before {
+    content: '•';
+    color: #e67e22;
+    font-weight: bold;
+    position: absolute;
+    left: -15px;
+  }
+  
+  /* Story Card Styles */
+  .story-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    height: 100%;
+  }
+  
+  .story-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .story-image {
+    height: 200px;
+    background: #f8f9fa;
+    overflow: hidden;
+  }
+  
+  .story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .story-card:hover .story-image img {
+    transform: scale(1.05);
+  }
+  
+    .no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2a5a78;
+    font-size: 4rem;
+    background: #f8f9fa;
+  }
+  
+  .story-content {
+    padding: 25px;
+  }
+  
+  .story-content h3 {
+    color: #2a5a78;
+    margin-bottom: 15px;
+  }
+  
+  .story-excerpt {
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  /* Partners Section Styles */
+  .partners-section img {
+    max-height: 80px;
+    width: auto;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  
+  .partners-section img:hover {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .impact-card {
+      flex-direction: column;
+    }
+    
+    .impact-icon {
+      width: 100%;
+      height: 60px;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  // Counter animation for stats
+  document.addEventListener('DOMContentLoaded', function() {
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 200;
+    
+    function animateCounters() {
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-count');
+        const count = +counter.innerText;
+        const increment = target / speed;
+        
+        if (count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          setTimeout(animateCounters, 1);
+        } else {
+          counter.innerText = target.toLocaleString();
+        }
+      });
+    }
+    
+    // Start animation when stats section is in view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.5});
+    
+    document.querySelectorAll('.impact-stats').forEach(section => {
+      observer.observe(section);
+    });
+  });
+</script>
+
+{% endblock %}

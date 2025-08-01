@@ -484,3 +484,25 @@ def youth_program_detail(request, pk):
     return render(request, 'twccapp/youth_program_detail.html', context)
 
 
+def governance(request):
+    context = {
+        'page_title': 'Governance Structure',
+        'active_page': 'governance'
+    }
+    return render(request, 'twccapp/governance.html', context)
+
+def impact(request):
+    context = {
+        'page_title': 'Our Impact',
+        'active_page': 'impact',
+        # Add any impact data you want to pass to the template
+    }
+    return render(request, 'twccapp/impact.html', context)
+
+def history(request):
+    context = {
+        'page_title': 'Our History',
+        'active_page': 'history',
+        # Add any historical data you want to pass to the template
+    }
+    return render(request, 'twccapp/history.html', context)

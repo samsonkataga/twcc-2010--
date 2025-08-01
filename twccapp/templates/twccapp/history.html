@@ -1,0 +1,286 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Our History - TWCC{% endblock %}
+
+{% block content %}
+<!-- Hero Header Section -->
+<section class="twcc-header py-5 position-relative overflow-hidden">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Title Column -->
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="title-container">
+          <h1 class="twcc-title">
+            <span class="twcc-word">Our</span>
+            <span class="twcc-word">History</span>
+          </h1>
+          <div class="divider-line"></div>
+          <p class="twcc-tagline mt-3">The Journey of Empowering Women in Business</p>
+        </div>
+      </div>
+      
+      <!-- Image Column -->
+      <div class="col-lg-6">
+        <div class="header-image-container">
+          <img src="{% static 'twccapp/images/history.jpg' %}" 
+               alt="TWCC History" 
+               class="img-fluid rounded-3 shadow-lg header-image">
+          <div class="image-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="timeline-section py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold text-primary">Our Journey Through Time</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+    </div>
+    
+    <div class="timeline">
+      <!-- Timeline Item 1 -->
+      <div class="timeline-item">
+        <div class="timeline-year">2005</div>
+        <div class="timeline-content">
+          <h3>Foundation</h3>
+          <p>TWCC was established by a group of visionary women entrepreneurs to address the unique challenges faced by women in business across Tanzania.</p>
+        </div>
+      </div>
+      
+      <!-- Timeline Item 2 -->
+      <div class="timeline-item">
+        <div class="timeline-year">2008</div>
+        <div class="timeline-content">
+          <h3>First Regional Chapter</h3>
+          <p>Expanded operations with the launch of our first regional chapter in Arusha, marking the beginning of nationwide outreach.</p>
+        </div>
+      </div>
+      
+      <!-- Timeline Item 3 -->
+      <div class="timeline-item">
+        <div class="timeline-year">2012</div>
+        <div class="timeline-content">
+          <h3>Policy Advocacy Milestone</h3>
+          <p>Successfully advocated for the inclusion of gender-sensitive provisions in Tanzania's National Trade Policy.</p>
+        </div>
+      </div>
+      
+      <!-- Timeline Item 4 -->
+      <div class="timeline-item">
+        <div class="timeline-year">2015</div>
+        <div class="timeline-content">
+          <h3>10th Anniversary</h3>
+          <p>Celebrated a decade of service with over 5,000 members and recognition from the Tanzanian government for our contributions.</p>
+        </div>
+      </div>
+      
+      <!-- Timeline Item 5 -->
+      <div class="timeline-item">
+        <div class="timeline-year">2020</div>
+        <div class="timeline-content">
+          <h3>Pandemic Response</h3>
+          <p>Launched emergency support programs helping 2,000 women-led businesses survive the COVID-19 economic impact.</p>
+        </div>
+      </div>
+      
+      <!-- Timeline Item 6 -->
+      <div class="timeline-item">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-content">
+          <h3>Current Reach</h3>
+          <p>Now serving 20,000+ members through 28 regional chapters with programs impacting over 1 million women nationwide.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Milestones Section -->
+<section class="milestones-section py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <h2 class="display-5 fw-bold text-primary mb-4">Key Milestones</h2>
+        <div class="milestone-list">
+          <div class="milestone-item">
+            <div class="milestone-icon">
+              <i class="bi bi-award"></i>
+            </div>
+            <div class="milestone-content">
+              <h4>2010 - Presidential Recognition</h4>
+              <p>Received national recognition for outstanding contribution to women's economic empowerment.</p>
+            </div>
+          </div>
+          
+          <div class="milestone-item">
+            <div class="milestone-icon">
+              <i class="bi bi-globe"></i>
+            </div>
+            <div class="milestone-content">
+              <h4>2014 - International Expansion</h4>
+              <p>Assisted South Sudan in establishing their first Women's Chamber of Commerce.</p>
+            </div>
+          </div>
+          
+          <div class="milestone-item">
+            <div class="milestone-icon">
+              <i class="bi bi-building"></i>
+            </div>
+            <div class="milestone-content">
+              <h4>2018 - Headquarters Establishment</h4>
+              <p>Opened our permanent national headquarters in Dar es Salaam.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-6">
+        <div class="founders-card p-4 bg-primary text-white rounded-3 shadow-lg h-100">
+          <h3 class="text-white mb-4">Our Founders</h3>
+          <div class="founder-item mb-4">
+            <div class="d-flex align-items-center mb-3">
+              <div class="founder-image me-3">
+                <i class="bi bi-person-circle fs-1"></i>
+              </div>
+              <div>
+                <h4 class="mb-1">Fatuma Mwamba</h4>
+                <p class="mb-0 small">First National Chairperson (2005-2012)</p>
+              </div>
+            </div>
+            <p>"We envisioned an organization that would break barriers for women in business. Today's TWCC surpasses our wildest dreams."</p>
+          </div>
+          
+          <div class="founder-item">
+            <div class="d-flex align-items-center mb-3">
+              <div class="founder-image me-3">
+                <i class="bi bi-person-circle fs-1"></i>
+              </div>
+              <div>
+                <h4 class="mb-1">Grace Mwakasege</h4>
+                <p class="mb-0 small">Co-founder & First Executive Director</p>
+              </div>
+            </div>
+            <p>"Our strength was in understanding that empowering one woman entrepreneur creates ripple effects across communities."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Timeline Styles */
+  .timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 50px;
+  }
+  
+  .timeline::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: #2a5a78;
+    top: 0;
+    bottom: 0;
+    left: 50px;
+    margin-left: -2px;
+  }
+  
+  .timeline-item {
+    position: relative;
+    margin-bottom: 50px;
+  }
+  
+  .timeline-year {
+    position: absolute;
+    width: 100px;
+    background-color: #e67e22;
+    color: white;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    left: -120px;
+    font-weight: bold;
+  }
+  
+  .timeline-content {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    position: relative;
+    margin-left: 60px;
+  }
+  
+  .timeline-content h3 {
+    color: #2a5a78;
+    margin-top: 0;
+  }
+  
+  .timeline-content::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 4px solid #e67e22;
+    border-radius: 50%;
+    left: -12px;
+    top: 20px;
+  }
+  
+  /* Milestones Styles */
+  .milestone-list {
+    padding-left: 20px;
+  }
+  
+  .milestone-item {
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-left: 2px solid #e67e22;
+    padding-left: 30px;
+  }
+  
+  .milestone-icon {
+    position: absolute;
+    left: -15px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    background-color: #2a5a78;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .milestone-item:last-child {
+    border-left: 2px dashed #e67e22;
+  }
+  
+  .milestone-item h4 {
+    color: #2a5a78;
+    font-size: 1.1rem;
+  }
+  
+  .founder-image {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+{% endblock %}
