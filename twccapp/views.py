@@ -10,7 +10,7 @@ from django.contrib.auth.models import User  # Add this import
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, NewsletterPDF, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
+from .models import News, YouthWingContent, YouthProgram, YouthGallery, NewsletterPDF, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
 from django.contrib.auth.decorators import login_required
 from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
 from django.views.decorators.csrf import csrf_exempt
@@ -450,5 +450,37 @@ def project_detail(request, pk):
     return render(request, 'twccapp/project_detail.html', {'project': project})
 
 
+
+def youth_wing(request):
+    # Get or create youth wing content
+    youth_content, created = YouthWingContent.objects.get_or_create(is_active=True)
+    
+    # Get active programs
+    programs = YouthProgram.objects.filter(is_active=True)
+    
+    # Get active leaders
+       
+    # Get gallery images
+    gallery_images = YouthGallery.objects.filter(is_active=True)
+    
+    context = {
+        'youth_content': youth_content,
+        'programs': programs,
+        'gallery_images': gallery_images,
+    }
+    return render(request, 'twccapp/youth_wing.html', context)
+
+def youth_program_detail(request, pk):
+    """
+    View to display details of a specific youth program
+    """
+    program = get_object_or_404(YouthProgram, id=pk, is_active=True)
+    other_programs = YouthProgram.objects.filter(is_active=True).exclude(id=pk)[:3]  # Get 3 other active programs
+    
+    context = {
+        'program': program,
+        'other_programs': other_programs,
+    }
+    return render(request, 'twccapp/youth_program_detail.html', context)
 
 

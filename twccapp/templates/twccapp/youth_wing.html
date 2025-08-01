@@ -1,0 +1,381 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Youth Wing - TWCC{% endblock %}
+
+{% block content %}
+<div class="youth-wing-container">
+    <!-- About Section -->
+    <section class="youth-about py-4 py-md-6">
+        <div class="container">
+            <div class="row align-items-center g-4 g-md-5">
+                <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                    <div class="about-image-wrapper position-relative">
+                        <div class="about-image-main shadow-lg rounded-4 overflow-hidden">
+                            {% if youth_content.about_image %}
+                                <img src="{{ youth_content.about_image.url }}" alt="Youth Wing Activities" class="img-fluid w-100 hover-zoom">
+                            {% else %}
+                                <img src="{% static 'twccapp/images/wing.png' %}" alt="Youth Wing Activities" class="img-fluid w-100 hover-zoom">
+                            {% endif %}
+                        </div>
+                        <div class="about-image-decoration bg-accent position-absolute d-none d-md-block"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <div class="pe-lg-4">
+                        <span class="badge bg-primary mb-2 mb-md-3">About Us</span>
+                        <h2 class="display-5 display-md-4 fw-bold mb-3 mb-md-4 text-dark">Igniting Passion, Building Leaders</h2>
+                        <div class="about-content fs-6 fs-md-5 lh-lg text-muted">
+                            {% if youth_content.about_content %}
+                                {{ youth_content.about_content|safe }}
+                            {% else %}
+                                <p>The TWCC Youth Wing is a vibrant community where young people discover their purpose, develop leadership skills, and create lasting impact. Through innovative programs and mentorship, we equip the next generation with tools for success in all areas of life.</p>
+                            {% endif %}
+                        </div>
+                        <div class="stats d-flex flex-wrap gap-3 gap-md-4 mt-4 mt-md-5">
+                            <div class="stat-item text-center">
+                                <div class="stat-number display-6 fw-bold text-primary">500+</div>
+                                <div class="stat-label text-muted small">Members</div>
+                            </div>
+                            <div class="stat-item text-center">
+                                <div class="stat-number display-6 fw-bold text-primary">20+</div>
+                                <div class="stat-label text-muted small">Programs</div>
+                            </div>
+                            <div class="stat-item text-center">
+                                <div class="stat-number display-6 fw-bold text-primary">100%</div>
+                                <div class="stat-label text-muted small">Engagement</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="youth-programs py-4 py-md-6 bg-light">
+        <div class="container">
+            <div class="text-center mb-4 mb-md-5">
+                <h2 class="display-5 display-md-4 fw-bold mb-3 text-dark">Our Programs</h2>
+                <p class="lead text-muted">Designed to challenge and inspire young leaders</p>
+            </div>
+            <div class="row g-3 g-md-4">
+                {% for program in programs %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="program-card card h-100 border-0 shadow-sm hover-lift transition-all overflow-hidden">
+                        <div class="card-img-top overflow-hidden position-relative" style="height: 180px;">
+                            {% if program.image %}
+                                <img src="{{ program.image.url }}" alt="{{ program.title }}" class="img-fluid w-100 h-100 object-fit-cover">
+                            {% else %}
+                                <img src="{% static 'twccapp/images/wing.png' %}" alt="{{ program.title }}" class="img-fluid w-100 h-100 object-fit-cover">
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <h3 class="h5 h4-md mb-2 mb-md-3">{{ program.title }}</h3>
+                            <p class="card-text text-muted small">{{ program.description|truncatewords:20 }}</p>
+                            <div class="program-meta d-flex justify-content-between mt-3 mt-md-4">
+                                <span class="text-primary small"><i class="far fa-calendar me-1"></i> {{ program.start_date|date:"M Y" }}</span>
+                                <span class="text-primary small"><i class="fas fa-users me-1"></i> {{ program.age_range }}</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0">
+                            <a href="{% url 'youth_program_detail' program.id %}" class="btn btn-primary btn-sm stretched-link">
+                                Learn More <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-4 py-md-5">
+                    <div class="alert alert-info">Exciting programs coming soon! Check back later.</div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-4 mt-md-5">
+                <a href="{% url 'projects_programs' %}" class="btn btn-outline-primary px-4 py-2 rounded-pill">
+                    View All Programs <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="youth-testimonials py-4 py-md-6 bg-dark text-white">
+        <div class="container">
+            <div class="text-center mb-4 mb-md-5">
+                <span class="badge bg-primary mb-2 mb-md-3">Voices</span>
+                <h2 class="display-5 display-md-4 fw-bold mb-3 text-white">What Our Youth Say</h2>
+                <p class="lead text-light">Hear from young leaders transforming their communities</p>
+            </div>
+            <div class="row g-3 g-md-4">
+                <div class="col-12 col-md-4">
+                    <div class="testimonial-card p-3 p-md-4 rounded-3 h-100">
+                        <div class="quote-icon text-primary mb-2 mb-md-3">
+                            <i class="fas fa-quote-left fa-lg"></i>
+                        </div>
+                        <p class="mb-3 mb-md-4">"The Youth Wing gave me confidence I never knew I had. The leadership training completely transformed how I see myself and my potential."</p>
+                        <div class="testimonial-author d-flex align-items-center">
+                            <img src="{% static 'twccapp/images/wing.png' %}" class="rounded-circle me-2 me-md-3" width="40" height="40" alt="Sarah J.">
+                            <div>
+                                <h5 class="mb-0 h6">Sarah J.</h5>
+                                <small class="text-muted">Leadership Program Graduate</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="testimonial-card p-3 p-md-4 rounded-3 h-100">
+                        <div class="quote-icon text-primary mb-2 mb-md-3">
+                            <i class="fas fa-quote-left fa-lg"></i>
+                        </div>
+                        <p class="mb-3 mb-md-4">"Through the Youth Wing, I've made lifelong friends and found mentors who genuinely care about my growth and success."</p>
+                        <div class="testimonial-author d-flex align-items-center">
+                            <img src="{% static 'twccapp/images/wing.png' %}" class="rounded-circle me-2 me-md-3" width="40" height="40" alt="Michael T.">
+                            <div>
+                                <h5 class="mb-0 h6">Michael T.</h5>
+                                <small class="text-muted">Community Service Coordinator</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="testimonial-card p-3 p-md-4 rounded-3 h-100">
+                        <div class="quote-icon text-primary mb-2 mb-md-3">
+                            <i class="fas fa-quote-left fa-lg"></i>
+                        </div>
+                        <p class="mb-3 mb-md-4">"The skills I've gained here have been invaluable in my university applications and personal development. It's more than a program it's family."</p>
+                        <div class="testimonial-author d-flex align-items-center">
+                            <img src="{% static 'twccapp/images/wing.png' %}" class="rounded-circle me-2 me-md-3" width="40" height="40" alt="Amina K.">
+                            <div>
+                                <h5 class="mb-0 h6">Amina K.</h5>
+                                <small class="text-muted">Youth Ambassador</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="youth-gallery py-4 py-md-6">
+        <div class="container">
+            <div class="text-center mb-4 mb-md-5">
+                <span class="badge bg-primary mb-2 mb-md-3">Moments</span>
+                <h2 class="display-5 display-md-4 fw-bold mb-3 text-dark">Our Journey in Pictures</h2>
+                <p class="lead text-muted">Capturing memories that inspire</p>
+            </div>
+            <div class="row g-2 g-md-3 gallery-grid">
+                {% for image in gallery_images|slice:":8" %}
+                <div class="col-6 col-md-4 col-lg-3 gallery-item">
+                    <a href="{{ image.image.url }}" data-lightbox="gallery" data-title="{{ image.caption }}" class="gallery-link">
+                        <div class="gallery-item-inner position-relative overflow-hidden rounded-3 shadow-sm">
+                            <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="img-fluid w-100 h-100 object-fit-cover" style="height: 150px;">
+                            <div class="gallery-overlay position-absolute top-0 start-0 end-0 bottom-0 d-flex align-items-center justify-content-center bg-dark bg-opacity-50 opacity-0 transition-all">
+                                <i class="fas fa-search-plus text-white fs-4"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-4 py-md-5">
+                    <div class="alert alert-info">Our gallery is coming soon. Stay tuned for exciting moments!</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if gallery_images|length > 8 %}
+            <div class="text-center mt-4 mt-md-5">
+                <button class="btn btn-outline-primary px-4 py-2 rounded-pill" id="loadMoreGallery">
+                    Load More <i class="fas fa-plus-circle ms-2"></i>
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="journey-cta py-4 py-md-5 bg-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8 text-center">
+                    <h2 class="cta-header text-primary mb-2 mb-md-3">Ready to Begin Your Journey?</h2>
+                    <p class="cta-text text-black mb-3 mb-md-4">Join a community that believes in your potential and will help you achieve it</p>
+                    <div class="d-flex flex-column flex-md-row justify-content-center gap-2 gap-md-3">
+                        <a href="{% url 'register' %}" class="btn btn-primary px-3 px-md-4 py-2">
+                            Register Now <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-primary px-3 px-md-4 py-2">
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+<style>
+    /* Custom Variables */
+    :root {
+        --primary: #4e73df;
+        --primary-dark: #3a56b4;
+        --secondary: #f8f9fc;
+        --accent: #e74c3c;
+        --accent-light: #f8d7da;
+        --dark: #2c3e50;
+        --light: #f9f9f9;
+        --gray: #6c757d;
+        --light-gray: #e9ecef;
+    }
+    
+    /* General Styles */
+    .py-4 {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+    
+    .py-6 {
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+    
+    @media (min-width: 768px) {
+        .py-md-5 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        .py-md-6 {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+    }
+    
+    /* About Section */
+    .about-image-decoration {
+        width: 80%;
+        height: 80%;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        border-radius: 1rem;
+    }
+    
+    /* Stats */
+    .stats {
+        border-top: 1px solid var(--light-gray);
+        padding-top: 1rem;
+    }
+    
+    @media (min-width: 768px) {
+        .stats {
+            padding-top: 1.5rem;
+        }
+    }
+    
+    /* Cards */
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Testimonials */
+    .testimonial-card {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* CTA Section */
+    .journey-cta {
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cta-header {
+        color: var(--primary);
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    
+    .cta-text {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    @media (min-width: 768px) {
+        .cta-header {
+            font-size: 1.75rem;
+        }
+        .cta-text {
+            font-size: 1.1rem;
+        }
+    }
+    
+    /* Responsive Typography */
+    .display-5 {
+        font-size: 2.25rem;
+    }
+    
+    .display-4 {
+        font-size: 2.5rem;
+    }
+    
+    @media (min-width: 768px) {
+        .display-md-4 {
+            font-size: 2.75rem;
+        }
+        .display-md-5 {
+            font-size: 2.5rem;
+        }
+    }
+    
+    /* Gallery */
+    .gallery-item-inner {
+        transition: all 0.3s ease;
+    }
+    
+    .gallery-link:hover .gallery-item-inner {
+        transform: scale(1.02);
+    }
+    
+    /* Buttons */
+    .btn {
+        white-space: nowrap;
+    }
+    
+    /* Ensure images don't overflow */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Smooth scrolling
+        $('a[href*="#"]').on('click', function(e) {
+            if (this.hash !== "") {
+                e.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $(this.hash).offset().top - 70
+                }, 600);
+            }
+        });
+        
+        // Load more gallery items
+        $('#loadMoreGallery').on('click', function() {
+            $(this).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Loading...').prop('disabled', true);
+            // Simulate loading
+            setTimeout(function() {
+                $('#loadMoreGallery').replaceWith('<p class="text-muted">All items loaded</p>');
+            }, 1500);
+        });
+    });
+</script>
+{% endblock %}

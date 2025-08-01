@@ -17,8 +17,16 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'index' %}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        About
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                        <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
+                        <li><a class="dropdown-item" href="{% url 'about' %}">Our Governance</a></li>
+                        <li><a class="dropdown-item" href="{% url 'about' %}">Our Impact</a></li>
+                        <li><a class="dropdown-item" href="{% url 'about' %}">Our History</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'services' %}">Services</a>
@@ -28,6 +36,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'projects_programs' %}">Projects & Programs</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'youth_wing' %}">YouthWing</a>
+                </li>
                 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
@@ -35,14 +47,26 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'publications_list' %}">Publications</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'news' %}">News & Updates</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        News
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                        <li><a class="dropdown-item" href="{% url 'news' %}">Upcoming Event </a></li>
+                        <li><a class="dropdown-item" href="{% url 'faqs' %}">Recent Update</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="{% url 'faqs' %}">FAQs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                </li> -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Contact
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                        <li><a class="dropdown-item" href="{% url 'contact' %}">Contact</a></li>
+                        <li><a class="dropdown-item" href="{% url 'faqs' %}">Faqs</a></li>
+                    </ul>
                 </li>
             </ul>
             
@@ -52,9 +76,7 @@
                     <a href="{% url 'logout' %}" class="btn btn-outline-light">Logout</a>
                 {% else %}
                     <a href="https://db.twcc-tz.org/login" class="btn btn-light me-2">Login</a>
-
                     <a href="https://db.twcc-tz.org/signup" class="btn btn-outline-light">Register</a>
-
                 {% endif %}
             </div>
         </div>

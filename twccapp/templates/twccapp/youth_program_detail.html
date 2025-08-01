@@ -1,0 +1,60 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}{{ program.title }} - Youth Wing{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'projects_programs' %}">Projects & Programs</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'youth_wing' %}">Youth Wing</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ program.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{ program.title }}</h1>
+            
+            {% if program.start_date %}
+            <p class="text-muted">
+                <i class="far fa-calendar-alt"></i>
+                {{ program.start_date|date:"F j, Y" }}
+                {% if program.end_date %} - {{ program.end_date|date:"F j, Y" }}{% endif %}
+            </p>
+            {% endif %}
+            
+            {% if program.image %}
+            <img src="{{ program.image.url }}" alt="{{ program.title }}" class="img-fluid mb-4">
+            {% endif %}
+            
+            <div class="program-content">
+                {{ program.details|linebreaks }}
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Other Youth Programs</h3>
+                </div>
+                <div class="card-body">
+                    {% if other_programs %}
+                    <ul class="list-group list-group-flush">
+                        {% for other in other_programs %}
+                        <li class="list-group-item">
+                            <a href="{% url 'youth_program_detail' other.id %}">{{ other.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>No other programs available at the moment.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

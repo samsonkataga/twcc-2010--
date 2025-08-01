@@ -50,7 +50,7 @@
         
             
             <!-- Slider Column - Right Side (80% width) -->
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
                     {% if slider_images %}
                     <!-- Indicators -->
@@ -68,7 +68,7 @@
     <div class="carousel-item {% if forloop.first %}active{% endif %}">
         <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" style="height: 65vh; object-fit: cover; object-position: center;">
         <div class="carousel-caption" style="bottom: 5px; padding: 0; display: block !important;">
-            <div class="caption-container p-1" style="background: rgba(0,0,0,0.3); border-radius: 3px;">
+            <div class="caption-container p-1" style="background: rgba(0,0,0,0.9); border-radius: 3px;">
                 <h3 class="caption-title" style="font-size: 0.8rem; margin-bottom: 0.2rem; line-height: 1.1;">{{ image.title }}</h3>
                 <p class="caption-text" style="font-size: 0.6rem; margin-bottom: 0; line-height: 1.1;">{{ image.caption }}</p>
             </div>
@@ -85,23 +85,35 @@
                     <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
+                        <span></span>
                     </button>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
+<style>
+    .slider-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+</style>
 </section>
 
-
 <section class="advertisement-section">
+    <h2 class="important-updates-header">Recent Updates</h2>
     <div class="advertisement-ticker-container">
         <div class="advertisement-ticker">
             {% if advertisements %}
                 <div class="advertisement-track">
-                    <!-- Single set of ads -->
+                    <!-- First set of ads -->
                     {% for ad in advertisements %}
                     <div class="advertisement-card">
+                        {% if ad.is_recent %}
+                        <div class="new-badge">NEW</div>
+                        {% endif %}
                         <div class="ad-content">
                             {% if ad.image %}
                             <div class="ad-image-container">
@@ -112,6 +124,38 @@
                                 <h4 class="ad-title">{{ ad.title }}</h4>
                                 <div class="ad-actions">
                                     <a href="{{ ad.get_absolute_url }}" class="btn btn-primary btn-sm">
+                                        Read More <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                    {% if ad.pdf_file %}
+                                        <a href="{{ ad.url }}" class="btn btn-danger btn-sm" target="_blank">
+                                            <i class="fas fa-file-pdf"></i> PDF
+                                        </a>
+                                    {% elif ad.url %}
+                                        <a href="{{ ad.url }}" class="btn btn-info btn-sm" target="_blank">
+                                            <i class="fas fa-external-link-alt"></i> Visit
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- Duplicate set of ads for seamless looping -->
+                    {% for ad in advertisements %}
+                    <div class="advertisement-card">
+                        {% if ad.is_recent %}
+                        <div class="new-badge">NEW</div>
+                        {% endif %}
+                        <div class="ad-content">
+                            {% if ad.image %}
+                            <div class="ad-image-container">
+                                <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="ad-image">
+                            </div>
+                            {% endif %}
+                            <div class="ad-text-content">
+                                <h4 class="ad-title">{{ ad.title }}</h4>
+                                <div class="ad-actions">
+                                    <a href="{{ ad.url }}" class="btn btn-primary btn-sm">
                                         Read More <i class="fas fa-arrow-right"></i>
                                     </a>
                                     {% if ad.pdf_file %}
@@ -139,147 +183,197 @@
 </section>
 
 <style>
-    /* Advertisement Ticker Styles */
-    .advertisement-section {
-        margin: 20px 0;
+.important-updates-header {
+    color: #0066cc; /* Blue color */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 2px solid #0066cc; /* Optional: adds a blue underline */
+}
+
+/* Advertisement Ticker Styles */
+.advertisement-section {
+    margin: 20px 0;
+}
+
+.advertisement-ticker-container {
+    width: 100%;
+    background: #f8f9fa;
+    padding: 15px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    overflow: hidden;
+    position: relative;
+}
+
+.advertisement-ticker {
+    width: 100%;
+    position: relative;
+}
+
+.advertisement-track {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: max-content;
+    animation: scrollAds 30s linear infinite;
+    padding: 5px 0;
+    /* Create a seamless loop by duplicating content */
+    padding-right: 100%;
+}
+
+.advertisement-card {
+    flex: 0 0 auto;
+    width: 280px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.advertisement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.ad-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.ad-image-container {
+    height: 150px;
+    overflow: hidden;
+}
+
+.ad-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.advertisement-card:hover .ad-image {
+    transform: scale(1.05);
+}
+
+.ad-text-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.ad-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ad-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.ad-actions .btn {
+    flex: 1;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.no-ads-message {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* New Badge Styles */
+.new-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4757;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 1;
+    animation: pulse 2s infinite;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Pause animation on hover */
+.advertisement-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scrollAds {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .advertisement-card {
+        width: 240px;
     }
     
-    .advertisement-ticker-container {
-        width: 100%;
-        background: #f8f9fa;
-        padding: 15px 0;
-        border-top: 1px solid #e0e0e0;
-        border-bottom: 1px solid #e0e0e0;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .advertisement-ticker {
-        width: 100%;
-        position: relative;
-    }
-
-    .advertisement-track {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        width: max-content;
-        animation: scrollAds 30s linear infinite;
-        padding: 5px 0;
-    }
-
-    .advertisement-card {
-        flex: 0 0 auto;
-        width: 280px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .advertisement-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    }
-
-    .ad-content {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-
     .ad-image-container {
-        height: 150px;
-        overflow: hidden;
+        height: 120px;
     }
-
-    .ad-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
-
-    .advertisement-card:hover .ad-image {
-        transform: scale(1.05);
-    }
-
-    .ad-text-content {
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
-
+    
     .ad-title {
-        font-size: 16px;
-        margin-bottom: 10px;
-        color: #333;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-size: 14px;
     }
-
-    .ad-actions {
-        display: flex;
-        gap: 8px;
-        margin-top: auto;
+    
+    .new-badge {
+        font-size: 9px;
+        padding: 2px 6px;
     }
-
-    .ad-actions .btn {
-        flex: 1;
-        padding: 5px 10px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-    }
-
-    .no-ads-message {
-        text-align: center;
-        padding: 20px;
-        color: #6c757d;
-        font-style: italic;
-    }
-
-    /* Pause animation on hover */
-    .advertisement-track:hover {
-        animation-play-state: paused;
-    }
-
-    @keyframes scrollAds {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(-100%);
-        }
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .advertisement-card {
-            width: 240px;
-        }
-        
-        .ad-image-container {
-            height: 120px;
-        }
-        
-        .ad-title {
-            font-size: 14px;
-        }
-    }
+}
 </style>
 
 <!-- Our Guiding Principles Section -->
-<section class="principles-section py-5 position-relative">
+<!--<section class="principles-section py-5 position-relative">
   <div class="container">
     <!-- Section Header -->
-    <div class="row mb-5">
+    <!--<div class="row mb-5">
       <div class="col-12 text-center">
         <h1 class="display-4 fw-bold text-primary mb-3">Who We Are</h1>
         <div class="divider mx-auto"></div>
@@ -291,7 +385,7 @@
   </div>
 
   <!-- Second Paragraph -->
-  <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+  <!--<div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
     <div style="flex: 1; min-width: 250px; background-color: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.05);">
       <h3 style="color: #e67e22; margin-top: 0; font-size: 1.2rem;">Global Partnerships</h3>
       <p style="margin-bottom: 0;">
@@ -300,7 +394,7 @@
     </div>
     
     <!-- Third Paragraph -->
-    <div style="flex: 1; min-width: 250px; background-color: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: relative;">
+    <!--<div style="flex: 1; min-width: 250px; background-color: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: relative;">
       <div style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #2a5a78, #e67e22); border-radius: 8px 8px 0 0;"></div>
       <h3 style="color: #2a5a78; margin-top: 0.5rem; font-size: 1.2rem;">International Impact</h3>
       <p style="margin-bottom: 0;">
@@ -311,10 +405,10 @@
     </div>
     
     <!-- Content with Navigation Tabs -->
-    <div class="row g-4">
+    <!--<div class="row g-4">
       <div class="col-lg-3">
         <!-- Vertical Navigation -->
-        <div class="principles-nav nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist">
+       <!-- <div class="principles-nav nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist">
           <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#vision" type="button">
             <i class="bi bi-eye me-2"></i> OUR VISION
           </button>
@@ -332,9 +426,9 @@
       
       <div class="col-lg-9">
         <!-- Tab Content -->
-        <div class="tab-content p-4 bg-white rounded shadow-lg" id="v-pills-tabContent">
+       <!-- <div class="tab-content p-4 bg-white rounded shadow-lg" id="v-pills-tabContent">
           <!-- Vision Tab -->
-          <div class="tab-pane fade show active" id="vision" role="tabpanel">
+         <!-- <div class="tab-pane fade show active" id="vision" role="tabpanel">
             <h2 class="text-primary mb-4"><i class="bi bi-eye-fill me-2"></i>VISION</h2>
             <p class="lead">A strong Apex Organization empowering women economically.</p>
              <div class="row mt-4 g-4">
@@ -342,7 +436,7 @@
           </div>
           
           <!-- Mission Tab -->
-<div class="tab-pane fade" id="mission" role="tabpanel">
+<!--<div class="tab-pane fade" id="mission" role="tabpanel">
   <div class="mission-card p-4 bg-light rounded">
     <h2 class="text-primary mb-3"><i class="bi bi-bullseye me-2"></i>MISSION</h2>
     <p class="mb-0">To create women's enterprises which are competitive locally, regionally, and internationally through advocating and tapping into opportunities available.</p>
@@ -385,7 +479,7 @@
 </div>
           
           <!-- Values Tab -->
-          <div class="tab-pane fade" id="values" role="tabpanel">
+         <!-- <div class="tab-pane fade" id="values" role="tabpanel">
             <h2 class="text-primary mb-4"><i class="bi bi-heart-fill me-2"></i>CORE VALUES</h2>
             <div class="row">
               <div class="col-md-6">
@@ -444,15 +538,15 @@
     
   
   <!-- Decorative Elements -->
-  <div class="position-absolute top-0 end-0 w-50 h-100 bg-light z-n1 opacity-10"></div>
+  <!--<div class="position-absolute top-0 end-0 w-50 h-100 bg-light z-n1 opacity-10"></div>
 </section>
 
 <!-- Chamber Objectives & Networks Section -->
-<section class="twcc-objectives">
+<!--<section class="twcc-objectives">
   <div class="container">
     <div class="dual-column">
       <!-- Chamber Objectives -->
-      <div class="objectives-card">
+      <!--<div class="objectives-card">
         <h2>Chamber Objectives</h2>
         <ul class="icon-list">
           <li><span>👥</span> Unite women entrepreneurs across formal and informal sectors</li>
@@ -465,7 +559,7 @@
       
       
       <!-- Membership Networks -->
-      <div class="networks-card">
+      <!--<div class="networks-card">
         <h2>Key Network Memberships</h2>
         <div class="network-badges">
           <div class="badge">TPSF</div>
@@ -571,7 +665,7 @@ h2 {
   }
 }
   </style>
-</section>
+</section> -->
 
 
 <!-- <section class="py-5">
@@ -659,6 +753,64 @@ h2 {
   </div>
 </section>
 
+ <!-- Testimonials Section -->
+    <section class="youth-testimonials py-4 py-md-6 bg-dark text-white">
+        <div class="container">
+            <div class="text-center mb-4 mb-md-5">
+                <span class="badge bg-primary mb-2 mb-md-3">Voices</span>
+                <h2 class="display-5 display-md-4 fw-bold mb-3 text-white">What People Say</h2>
+                <p class="lead text-light">Hear from enterpreneurs transforming their communities</p>
+            </div>
+            <div class="row g-3 g-md-4">
+                <div class="col-12 col-md-4">
+                    <div class="testimonial-card p-3 p-md-4 rounded-3 h-100">
+                        <div class="quote-icon text-primary mb-2 mb-md-3">
+                            <i class="fas fa-quote-left fa-lg"></i>
+                        </div>
+                        <p class="mb-3 mb-md-4">"The TWCC gave me confidence I never knew I had. The leadership training completely transformed how I see myself and my potential."</p>
+                        <div class="testimonial-author d-flex align-items-center">
+                            <img src="{% static 'twccapp/images/wing.png' %}" class="rounded-circle me-2 me-md-3" width="40" height="40" alt="Sarah J.">
+                            <div>
+                                <h5 class="mb-0 h6">Sarah J.</h5>
+                                <small class="text-muted">Leadership Program Graduate</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="testimonial-card p-3 p-md-4 rounded-3 h-100">
+                        <div class="quote-icon text-primary mb-2 mb-md-3">
+                            <i class="fas fa-quote-left fa-lg"></i>
+                        </div>
+                        <p class="mb-3 mb-md-4">"Through TWCC, I've made lifelong friends and found mentors who genuinely care about my growth and success."</p>
+                        <div class="testimonial-author d-flex align-items-center">
+                            <img src="{% static 'twccapp/images/wing.png' %}" class="rounded-circle me-2 me-md-3" width="40" height="40" alt="Michael T.">
+                            <div>
+                                <h5 class="mb-0 h6">Michael T.</h5>
+                                <small class="text-muted">Community Service Coordinator</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="testimonial-card p-3 p-md-4 rounded-3 h-100">
+                        <div class="quote-icon text-primary mb-2 mb-md-3">
+                            <i class="fas fa-quote-left fa-lg"></i>
+                        </div>
+                        <p class="mb-3 mb-md-4">"The skills I've gained here have been invaluable in my university applications and personal development. It's more than a program it's family."</p>
+                        <div class="testimonial-author d-flex align-items-center">
+                            <img src="{% static 'twccapp/images/wing.png' %}" class="rounded-circle me-2 me-md-3" width="40" height="40" alt="Amina K.">
+                            <div>
+                                <h5 class="mb-0 h6">Amina K.</h5>
+                                <small class="text-muted">Youth Ambassador</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 <section id="video-updates" class="py-5 {% if not videos %}d-none{% endif %}">
     <div class="container">
         <div class="row mb-4">
@@ -671,12 +823,31 @@ h2 {
         </div>
 
         <!-- Horizontal Scrolling Container -->
-        <div class="video-scroll-container" style="overflow: hidden;">
-            <div class="video-scroll-wrapper d-flex" style="animation: scrollLeft 30s linear infinite;">
-                <!-- Video Grid -->
-                <div class="d-flex" style="flex-wrap: nowrap;">
+        <div class="video-scroll-container">
+            <div class="video-scroll-wrapper d-flex">
+                <!-- Video Grid - Original Set -->
+                <div class="d-flex video-set" style="flex-wrap: nowrap;">
                     {% for video in videos %}
-                    <div class="col" style="flex: 0 0 auto; width: 350px; margin-right: 20px;"> <!-- Adjust width as needed -->
+                    <div class="col" style="flex: 0 0 auto; width: 350px; margin-right: 20px;">
+                        <div class="card h-100 shadow-sm">
+                            <div class="ratio ratio-16x9">
+                                {{ video.embed_code|safe }}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ video.title }}</h5>
+                                <p class="card-text text-muted">
+                                    Posted on: {{ video.date_posted|date:"F j, Y" }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Video Grid - Duplicate Set for seamless looping -->
+                <div class="d-flex video-set" style="flex-wrap: nowrap;">
+                    {% for video in videos %}
+                    <div class="col" style="flex: 0 0 auto; width: 350px; margin-right: 20px;">
                         <div class="card h-100 shadow-sm">
                             <div class="ratio ratio-16x9">
                                 {{ video.embed_code|safe }}
@@ -699,14 +870,23 @@ h2 {
 <style>
     @keyframes scrollLeft {
         0% { transform: translateX(0); }
-        100% { transform: translateX(-100%); }
+        100% { transform: translateX(-50%); } /* Changed from -100% to -50% */
     }
     .video-scroll-container {
         width: 100%;
         overflow: hidden;
+        position: relative;
     }
     .video-scroll-wrapper {
-        width: max-content; /* Allows content to overflow */
+        display: flex;
+        width: max-content;
+        animation: scrollLeft 30s linear infinite;
+    }
+    .video-scroll-wrapper:hover {
+        animation-play-state: paused;
+    }
+    .video-set {
+        flex: 0 0 auto;
     }
 </style>
 
@@ -787,14 +967,14 @@ h2 {
         animation-play-state: paused;
     }
     /* Mobile responsiveness */
-    @media (max-width: 768px) {
+    /* @media (max-width: 768px) {
         .partners-scroll-wrapper {
             animation: none !important;
             flex-wrap: wrap;
             justify-content: center;
             width: 100% !important;
         }
-    }
+    } */
 </style>
 
 <!-- <section class="py-5 bg-light">

@@ -126,10 +126,17 @@ footer {
 }
 
 
- .slider-section {
+ /*.slider-section {
         position: relative;
         width: 100%;
-    }
+    }*/
+
+.slider-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
     
     .advert-column {
         background-color: #f8f9fa;
@@ -259,7 +266,7 @@ footer {
 }
 
 .caption-container {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 1);
     border-radius: 5px;
     padding: 15px;
     max-width: 600px;
@@ -1073,3 +1080,44 @@ footer {
 
 
 
+/* Center the slider section horizontally */
+.slider-section {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px; /* Adjust this value based on your desired maximum width */
+    width: 100%;
+}
+
+/* Ensure the container-fluid doesn't create unwanted padding */
+.slider-section .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Center the row content */
+.slider-section .row {
+    justify-content: center;
+}
+
+/* Adjust the slider column width if needed */
+.slider-section .col-md-10 {
+    width: 100%;
+    max-width: 1000px; /* Adjust based on your preference */
+}
+
+/* Center the carousel */
+#mainCarousel {
+    margin: 0 auto;
+}
+
+/* Optional: Center the carousel indicators */
+.carousel-indicators {
+    justify-content: center;
+}
+
+/* Optional: Center the carousel captions */
+.carousel-caption {
+    left: 0;
+    right: 0;
+    text-align: center;
+}

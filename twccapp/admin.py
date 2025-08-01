@@ -1,7 +1,7 @@
 # twccapp/admin.py
 from django.contrib import admin
 from django.utils.safestring import mark_safe 
-from .models import Member, NewsletterPDF, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+from .models import Member, YouthWingContent, YouthProgram, YouthGallery, NewsletterPDF, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
 
 @admin.register(NewsletterPDF)
 class NewsletterPDFAdmin(admin.ModelAdmin):
@@ -162,3 +162,26 @@ class GalleryImageAdmin(admin.ModelAdmin):
         if not obj.uploaded_by:  # Set uploaded_by if empty
             obj.uploaded_by = request.user
         super().save_model(request, obj, form, change)
+
+class YouthProgramAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active', 'start_date', 'end_date')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'description')
+
+
+# class YouthLeaderAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'position', 'order', 'is_active')
+#     list_editable = ('order', 'is_active')
+#     list_filter = ('is_active',)
+#     search_fields = ('name', 'position')
+
+class YouthGalleryAdmin(admin.ModelAdmin):
+    list_display = ('caption', 'upload_date', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('caption',)
+
+admin.site.register(YouthWingContent)
+admin.site.register(YouthProgram, YouthProgramAdmin)
+# admin.site.register(YouthLeader, YouthLeaderAdmin)
+admin.site.register(YouthGallery, YouthGalleryAdmin)
+

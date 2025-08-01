@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
 from django.utils.html import mark_safe
 from django.db import models
@@ -264,6 +265,21 @@ class Newsletter(models.Model):
         ordering = ['-created_at']
 
 
+# class Advertisement(models.Model):
+#     title = models.CharField(max_length=100)
+#     image = models.ImageField(upload_to='advertisements/', blank=True, null=True)
+#     url = models.URLField(blank=True, null=True)
+#     is_active = models.BooleanField(default=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    
+#     def __str__(self):
+#         return self.title
+        
+#     class Meta:
+#         ordering = ['-created_at']
+
+
 class Advertisement(models.Model):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to='advertisements/', blank=True, null=True)
@@ -277,7 +293,11 @@ class Advertisement(models.Model):
         
     class Meta:
         ordering = ['-created_at']
-
+    
+    @property
+    def is_recent(self):
+        """Return True if the ad was created within the last 7 days"""
+        return timezone.now() - self.created_at < timedelta(days=2)
 
 
 
@@ -328,3 +348,62 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class YouthWingContent(models.Model):
+    hero_image = models.ImageField(upload_to='youth_wing/hero/', blank=True, null=True)
+    about_image = models.ImageField(upload_to='youth_wing/about/', blank=True, null=True)
+    about_content = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "Youth Wing Content"
+
+    class Meta:
+        verbose_name = "Youth Wing Content"
+        verbose_name_plural = "Youth Wing Content"
+
+class YouthProgram(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='youth_wing/programs/', blank=True, null=True)
+    description = models.TextField()
+    details = models.TextField(blank=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-created_at']
+
+# class YouthLeader(models.Model):
+#     name = models.CharField(max_length=100)
+#     position = models.CharField(max_length=100)
+#     image = models.ImageField(upload_to='youth_wing/leaders/', blank=True, null=True)
+#     bio = models.TextField()
+#     is_active = models.BooleanField(default=True)
+#     order = models.PositiveIntegerField(default=0)
+
+#     def __str__(self):
+#         return f"{self.name} - {self.position}"
+
+#     class Meta:
+#         ordering = ['order']
+
+class YouthGallery(models.Model):
+    image = models.ImageField(upload_to='youth_wing/gallery/')
+    caption = models.CharField(max_length=200, blank=True)
+    upload_date = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.caption if self.caption else f"Gallery Image {self.id}"
+
+    class Meta:
+        verbose_name_plural = "Youth Gallery"
+        ordering = ['-upload_date']
