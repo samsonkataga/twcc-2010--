@@ -1,0 +1,75 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container py-4">
+    <h3 class="text-center mb-4">Our Partners & Donors</h3>
+    
+    <!-- Scrolling Container -->
+    <div class="partners-scroll-container" style="overflow: hidden; position: relative;">
+        <!-- Scrolling Content - Duplicate for seamless loop -->
+        <div class="partners-scroll-wrapper d-flex" style="animation: scrollRight 30s linear infinite;">
+            <!-- Original Logos -->
+            {% for partner in partners %}
+            <div class="partner-logo mx-3">
+                <img src="{{ partner.logo.url }}" 
+                     alt="{{ partner.name }} Logo"
+                     class="img-fluid"
+                     style="height: 80px; width: auto; object-fit: contain;">
+            </div>
+            {% endfor %}
+            
+            <!-- Duplicated Logos (for seamless looping) -->
+            {% for partner in partners %}
+            <div class="partner-logo mx-3">
+                <img src="{{ partner.logo.url }}" 
+                     alt="{{ partner.name }} Logo"
+                     class="img-fluid"
+                     style="height: 80px; width: auto; object-fit: contain;">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+  /* Option 1: Keep animation but make it slower on mobile */
+@media (max-width: 768px) {
+    .partners-scroll-wrapper {
+        animation: scrollRight 60s linear infinite !important; /* Slower speed */
+        flex-wrap: nowrap; /* Prevent wrapping */
+    }
+}
+
+/* Option 2: Completely remove the mobile override */
+/* Delete the entire @media block */
+
+
+    @keyframes scrollRight {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .partners-scroll-wrapper {
+        display: flex;
+        width: max-content;
+    }
+    .partner-logo {
+        flex: 0 0 auto;
+    }
+    /* Pause on hover */
+    .partners-scroll-wrapper:hover {
+        animation-play-state: paused;
+    }
+    /* Mobile responsiveness */
+    /* @media (max-width: 768px) {
+        .partners-scroll-wrapper {
+            animation: none !important;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100% !important;
+        }
+    } */
+</style>
+</div>
+{% endblock %}

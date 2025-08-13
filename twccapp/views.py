@@ -10,7 +10,7 @@ from django.contrib.auth.models import User  # Add this import
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, YouthWingContent, YouthProgram, YouthGallery, NewsletterPDF, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
+from .models import News, RecentAdvert, Document, UpcomingEvent, YouthWingContent, YouthProgram, YouthGallery, NewsletterPDF, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
 from django.contrib.auth.decorators import login_required
 from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
 from django.views.decorators.csrf import csrf_exempt
@@ -103,15 +103,50 @@ def publication_detail(request, pk):
 #     }
 #     return render(request, 'twccapp/index.html', context)
 
+# def index(request):
+#     latest_news = News.objects.all().order_by('-date_posted')[:3]
+#     videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:10]
+#     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
+#     partners = Partner.objects.all().order_by('order')
+#     profile = CompanyProfile.objects.filter(is_active=True).first()
+#     advertisements = Advertisement.objects.filter(is_active=True).order_by('-created_at')[:5]  # Show 5 most recent ads
+
+#     # Handle video form submission if it's a POST request
+#     if request.method == 'POST':
+#         if 'video_url' in request.POST and is_admin(request.user):
+#             form = VideoUpdateForm(request.POST)
+#             if form.is_valid():
+#                 video = form.save(commit=False)
+#                 video.posted_by = request.user
+#                 video.save()
+#                 messages.success(request, 'Video added successfully!')
+#                 return redirect('news')
+#         # Handle ad form submission if needed
+#         # You can add similar logic for ad creation here
+#     else:
+#         form = VideoUpdateForm()
+    
+#     context = {
+#         'latest_news': latest_news,
+#         'company_profile': profile,
+#         'slider_images': slider_images,
+#         'videos': videos,
+#         'video_form': form,
+#         'partners': partners,
+#         'advertisements': advertisements,  # Add ads to context
+#     }
+#     return render(request, 'twccapp/index.html', context)
+
+# views.py
 def index(request):
     latest_news = News.objects.all().order_by('-date_posted')[:3]
     videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:10]
     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
     partners = Partner.objects.all().order_by('order')
     profile = CompanyProfile.objects.filter(is_active=True).first()
-    advertisements = Advertisement.objects.filter(is_active=True).order_by('-created_at')[:5]  # Show 5 most recent ads
+    advertisements = Advertisement.objects.filter(is_active=True).order_by('-created_at')[:5]
+    recent_adverts = RecentAdvert.objects.filter(is_active=True).order_by('-created_at')[:5]  # Show 5 most recent adverts
 
-    # Handle video form submission if it's a POST request
     if request.method == 'POST':
         if 'video_url' in request.POST and is_admin(request.user):
             form = VideoUpdateForm(request.POST)
@@ -121,8 +156,6 @@ def index(request):
                 video.save()
                 messages.success(request, 'Video added successfully!')
                 return redirect('news')
-        # Handle ad form submission if needed
-        # You can add similar logic for ad creation here
     else:
         form = VideoUpdateForm()
     
@@ -133,7 +166,8 @@ def index(request):
         'videos': videos,
         'video_form': form,
         'partners': partners,
-        'advertisements': advertisements,  # Add ads to context
+        'advertisements': advertisements,
+        'recent_adverts': recent_adverts,  # Add recent adverts to context
     }
     return render(request, 'twccapp/index.html', context)
 
@@ -484,11 +518,36 @@ def youth_program_detail(request, pk):
     return render(request, 'twccapp/youth_program_detail.html', context)
 
 
+# def governance(request):
+    
+#     leaders = Leadership.objects.filter(is_active=True).order_by('order')[:50]
+#     profile = CompanyProfile.objects.filter(is_active=True).first()
+#     context = {
+#         'company_profile': profile,
+#         'leaders' : leaders
+#     }
+#     return render(request, 'twccapp/governance.html', context)
+
+from django.shortcuts import render
+from .models import Leadership, CompanyProfile, Document
+
 def governance(request):
+    # Existing queries
+    leaders = Leadership.objects.filter(is_active=True).order_by('order')[:50]
+    profile = CompanyProfile.objects.filter(is_active=True).first()
+    
+    # Get all documents
+    documents = Document.objects.all()
+    
+    # Create context with all data
     context = {
-        'page_title': 'Governance Structure',
-        'active_page': 'governance'
+        'company_profile': profile,
+        'leaders': leaders,
+        'constitution': documents.filter(document_type='constitution').first(),
+        'strategic_plan': documents.filter(document_type='strategic_plan').first(),
+        'code_of_conduct': documents.filter(document_type='code_of_conduct').first(),
     }
+    
     return render(request, 'twccapp/governance.html', context)
 
 def impact(request):
@@ -506,3 +565,50 @@ def history(request):
         # Add any historical data you want to pass to the template
     }
     return render(request, 'twccapp/history.html', context)
+
+def upcoming_event(request):
+    upcoming_events = UpcomingEvent.objects.all().order_by('-date_posted')
+    context = {
+        'upcoming_event_list': upcoming_events  # Pass the actual queryset
+    }
+    return render(request, 'twccapp/upcoming_event.html', context)
+
+def upcoming_event_detail(request, pk):
+    upcoming_event_item = UpcomingEvent.objects.get(pk=pk)
+    return render(request, 'twccapp/upcoming_event_detail.html', {'upcoming_event_item': upcoming_event_item})
+
+def video_update(request):
+    videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:10]
+    if request.method == 'POST':
+        if 'video_url' in request.POST and is_admin(request.user):
+            form = VideoUpdateForm(request.POST)
+            if form.is_valid():
+                video = form.save(commit=False)
+                video.posted_by = request.user
+                video.save()
+                messages.success(request, 'Video added successfully!')
+                return redirect('news')
+    else:
+        form = VideoUpdateForm()
+    context = {
+        'videos': videos,
+        'video_form': form,
+    }
+    return render(request, 'twccapp/video_highlights.html', context)
+
+def mission_vision(request):
+    return render(request, 'twccapp/mission_vision.html')
+
+def team(request):
+    leaders = Leadership.objects.filter(is_active=True).order_by('order')[:50]
+    context = {
+        'leaders': leaders,
+    }
+    return render(request, 'twccapp/team.html', context)
+
+def partners_supporters(request):
+    partners = Partner.objects.all().order_by('order')
+    context = {
+        'partners': partners,
+    }
+    return render(request, 'twccapp/partners_supporters.html', context)    

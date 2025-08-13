@@ -1,0 +1,87 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Video Updates - TWCC{% endblock %}
+
+{% block content %}
+
+
+<section id="video-updates" class="py-5 {% if not videos %}d-none{% endif %}">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="display-5">
+                    <i class="fab fa-youtube text-danger me-2"></i>Video Updates
+                </h2>
+                <p style="font-weight: bold;" class="lead">Watch our latest videos and streams</p>
+            </div>
+        </div>
+
+        <!-- Horizontal Scrolling Container -->
+        <div class="video-scroll-container">
+            <div class="video-scroll-wrapper d-flex">
+                <!-- Video Grid - Original Set -->
+                <div class="d-flex video-set" style="flex-wrap: nowrap;">
+                    {% for video in videos %}
+                    <div class="col" style="flex: 0 0 auto; width: 350px; margin-right: 20px;">
+                        <div class="card h-100 shadow-sm">
+                            <div class="ratio ratio-16x9">
+                                {{ video.embed_code|safe }}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ video.title }}</h5>
+                                <p class="card-text text-muted">
+                                    Posted on: {{ video.date_posted|date:"F j, Y" }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Video Grid - Duplicate Set for seamless looping -->
+                <div class="d-flex video-set" style="flex-wrap: nowrap;">
+                    {% for video in videos %}
+                    <div class="col" style="flex: 0 0 auto; width: 350px; margin-right: 20px;">
+                        <div class="card h-100 shadow-sm">
+                            <div class="ratio ratio-16x9">
+                                {{ video.embed_code|safe }}
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ video.title }}</h5>
+                                <p class="card-text text-muted">
+                                    Posted on: {{ video.date_posted|date:"F j, Y" }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes scrollLeft {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); } /* Changed from -100% to -50% */
+    }
+    .video-scroll-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    .video-scroll-wrapper {
+        display: flex;
+        width: max-content;
+        animation: scrollLeft 30s linear infinite;
+    }
+    .video-scroll-wrapper:hover {
+        animation-play-state: paused;
+    }
+    .video-set {
+        flex: 0 0 auto;
+    }
+</style>
+{% endblock %}

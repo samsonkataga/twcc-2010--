@@ -19,7 +19,7 @@
             <span class="twcc-word">Commerce</span>
           </h1>
           <div class="divider-line"></div>
-          <p class="twcc-tagline mt-3">For Empowering Women in Business</p>
+          <p class="twcc-tagline mt-3" style="font-weight: bold; color: green;">For Empowering Women in Business</p>
         </div>
       </div>
       
@@ -743,24 +743,23 @@ entrepreneurs.</p>
       </div>
       
       <!-- Level 2: Managers -->
-      <!-- Level 2: Managers -->
-<div class="tree-level compact-level-2">
-  {% for leader in leaders %}
-    {% if "manager" in leader.position.lower and "officer" not in leader.position.lower %}
-    <div class="leader-card compact-node manager-line">
-      <div class="leader-image compact-img">
-        {% if leader.image %}
-        <img src="{{ leader.image.url }}" alt="{{ leader.name }}">
-        {% else %}
-        <i class="bi bi-person-fill"></i>
-        {% endif %}
+      <div class="tree-level compact-level-2">
+        {% for leader in leaders %}
+          {% if "manager" in leader.position.lower and "officer" not in leader.position.lower %}
+          <div class="leader-card compact-node">
+            <div class="leader-image compact-img">
+              {% if leader.image %}
+              <img src="{{ leader.image.url }}" alt="{{ leader.name }}">
+              {% else %}
+              <i class="bi bi-person-fill"></i>
+              {% endif %}
+            </div>
+            <h4 class="compact-name">{{ leader.name }}</h4>
+            <p class="compact-position">{{ leader.position }}</p>
+          </div>
+          {% endif %}
+        {% endfor %}
       </div>
-      <h4 class="compact-name">{{ leader.name }}</h4>
-      <p class="compact-position">{{ leader.position }}</p>
-    </div>
-    {% endif %}
-  {% endfor %}
-</div>
       
       <!-- Level 3: Officers -->
       <div class="tree-level compact-level-3">
@@ -820,7 +819,6 @@ entrepreneurs.</p>
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  position: relative;
 }
 
 .tree-level {
@@ -829,7 +827,6 @@ entrepreneurs.</p>
   justify-content: center;
   gap: 10px;
   width: 100%;
-  position: relative;
 }
 
 .compact-level-1 {
@@ -838,61 +835,8 @@ entrepreneurs.</p>
 
 .compact-level-2 {
   margin-bottom: 10px;
-  padding-top: 15px;
 }
 
-.compact-level-3 {
-  padding-top: 15px;
-}
-
-/* Vertical connecting line from CEO to managers */
-.compact-level-1 + .compact-level-2::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 1px;
-  height: 15px;
-  background-color: #adb5bd;
-}
-
-/* Horizontal connecting line above managers */
-.compact-level-2::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 25%;
-  right: 25%;
-  height: 1px;
-  background-color: #adb5bd;
-}
-
-/* Vertical connecting lines from managers to officers */
-.compact-level-2 + .compact-level-3::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 1px;
-  height: 15px;
-  background-color: #adb5bd;
-}
-
-/* Individual connecting lines from each manager to their officers */
-.manager-line {
-  position: relative;
-}
-
-.manager-line::after {
-  content: '';
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 15px;
-  background-color: #adb5bd;
-}
 
 .compact-node {
   width: 100px;
@@ -903,7 +847,6 @@ entrepreneurs.</p>
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   text-align: center;
   transition: all 0.2s;
-  position: relative;
 }
 
 .compact-node:hover {
@@ -948,19 +891,24 @@ entrepreneurs.</p>
   line-height: 1.2;
 }
 
-/* For the staff level */
-.org-level {
-  padding-top: 15px;
-  position: relative;
-}
-
-.org-level::before {
+/* Connecting lines */
+.compact-tree::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 60px;
   left: 50%;
   width: 1px;
   height: 15px;
+  background-color: #adb5bd;
+}
+
+.compact-level-2::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 0;
+  right: 0;
+  height: 1px;
   background-color: #adb5bd;
 }
 
@@ -983,6 +931,7 @@ entrepreneurs.</p>
     font-size: 0.6rem;
   }
 }
+
 </style>
 </section>
     

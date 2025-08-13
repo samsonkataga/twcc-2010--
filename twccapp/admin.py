@@ -1,7 +1,7 @@
 # twccapp/admin.py
 from django.contrib import admin
 from django.utils.safestring import mark_safe 
-from .models import Member, YouthWingContent, YouthProgram, YouthGallery, NewsletterPDF, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+from .models import Member, RecentAdvert, Document, YouthWingContent, UpcomingEvent, YouthProgram, YouthGallery, NewsletterPDF, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
 
 @admin.register(NewsletterPDF)
 class NewsletterPDFAdmin(admin.ModelAdmin):
@@ -36,6 +36,13 @@ class NewsletterAdmin(admin.ModelAdmin):
 
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active', 'created_at')
+    list_filter = ('is_active',)
+    search_fields = ('title',)
+
+
+@admin.register(RecentAdvert)
+class RecentAdvertAdmin(admin.ModelAdmin):
     list_display = ('title', 'is_active', 'created_at')
     list_filter = ('is_active',)
     search_fields = ('title',)
@@ -78,6 +85,12 @@ class MemberAdmin(admin.ModelAdmin):
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'date_posted')
+    search_fields = ('title', 'content')
+    list_filter = ('date_posted',)
+
+@admin.register(UpcomingEvent)
+class UpcomingEventAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'date_posted')
     search_fields = ('title', 'content')
     list_filter = ('date_posted',)
@@ -185,3 +198,7 @@ admin.site.register(YouthProgram, YouthProgramAdmin)
 # admin.site.register(YouthLeader, YouthLeaderAdmin)
 admin.site.register(YouthGallery, YouthGalleryAdmin)
 
+@admin.register(Document)
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = ('document_type', 'updated_at')
+    readonly_fields = ('updated_at',)

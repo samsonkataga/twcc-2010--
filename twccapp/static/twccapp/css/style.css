@@ -283,6 +283,8 @@ footer {
     color: #f8f9fa;
     font-size: 14px;
     line-height: 1.5;
+    padding: 3.2;
+    margin-inline-start: ;
 }
 
 /* Responsive adjustments */

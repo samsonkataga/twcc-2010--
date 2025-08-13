@@ -1,4 +1,13 @@
 {% load static %}
+<style>
+    .nav-link{
+        color: white;
+    }
+    .nav-link:hover{
+        color: yellow;
+    }
+    
+</style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand" href="{% url 'index' %}">
@@ -15,19 +24,22 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        About
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
-                        <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
-                        <li><a class="dropdown-item" href="{% url 'governance' %}">Our Governance</a></li>
-                        <li><a class="dropdown-item" href="{% url 'impact' %}">Our Impact</a></li>
-                        <li><a class="dropdown-item" href="{% url 'history' %}">Our History</a></li>
-                    </ul>
-                </li>
+    <a class="nav-link dropdown-toggle" href="{% url 'about' %}" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        About
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+        <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
+        <li><a class="dropdown-item" href="{% url 'mission_vision' %}">Our Mission & Vision</a></li>
+        <li><a class="dropdown-item" href="{% url 'team' %}">Our Team</a></li>
+        <li><a class="dropdown-item" href="{% url 'partners_supporters' %}">Partners & Supporters</a></li>
+        <li><a class="dropdown-item" href="{% url 'governance' %}">Our Governance</a></li>
+        <li><a class="dropdown-item" href="{% url 'impact' %}">Our Impact</a></li>
+        <li><a class="dropdown-item" href="{% url 'history' %}">Our History</a></li>
+    </ul>
+</li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'services' %}">Services</a>
                 </li>
@@ -41,9 +53,15 @@
                     <a class="nav-link" href="{% url 'youth_wing' %}">YouthWing</a>
                 </li>
                 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'gallery' %}">Gallery</a>
-                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'gallery' %}" id="galleryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Gallery</a>
+    <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
+        <li><a class="dropdown-item" href="{% url 'gallery' %}">Photo Albums</a></li>
+        <li><a class="dropdown-item" href="{% url 'video_update' %}">Video Highlights</a></li>
+    </ul>
+</li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'publications_list' %}">Publications</a>
                 </li>
@@ -52,8 +70,8 @@
                         News
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
-                        <li><a class="dropdown-item" href="{% url 'news' %}">Upcoming Event </a></li>
-                        <li><a class="dropdown-item" href="{% url 'faqs' %}">Recent Update</a></li>
+                        <li><a class="dropdown-item" href="{% url 'upcoming_event' %}">Upcoming Event </a></li>
+                        <li><a class="dropdown-item" href="{% url 'news' %}">Recent Update</a></li>
                     </ul>
                 </li>
                 <!-- <li class="nav-item">
@@ -76,7 +94,7 @@
                     <a href="{% url 'logout' %}" class="btn btn-outline-light">Logout</a>
                 {% else %}
                     <a href="https://db.twcc-tz.org/login" class="btn btn-light me-2">Login</a>
-                    <a href="https://db.twcc-tz.org/signup" class="btn btn-outline-light">Register</a>
+                    <a href="https://db.twcc-tz.org/signup" class="btn btn-light me-2">Register</a>
                 {% endif %}
             </div>
         </div>

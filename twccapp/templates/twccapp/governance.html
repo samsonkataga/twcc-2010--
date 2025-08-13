@@ -23,7 +23,7 @@
       <!-- Image Column -->
       <div class="col-lg-6">
         <div class="header-image-container">
-          <img src="{% static 'twccapp/images/governance.jpg' %}" 
+          <img src="{% static 'twccapp/images/history.jpeg' %}" 
                alt="TWCC Governance" 
                class="img-fluid rounded-3 shadow-lg header-image">
           <div class="image-overlay"></div>
@@ -112,72 +112,6 @@
   </div>
 </section>
 
-<!-- Leadership Section -->
-<section class="leadership-section py-5">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center mb-5">
-        <h2 class="display-4 fw-bold text-primary">Our Leadership</h2>
-        <div class="divider mx-auto"></div>
-      </div>
-    </div>
-    
-    <!-- Board of Directors -->
-    <div class="row mb-5">
-      <div class="col-12 mb-4">
-        <h3 class="text-center mb-4">Board of Directors</h3>
-      </div>
-      {% for leader in board_members %}
-      <div class="col-md-6 col-lg-3 mb-4">
-        <div class="leader-card">
-          <div class="leader-image">
-            {% if leader.image %}
-            <img src="{{ leader.image.url }}" alt="{{ leader.name }}" class="img-fluid">
-            {% else %}
-            <i class="bi bi-person-circle"></i>
-            {% endif %}
-          </div>
-          <div class="leader-info">
-            <h4>{{ leader.name }}</h4>
-            <p class="position">{{ leader.position }}</p>
-            <p class="bio">{{ leader.bio|truncatewords:15 }}</p>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-    
-    <!-- Executive Team -->
-    <div class="row">
-      <div class="col-12 mb-4">
-        <h3 class="text-center mb-4">Executive Team</h3>
-      </div>
-      {% for leader in executive_team %}
-      <div class="col-md-6 mb-4">
-        <div class="executive-card">
-          <div class="executive-image">
-            {% if leader.image %}
-            <img src="{{ leader.image.url }}" alt="{{ leader.name }}" class="img-fluid">
-            {% else %}
-            <i class="bi bi-person-circle"></i>
-            {% endif %}
-          </div>
-          <div class="executive-info">
-            <h4>{{ leader.name }}</h4>
-            <p class="position">{{ leader.position }}</p>
-            <p class="bio">{{ leader.bio }}</p>
-            <div class="social-links">
-              {% if leader.linkedin %}<a href="{{ leader.linkedin }}"><i class="bi bi-linkedin"></i></a>{% endif %}
-              {% if leader.twitter %}<a href="{{ leader.twitter }}"><i class="bi bi-twitter"></i></a>{% endif %}
-              {% if leader.email %}<a href="mailto:{{ leader.email }}"><i class="bi bi-envelope-fill"></i></a>{% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
 
 <!-- Policies Section -->
 <section class="policies-section py-5 bg-light">
@@ -190,39 +124,54 @@
     </div>
     
     <div class="row g-4">
-      <div class="col-md-4">
-        <div class="policy-card">
-          <div class="policy-icon">
-            <i class="bi bi-file-earmark-text"></i>
-          </div>
-          <h3>Constitution</h3>
-          <p>Our foundational document outlining the Chamber's purpose, structure, and operating principles.</p>
-          <a href="#" class="btn btn-outline-primary">Download PDF</a>
-        </div>
+  <!-- Constitution Card -->
+  <div class="col-md-4">
+    <div class="policy-card">
+      <div class="policy-icon">
+        <i class="bi bi-file-earmark-text"></i>
       </div>
-      
-      <div class="col-md-4">
-        <div class="policy-card">
-          <div class="policy-icon">
-            <i class="bi bi-graph-up"></i>
-          </div>
-          <h3>Strategic Plan</h3>
-          <p>2023-2028 roadmap guiding our programs and initiatives for women's economic empowerment.</p>
-          <a href="#" class="btn btn-outline-primary">Download PDF</a>
-        </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="policy-card">
-          <div class="policy-icon">
-            <i class="bi bi-shield-check"></i>
-          </div>
-          <h3>Code of Conduct</h3>
-          <p>Ethical guidelines ensuring integrity in all our operations and member interactions.</p>
-          <a href="#" class="btn btn-outline-primary">Download PDF</a>
-        </div>
-      </div>
+      <h3>Constitution</h3>
+      <p>Our foundational document outlining the Chamber's purpose, structure, and operating principles.</p>
+      {% if constitution %}
+        <a href="{{ constitution.pdf_file.url }}" class="btn btn-outline-primary" download>Download PDF</a>
+      {% else %}
+        <button class="btn btn-outline-secondary" disabled>Document Not Available</button>
+      {% endif %}
     </div>
+  </div>
+  
+  <!-- Strategic Plan Card -->
+  <div class="col-md-4">
+    <div class="policy-card">
+      <div class="policy-icon">
+        <i class="bi bi-graph-up"></i>
+      </div>
+      <h3>Newsletter Update: Q2 2025</h3>
+    <p><strong>Highlights:</strong> 78% of annual targets achieved | 32% growth in women-led startups | New mentorship program launched</p>
+      {% if strategic_plan %}
+        <a href="{{ strategic_plan.pdf_file.url }}" class="btn btn-outline-primary" download>Download PDF</a>
+      {% else %}
+        <button class="btn btn-outline-secondary" disabled>Document Not Available</button>
+      {% endif %}
+    </div>
+  </div>
+  
+  <!-- Code of Conduct Card -->
+  <div class="col-md-4">
+    <div class="policy-card">
+      <div class="policy-icon">
+        <i class="bi bi-shield-check"></i>
+      </div>
+      <h3>Code of Conduct</h3>
+      <p>Ethical guidelines ensuring integrity in all our operations and member interactions.</p>
+      {% if code_of_conduct %}
+        <a href="{{ code_of_conduct.pdf_file.url }}" class="btn btn-outline-primary" download>Download PDF</a>
+      {% else %}
+        <button class="btn btn-outline-secondary" disabled>Document Not Available</button>
+      {% endif %}
+    </div>
+  </div>
+</div>
   </div>
 </section>
 
@@ -280,84 +229,7 @@
     font-weight: bold;
   }
   
-  /* Leader Card Styles */
-  .leader-card {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-  }
   
-  .leader-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .leader-image {
-    height: 200px;
-    background: #f8f9fa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #6c757d;
-    font-size: 4rem;
-  }
-  
-  .leader-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .leader-info {
-    padding: 20px;
-  }
-  
-  .leader-info h4 {
-    color: #2a5a78;
-    margin-bottom: 5px;
-  }
-  
-  .position {
-    color: #e67e22;
-    font-weight: 500;
-    margin-bottom: 10px;
-  }
-  
-  /* Executive Card Styles */
-  .executive-card {
-    display: flex;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
-  }
-  
-  .executive-image {
-    width: 200px;
-    background: #f8f9fa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #6c757d;
-    font-size: 4rem;
-  }
-  
-  .executive-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .executive-info {
-    padding: 25px;
-    flex: 1;
-  }
-  
-  .executive-info h4 {
-    color: #2a5a78;
-    margin-bottom: 5px;
-  }
   
   .social-links a {
     color: #6c757d;

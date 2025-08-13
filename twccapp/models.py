@@ -86,6 +86,17 @@ class News(models.Model):
     def __str__(self):
         return self.title 
 
+class UpcomingEvent(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    summary = models.TextField()
+    image = models.ImageField(upload_to='upcoming_event/', null=True, blank=True)
+    date_posted = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.title 
+
 class Services(models.Model):
     ICON_CHOICES = [
         ('fa-money-bill-wave', 'Financial (money bill)'),
@@ -300,6 +311,34 @@ class Advertisement(models.Model):
         return timezone.now() - self.created_at < timedelta(days=2)
 
 
+class RecentAdvert(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='recent_adverts/', blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
+    pdf_file = models.FileField(upload_to='recent_adverts/pdfs/', blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self):
+        return self.title
+        
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Recent Advert"
+        verbose_name_plural = "Recent Adverts"
+    
+    @property
+    def is_recent(self):
+        """Return True if the advert was created within the last 2 days"""
+        return timezone.now() - self.created_at < timedelta(days=2)
+    
+    def get_absolute_url(self):
+        if self.pdf_file:
+            return self.pdf_file.url
+        return self.url if self.url else '#'
+
+
 
 # class GalleryImage(models.Model):
 #     title = models.CharField(max_length=200)
@@ -407,3 +446,29 @@ class YouthGallery(models.Model):
     class Meta:
         verbose_name_plural = "Youth Gallery"
         ordering = ['-upload_date']
+
+class Document(models.Model):
+    TYPE_CHOICES = [
+        ('constitution', 'Constitution'),
+        ('strategic_plan', 'Strategic Plan'),
+        ('code_of_conduct', 'Code of Conduct'),
+    ]
+    
+    document_type = models.CharField(
+        max_length=20,
+        choices=TYPE_CHOICES,
+        unique=True,
+        help_text="Type of document"
+    )
+    pdf_file = models.FileField(
+        upload_to='documents/',
+        help_text="Upload PDF file"
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.get_document_type_display()
+
+    class Meta:
+        verbose_name = "Document"
+        verbose_name_plural = "Documents"

@@ -5,10 +5,10 @@
 {% block title %}Tanzania Women Chamber of Commerce{% endblock %}
 
 {% block content %}
-<div class="header-typing-container text-center py-3">
+<!-- <div class="header-typing-container text-center py-3">
   <h1 class="main-heading" id="typing-text"></h1>
-  <p class="typing-subtext" id="typing-subtext"></p>
-</div>
+  <p class="typing-subtext" id="typing-subtext" style="font-weight: bold;"></p>
+</div> -->
 <!-- <section class="hero-section text-center text-white py-5" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{% static 'twccapp/images/logo.png' %}'); background-size: contain; background-repeat: no-repeat; background-position: center center; background-attachment: scroll; min-height: 400px;">
     <div class="container py-5">
         <h1 class="display-4 fw-bold">Welcome to Tanzania Women Chamber of Commerce</h1>
@@ -16,7 +16,7 @@
         <a href="{% url 'register' %}" class="btn btn-primary btn-lg mt-3">Join Us Today</a>
     </div>
 </section> -->
-<br>
+<!-- <br> -->
 
 <!-- Image Slider Section -->
 <section class="slider-section">
@@ -66,12 +66,25 @@
                    <div class="carousel-inner">
     {% for image in slider_images %}
     <div class="carousel-item {% if forloop.first %}active{% endif %}">
-        <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" style="height: 65vh; object-fit: cover; object-position: center;">
-        <div class="carousel-caption" style="bottom: 5px; padding: 0; display: block !important;">
-            <div class="caption-container p-1" style="background: rgba(0,0,0,0.9); border-radius: 3px;">
-                <h3 class="caption-title" style="font-size: 0.8rem; margin-bottom: 0.2rem; line-height: 1.1;">{{ image.title }}</h3>
-                <p class="caption-text" style="font-size: 0.6rem; margin-bottom: 0; line-height: 1.1;">{{ image.caption }}</p>
-            </div>
+        <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" style="height: 90vh; object-fit: cover; object-position: center;">
+        <div class="carousel-caption" style="bottom: 40px; padding: 0; display: block !important;">
+            <div class="caption-container p-1" style="
+    background: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border-radius: 3px;
+    position: absolute;
+    bottom: 20px; /* Position from bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px); /* Full width minus padding */
+    max-width: 800px; /* Optional: set max width if needed */
+    padding: 10px 20px;
+    box-sizing: border-box;
+    text-align: center;
+">
+    <h3 class="caption-title" style="font-size: 0.8rem; margin-bottom: 0.2rem; line-height: 1.1;">{{ image.title }}</h3>
+    <p class="caption-text" style="font-size: 1.3rem; margin-bottom: 0; line-height: 1.1;">{{ image.caption }}</p>
+</div>
         </div>
     </div>
     {% endfor %}
@@ -99,11 +112,46 @@
     align-items: center;
     padding: 20px 0;
 }
+
+ /* Mobile-specific slider styles */
+    @media (max-width: 768px) {
+        .slider-section {
+            padding: 10px 0;
+        }
+        
+        .carousel-item img {
+            height: 50vh !important;
+            object-fit: contain !important;
+            object-position: center;
+        }
+        
+        .carousel-caption {
+            bottom: 10px !important;
+            left: 5%;
+            right: 5%;
+            width: 90%;
+            padding: 0 !important;
+        }
+        
+        .caption-container {
+            padding: 8px !important;
+            background: rgba(0,0,0,0.8) !important;
+        }
+        
+        .caption-title {
+            font-size: 0.9rem !important;
+            margin-bottom: 0.1rem !important;
+        }
+        
+        .caption-text {
+            font-size: 0.7rem !important;
+        }
+    }
 </style>
 </section>
 
 <section class="advertisement-section">
-    <h2 class="important-updates-header">Recent Updates</h2>
+    <h2 class="important-updates-header">Upcoming Events</h2>
     <div class="advertisement-ticker-container">
         <div class="advertisement-ticker">
             {% if advertisements %}
@@ -368,6 +416,238 @@
     }
 }
 </style>
+
+
+<!-- twccapp/index.html -->
+<section class="recent-adverts-section">
+    <h2 class="recent-adverts-header">Recent Adverts</h2>
+    <div class="recent-adverts-ticker-container">
+        <div class="recent-adverts-ticker">
+            {% if recent_adverts %}
+                <div class="recent-adverts-track">
+                    <!-- First set of adverts -->
+                    {% for advert in recent_adverts %}
+                    <div class="recent-advert-card">
+                        {% if advert.is_recent %}
+                        <div class="new-badge">NEW</div>
+                        {% endif %}
+                        <div class="recent-advert-content">
+                            {% if advert.image %}
+                            <div class="recent-advert-image-container">
+                                <img src="{{ advert.image.url }}" alt="{{ advert.title }}" class="recent-advert-image">
+                            </div>
+                            {% endif %}
+                            <div class="recent-advert-text-content">
+                                <h4 class="recent-advert-title">{{ advert.title }}</h4>
+                                <div class="recent-advert-actions">
+                                    <a href="{{ advert.get_absolute_url }}" class="btn btn-primary btn-sm">
+                                        View <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                    {% if advert.pdf_file %}
+                                        <a href="{{ advert.get_absolute_url }}" class="btn btn-danger btn-sm" target="_blank">
+                                            <i class="fas fa-file-pdf"></i> PDF
+                                        </a>
+                                    {% elif advert.url %}
+                                        <a href="{{ advert.url }}" class="btn btn-info btn-sm" target="_blank">
+                                            <i class="fas fa-external-link-alt"></i> Visit
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- Duplicate set of adverts for seamless looping -->
+                    {% for advert in recent_adverts %}
+                    <div class="recent-advert-card">
+                        {% if advert.is_recent %}
+                        <div class="new-badge">NEW</div>
+                        {% endif %}
+                        <div class="recent-advert-content">
+                            {% if advert.image %}
+                            <div class="recent-advert-image-container">
+                                <img src="{{ advert.image.url }}" alt="{{ advert.title }}" class="recent-advert-image">
+                            </div>
+                            {% endif %}
+                            <div class="recent-advert-text-content">
+                                <h4 class="recent-advert-title">{{ advert.title }}</h4>
+                                <div class="recent-advert-actions">
+                                    <a href="{{ advert.get_absolute_url }}" class="btn btn-primary btn-sm">
+                                        View <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                    {% if advert.pdf_file %}
+                                        <a href="{{ advert.get_absolute_url }}" class="btn btn-danger btn-sm" target="_blank">
+                                            <i class="fas fa-file-pdf"></i> PDF
+                                        </a>
+                                    {% elif advert.url %}
+                                        <a href="{{ advert.url }}" class="btn btn-info btn-sm" target="_blank">
+                                            <i class="fas fa-external-link-alt"></i> Visit
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-adverts-message">
+                    <p>No recent adverts available at this time</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+<style>
+/* Recent Adverts Section Styles */
+.recent-adverts-header {
+    color: #28a745; /* Green color for distinction */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 2px solid #28a745;
+}
+
+.recent-adverts-section {
+    margin: 20px 0;
+}
+
+.recent-adverts-ticker-container {
+    width: 100%;
+    background: #f1f8e9; /* Light green background */
+    padding: 15px 0;
+    border-top: 1px solid #dcedc8;
+    border-bottom: 1px solid #dcedc8;
+    overflow: hidden;
+    position: relative;
+}
+
+.recent-adverts-ticker {
+    width: 100%;
+    position: relative;
+}
+
+.recent-adverts-track {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: max-content;
+    animation: scrollRecentAdverts 30s linear infinite;
+    padding: 5px 0;
+    padding-right: 100%;
+}
+
+.recent-advert-card {
+    flex: 0 0 auto;
+    width: 280px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.recent-advert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.recent-advert-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.recent-advert-image-container {
+    height: 150px;
+    overflow: hidden;
+}
+
+.recent-advert-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.recent-advert-card:hover .recent-advert-image {
+    transform: scale(1.05);
+}
+
+.recent-advert-text-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.recent-advert-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recent-advert-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.recent-advert-actions .btn {
+    flex: 1;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.no-adverts-message {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Reverse animation for right-to-left movement */
+@keyframes scrollRecentAdverts {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Pause animation on hover */
+.recent-adverts-track:hover {
+    animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .recent-advert-card {
+        width: 240px;
+    }
+    
+    .recent-advert-image-container {
+        height: 120px;
+    }
+    
+    .recent-advert-title {
+        font-size: 14px;
+    }
+}
+</style>
+</section>
 
 <!-- Our Guiding Principles Section -->
 <!--<section class="principles-section py-5 position-relative">
@@ -710,7 +990,7 @@ h2 {
       <h2 class="display-4 font-weight-bold text-primary">
         <i class="bi bi-bar-chart-fill me-2"></i>Our Impact
       </h2>
-      <p class="lead">Measuring our progress and achievements</p>
+      <p style="font-weight: bold;" class="lead">Measuring our progress and achievements</p>
     </div>
   <div class="container">
     <div class="row text-center">
@@ -719,7 +999,7 @@ h2 {
         <div class="stat-item">
           <i class="bi bi-check-circle-fill text-primary mb-3" style="font-size: 2.5rem;"></i>
           <h2 class="display-4 font-weight-bold" id="projects-count">0</h2>
-          <p class="text-muted">Years of Services</p>
+          <p style="font-weight: bold;" class="text-muted">Years of Services</p>
         </div>
       </div>
       
@@ -728,7 +1008,7 @@ h2 {
         <div class="stat-item">
           <i class="bi bi-person-standing text-primary mb-3" style="font-size: 2.5rem;"></i>
           <h2 class="display-4 font-weight-bold" id="funding-count">$0</h2>
-          <p class="text-muted">Women Served</p>
+          <p style="font-weight: bold;" class="text-muted">Women Served</p>
         </div>
       </div>
       
@@ -737,7 +1017,7 @@ h2 {
         <div class="stat-item">
           <i class="bi bi-building text-primary mb-3" style="font-size: 2.5rem;"></i>
           <h2 class="display-4 font-weight-bold" id="offices-count">0</h2>
-          <p class="text-muted">Regional offices</p>
+          <p style="font-weight: bold;" class="text-muted">Regional offices</p>
         </div>
       </div>
       
@@ -746,7 +1026,7 @@ h2 {
         <div class="stat-item">
           <i class="bi bi-people-fill text-primary mb-3" style="font-size: 2.5rem;"></i>
           <h2 class="display-4 font-weight-bold" id="team-count">0</h2>
-          <p class="text-muted">Members</p>
+          <p  style="font-weight: bold;" class="text-muted">Members</p>
         </div>
       </div>
     </div>
@@ -818,7 +1098,7 @@ h2 {
                 <h2 class="display-5">
                     <i class="fab fa-youtube text-danger me-2"></i>Video Updates
                 </h2>
-                <p class="lead">Watch our latest videos and streams</p>
+                <p style="font-weight: bold;" class="lead">Watch our latest videos and streams</p>
             </div>
         </div>
 
