@@ -1,0 +1,203 @@
+{% extends 'twccapp/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="jumbotron bg-light-blue text-center mb-5 rounded-lg">
+        <h1 class="display-4 text-primary">Youth Resources</h1>
+        <p class="lead">Empowering young people with tools for success</p>
+        <div class="d-flex justify-content-center">
+            <div class="badge badge-success p-2 mr-2">Ages 12-24</div>
+            <div class="badge badge-primary p-2">Free Access</div>
+        </div>
+    </div>
+
+    <!-- Resource Categories -->
+    <div class="row mb-5">
+        <div class="col-lg-4 mb-4">
+            <div class="resource-card card h-100 border-0 shadow-sm hover-effect">
+                <div class="card-header bg-primary text-white">
+                    <h3><i class="fas fa-graduation-cap mr-2"></i> Education</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Tutoring programs</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>College prep workshops</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Scholarship opportunities</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Career exploration</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="#" class="btn btn-success btn-block">Explore Education</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="resource-card card h-100 border-0 shadow-sm hover-effect">
+                <div class="card-header bg-primary text-white">
+                    <h3><i class="fas fa-heartbeat mr-2"></i> Wellness</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Mental health resources</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Nutrition guidance</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Fitness programs</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Substance abuse prevention</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="#" class="btn btn-success btn-block">Explore Wellness</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="resource-card card h-100 border-0 shadow-sm hover-effect">
+                <div class="card-header bg-primary text-white">
+                    <h3><i class="fas fa-briefcase mr-2"></i> Employment</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Job readiness training</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Internship opportunities</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Resume building</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success mr-3"></i>
+                            <span>Youth entrepreneurship</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="#" class="btn btn-success btn-block">Explore Employment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Programs Section -->
+    <div class="featured-programs mb-5">
+        <h2 class="text-center text-primary mb-4">Featured Programs</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card border-success h-100">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="featured-badge bg-success text-white mr-3">New</div>
+                            <h4 class="text-primary">Youth Leadership Academy</h4>
+                        </div>
+                        <p class="mt-2">Develop leadership skills through this 8-week intensive program with mentorship opportunities.</p>
+                        <div class="program-details mt-3">
+                            <p class="mb-1"><i class="far fa-calendar-alt text-success mr-2"></i> Starts June 5, 2023</p>
+                            <p class="mb-1"><i class="far fa-clock text-success mr-2"></i> Wednesdays 4-6pm</p>
+                            <p><i class="fas fa-map-marker-alt text-success mr-2"></i> Community Center</p>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="#" class="btn btn-outline-primary">Learn More</a>
+                        <a href="#" class="btn btn-success float-right">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card border-primary h-100">
+                    <div class="card-body">
+                        <h4 class="text-primary">Tech Skills Bootcamp</h4>
+                        <p>Free coding and digital skills training for youth ages 16-24. No experience required!</p>
+                        <div class="skills-tags mt-3">
+                            <span class="badge badge-success mr-2">Web Design</span>
+                            <span class="badge badge-success mr-2">Python</span>
+                            <span class="badge badge-success mr-2">JavaScript</span>
+                            <span class="badge badge-success">Career Prep</span>
+                        </div>
+                        <div class="program-details mt-3">
+                            <p class="mb-1"><i class="far fa-calendar-alt text-primary mr-2"></i> Ongoing Enrollment</p>
+                            <p><i class="fas fa-laptop text-primary mr-2"></i> Virtual & In-Person</p>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="#" class="btn btn-outline-success">View Schedule</a>
+                        <a href="#" class="btn btn-primary float-right">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Resources -->
+    <div class="additional-resources bg-light-blue p-4 rounded-lg">
+        <h2 class="text-center text-primary mb-4">More Ways We Support Youth</h2>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="d-flex">
+                    <div class="mr-3 text-success">
+                        <i class="fas fa-phone-alt fa-2x"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-primary">24/7 Support Line</h5>
+                        <p class="small">Confidential help for youth in crisis</p>
+                        <p class="font-weight-bold">1-800-YOUTH-HELP</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex">
+                    <div class="mr-3 text-success">
+                        <i class="fas fa-utensils fa-2x"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-primary">Food Assistance</h5>
+                        <p class="small">Free meals and grocery support</p>
+                        <p class="font-weight-bold">Monday-Friday, 3-6pm</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="d-flex">
+                    <div class="mr-3 text-success">
+                        <i class="fas fa-hands-helping fa-2x"></i>
+                    </div>
+                    <div>
+                        <h5 class="text-primary">Mentorship</h5>
+                        <p class="small">Connect with caring adult mentors</p>
+                        <a href="#" class="btn btn-sm btn-outline-success">Find a Mentor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

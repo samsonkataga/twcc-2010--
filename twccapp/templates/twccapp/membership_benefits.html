@@ -1,0 +1,146 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="benefits-page">
+    <!-- Hero Section -->
+    <div class="hero-section bg-primary text-white py-1">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold mb-4">TWCC Membership Benefits</h1>
+            <p class="lead">Exclusive advantages for our valued members</p>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row g-4">
+            <!-- Benefit 1: Networking -->
+            <div class="col-md-6 col-lg-4">
+                <div class="benefit-card card border-0 shadow-lg h-100">
+                    <div class="card-header bg-success text-white py-3">
+                        <i class="fas fa-network-wired me-2"></i>
+                        <h3 class="h5 mb-0 d-inline">Powerful Networking</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Access to exclusive member-only events</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Direct connections with industry leaders</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Priority invitations to conferences</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefit 2: Business Growth -->
+            <div class="col-md-6 col-lg-4">
+                <div class="benefit-card card border-0 shadow-lg h-100">
+                    <div class="card-header bg-success text-white py-3">
+                        <i class="fas fa-chart-line me-2"></i>
+                        <h3 class="h5 mb-0 d-inline">Business Acceleration</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Member-only market intelligence reports</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Discounted business development services</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Access to funding opportunities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefit 3: Learning -->
+            <div class="col-md-6 col-lg-4">
+                <div class="benefit-card card border-0 shadow-lg h-100">
+                    <div class="card-header bg-success text-white py-3">
+                        <i class="fas fa-graduation-cap me-2"></i>
+                        <h3 class="h5 mb-0 d-inline">Capacity Development</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Free member training workshops</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Certification program discounts</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Mentorship programs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefit 4: Advocacy -->
+            <div class="col-md-6 col-lg-4">
+                <div class="benefit-card card border-0 shadow-lg h-100">
+                    <div class="card-header bg-success text-white py-3">
+                        <i class="fas fa-bullhorn me-2"></i>
+                        <h3 class="h5 mb-0 d-inline">Policy Influence</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Voice in policy discussions</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Representation in government dialogues</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Early access to regulatory updates</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefit 5: Market Access -->
+            <div class="col-md-6 col-lg-4">
+                <div class="benefit-card card border-0 shadow-lg h-100">
+                    <div class="card-header bg-success text-white py-3">
+                        <i class="fas fa-store me-2"></i>
+                        <h3 class="h5 mb-0 d-inline">Premium Market Access</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Member-only trade opportunities</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Showcase in TWCC business directory</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Priority in procurement opportunities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefit 6: Support -->
+            <div class="col-md-6 col-lg-4">
+                <div class="benefit-card card border-0 shadow-lg h-100">
+                    <div class="card-header bg-success text-white py-3">
+                        <i class="fas fa-hands-helping me-2"></i>
+                        <h3 class="h5 mb-0 d-inline">Business Support</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Free business advisory services</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Legal consultation discounts</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Startup incubation support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.benefit-card {
+    transition: transform 0.3s;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.hero-section {
+    background: linear-gradient(135deg, #0d6efd 0%, #084298 100%);
+    margin-bottom: 30px;
+}
+.card-header {
+    border-bottom: none;
+}
+.list-unstyled li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+}
+.list-unstyled li:last-child {
+    border-bottom: none;
+}
+</style>
+{% endblock %}

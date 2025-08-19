@@ -1,0 +1,285 @@
+{% extends "twccapp/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="other-sectors-page">
+    <!-- Hero Section -->
+    <section class="hero-section bg-gradient py-5 text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-3 fw-bold mb-4">
+                        <i class="{{ icon }} me-3"></i>{{ category }}
+                    </h1>
+                    <p class="lead mb-4">{{ description }}</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#sector-stories" class="btn btn-light btn-lg px-4">
+                            <i class="fas fa-book-open me-2"></i>Explore Stories
+                        </a>
+                        <a href="{% url 'impact_stories' %}" class="btn btn-outline-light btn-lg px-4">
+                            View All Categories
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-none d-lg-block">
+                    <img src="{% static 'twccapp/images/logo.jpg' %}" 
+                         alt="Various Industries" 
+                         class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sector Navigation -->
+    <section class="bg-light py-4">
+        <div class="container">
+            <div class="sector-nav">
+                <div class="row g-2 justify-content-center">
+                    <div class="col-auto">
+                        <a href="{% url 'sustainable_fashion' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-tshirt me-2"></i>Fashion
+                        </a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'regional_markets' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-globe-africa me-2"></i>Markets
+                        </a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'youth_innovations' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-lightbulb me-2"></i>Youth
+                        </a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'women_agriculture' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-tractor me-2"></i>Agriculture
+                        </a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="#" class="btn btn-primary disabled">
+                            <i class="fas fa-industry me-2"></i>Other Sectors
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stories Grid -->
+    <section id="sector-stories" class="py-5">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="display-5 fw-bold">Diverse Success Stories</h2>
+                <div class="divider mx-auto my-3 bg-primary"></div>
+                <p class="lead text-muted">Impactful stories from various industries and sectors</p>
+            </div>
+
+            <div class="row g-4">
+                {% for story in stories %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card sector-card h-100 border-0 shadow-sm">
+                        {% if story.image %}
+                        <div class="card-img-container">
+                            <img src="{{ story.image.url }}" 
+                                 class="card-img-top" 
+                                 alt="{{ story.title }}">
+                            <span class="card-badge bg-primary">
+                                <i class="fas fa-cog me-1"></i>{{ story.subcategory|default:"Other" }}
+                            </span>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <small class="text-muted">
+                                    {{ story.date_published|date:"M Y" }}
+                                </small>
+                                {% if story.featured %}
+                                <span class="badge bg-warning text-dark">
+                                    <i class="fas fa-star me-1"></i>Featured
+                                </span>
+                                {% endif %}
+                            </div>
+                            <h3 class="card-title">{{ story.title }}</h3>
+                            <p class="card-text text-muted">
+                                {{ story.summary|truncatechars:120 }}
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0">
+                            <a href="{% url 'story_detail' story.pk %}" 
+                               class="btn btn-outline-primary stretched-link">
+                                Read Story <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-primary text-center py-4">
+                        <i class="fas fa-industry fa-2x mb-3"></i>
+                        <h4>No stories in other sectors yet</h4>
+                        <p>Check back soon for inspiring stories from diverse industries!</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Sector Highlights -->
+    <section class="bg-light py-5 border-top">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Explore Various Sectors</h2>
+                <div class="divider mx-auto my-3 bg-primary"></div>
+                <p class="text-muted">Discover impact stories across different industries</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="sector-highlight-card text-center p-4 h-100">
+                        <div class="sector-icon mb-3">
+                            <i class="fas fa-stethoscope fa-3x text-danger"></i>
+                        </div>
+                        <h4>Healthcare</h4>
+                        <p class="text-muted small">Innovations in medical services and community health</p>
+                        <a href="#" class="btn btn-sm btn-outline-danger mt-auto">
+                            View Stories
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="sector-highlight-card text-center p-4 h-100">
+                        <div class="sector-icon mb-3">
+                            <i class="fas fa-graduation-cap fa-3x text-info"></i>
+                        </div>
+                        <h4>Education</h4>
+                        <p class="text-muted small">Transformative learning initiatives</p>
+                        <a href="#" class="btn btn-sm btn-outline-info mt-auto">
+                            View Stories
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="sector-highlight-card text-center p-4 h-100">
+                        <div class="sector-icon mb-3">
+                            <i class="fas fa-plug fa-3x text-warning"></i>
+                        </div>
+                        <h4>Energy</h4>
+                        <p class="text-muted small">Renewable energy and power solutions</p>
+                        <a href="#" class="btn btn-sm btn-outline-warning mt-auto">
+                            View Stories
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="sector-highlight-card text-center p-4 h-100">
+                        <div class="sector-icon mb-3">
+                            <i class="fas fa-truck fa-3x text-success"></i>
+                        </div>
+                        <h4>Transport</h4>
+                        <p class="text-muted small">Mobility and logistics innovations</p>
+                        <a href="#" class="btn btn-sm btn-outline-success mt-auto">
+                            View Stories
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero-section.bg-gradient {
+        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    }
+    
+    /* Sector Navigation */
+    .sector-nav .btn {
+        border-radius: 20px;
+    }
+    
+    /* Sector Cards */
+    .sector-card {
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .sector-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    .card-img-container {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .card-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .sector-card:hover .card-img-container img {
+        transform: scale(1.05);
+    }
+    
+    .card-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    /* Sector Highlights */
+    .sector-highlight-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .sector-highlight-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .sector-icon {
+        color: #6c757d;
+    }
+    
+    /* Divider */
+    .divider {
+        width: 80px;
+        height: 4px;
+        border-radius: 2px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Smooth scroll for anchor links
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

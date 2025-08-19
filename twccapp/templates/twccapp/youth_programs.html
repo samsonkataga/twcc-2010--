@@ -1,0 +1,61 @@
+<!-- templates/youth_wing/programs.html -->
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Youth Programs & Initiatives | TWCC{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="mb-4">Youth Programs & Initiatives</h1>
+                <p class="lead">Comprehensive programs designed to empower young Africans</p>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/leadership-program.jpg' %}" class="card-img-top" alt="Leadership Training">
+                    <div class="card-body">
+                        <h3 class="card-title">Leadership Training</h3>
+                        <p class="card-text">Develop essential leadership skills through our intensive training programs and mentorship opportunities.</p>
+                        <a href="{% url 'leadership_training' %}" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/entrepreneurship-program.jpg' %}" class="card-img-top" alt="Entrepreneurship Bootcamps">
+                    <div class="card-body">
+                        <h3 class="card-title">Entrepreneurship Bootcamps</h3>
+                        <p class="card-text">Turn your business ideas into reality with our hands-on entrepreneurship training and startup support.</p>
+                        <a href="{% url 'entrepreneurship_bootcamps' %}" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/digital-skills.jpg' %}" class="card-img-top" alt="Digital Skills Workshops">
+                    <div class="card-body">
+                        <h3 class="card-title">Digital Skills Workshops</h3>
+                        <p class="card-text">Gain in-demand digital skills from coding to digital marketing in our practical workshops.</p>
+                        <a href="{% url 'digital_skills_workshops' %}" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/trade-mission.jpg' %}" class="card-img-top" alt="Youth Trade Missions">
+                    <div class="card-body">
+                        <h3 class="card-title">Youth Trade Missions</h3>
+                        <p class="card-text">Connect with regional and international markets through our organized trade missions.</p>
+                        <a href="{% url 'youth_trade_missions' %}" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

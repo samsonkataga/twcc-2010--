@@ -1,0 +1,285 @@
+{% extends "twccapp/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="regional-markets-page">
+    <!-- Hero Section -->
+    <section class="hero-section bg-primary bg-gradient text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-4 fw-bold mb-3">
+                        <i class="{{ icon }} me-3"></i>{{ category }}
+                    </h1>
+                    <p class="lead mb-4">{{ description }}</p>
+                    <div class="d-flex gap-3">
+                        <a href="#market-stories" class="btn btn-light btn-lg px-4">
+                            View Market Stories
+                        </a>
+                        <a href="{% url 'impact_stories' %}" class="btn btn-outline-light btn-lg px-4">
+                            All Categories
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 d-none d-md-block">
+                    <img src="{% static 'twccapp/images/logo.jpg' %}" 
+                         alt="Women in Regional Markets" 
+                         class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <h3 class="stat-number mb-0">85%</h3>
+                        <p class="stat-label mb-0">Cross-Border Traders</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <h3 class="stat-number mb-0">42</h3>
+                        <p class="stat-label mb-0">Markets Served</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <h3 class="stat-number mb-0">$+</h3>
+                        <p class="stat-label mb-0">Annual Trade Volume</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <h3 class="stat-number mb-0">0+</h3>
+                        <p class="stat-label mb-0">Success Stories</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stories Grid -->
+    <section id="market-stories" class="py-5">
+        <div class="container">
+            <div class="section-header mb-5 text-center">
+                <h2 class="section-title fw-bold">Market Success Stories</h2>
+                <div class="divider mx-auto my-3 bg-primary"></div>
+                <p class="section-subtitle text-muted">
+                    Inspiring stories of women breaking barriers in regional commerce
+                </p>
+            </div>
+
+            <div class="row g-4">
+                {% for story in stories %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card story-card h-100 border-0 shadow-sm hover-zoom">
+                        {% if story.image %}
+                        <div class="card-img-top-container">
+                            <img src="{{ story.image.url }}" 
+                                 class="card-img-top" 
+                                 alt="{{ story.title }}">
+                            <div class="card-badge bg-primary text-white">
+                                <i class="fas fa-map-marker-alt me-2"></i>Regional Trade
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <small class="text-muted">
+                                    {{ story.date_published|date:"M Y" }}
+                                </small>
+                                {% if story.featured %}
+                                <span class="badge bg-warning text-dark">
+                                    <i class="fas fa-star me-1"></i>Featured
+                                </span>
+                                {% endif %}
+                            </div>
+                            <h3 class="card-title h5">{{ story.title }}</h3>
+                            <p class="card-text text-muted">
+                                {{ story.summary|truncatechars:120 }}
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0">
+                            <a href="{% url 'story_detail' story.pk %}" 
+                               class="btn btn-primary stretched-link">
+                                Read Story <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        No regional market stories available yet. Check back soon!
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+   <!--  <section class="bg-light py-5 border-top">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Voices From The Markets</h2>
+                <div class="divider mx-auto my-3 bg-primary"></div>
+                <p class="text-muted">What our members say about regional trade</p>
+            </div> -->
+            
+            <!-- <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="testimonial-carousel owl-carousel owl-theme">
+                        <!- Testimonial 1 -->
+                        <!-- <div class="testimonial-item text-center">
+                            <div class="testimonial-img mx-auto mb-4">
+                                <img src="{% static 'images/testimonial1.jpg' %}" 
+                                     class="rounded-circle" 
+                                     width="100" 
+                                     alt="Testimonial">
+                            </div> --> -->
+                            <!-- <p class="testimonial-text lead mb-4">
+                                "The regional markets program transformed my small business into a cross-border success story."
+                            </p> -->
+                            <!-- <h5 class="mb-1">Fatima N.</h5>
+                            <p class="text-muted small">Textiles Trader, Tanzania-Kenya Route</p>
+                        </div> -->
+                        
+                        <!-- Testimonial 2 -->
+                        <!-- <div class="testimonial-item text-center">
+                            <div class="testimonial-img mx-auto mb-4">
+                                <img src="{% static 'images/testimonial2.jpg' %}" 
+                                     class="rounded-circle" 
+                                     width="100" 
+                                     alt="Testimonial">
+                            </div> -->
+                           <!--  <p class="testimonial-text lead mb-4">
+                                "I've doubled my income by accessing new markets through this network of amazing women."
+                            </p> -->
+                            <!-- <h5 class="mb-1">Amina K.</h5>
+                            <p class="text-muted small">Agricultural Products, Uganda Border</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #0d6efd 0%, #084298 100%);
+    }
+    
+    /* Stats Bar */
+    .stat-item {
+        padding: 15px 0;
+    }
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+    }
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+    
+    /* Story Cards */
+    .story-card {
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .hover-zoom:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(13, 110, 253, 0.1);
+    }
+    
+    .card-img-top-container {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .hover-zoom:hover .card-img-top {
+        transform: scale(1.05);
+    }
+    
+    .card-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    
+    /* Testimonials */
+    .testimonial-item {
+        padding: 30px;
+    }
+    .testimonial-text {
+        font-style: italic;
+        position: relative;
+    }
+    .testimonial-text:before,
+    .testimonial-text:after {
+        content: '"';
+        font-size: 2rem;
+        color: rgba(13, 110, 253, 0.2);
+        position: absolute;
+    }
+    .testimonial-text:before {
+        top: -15px;
+        left: -10px;
+    }
+    .testimonial-text:after {
+        bottom: -30px;
+        right: -10px;
+    }
+    
+    /* Divider */
+    .divider {
+        width: 60px;
+        height: 3px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize testimonial carousel if using Owl Carousel
+    $(document).ready(function(){
+        $('.testimonial-carousel').owlCarousel({
+            loop: true,
+            margin: 20,
+            nav: false,
+            dots: true,
+            autoplay: true,
+            responsive: {
+                0: { items: 1 },
+                768: { items: 1 },
+                992: { items: 1 }
+            }
+        });
+    });
+</script>
+{% endblock %}

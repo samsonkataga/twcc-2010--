@@ -1,0 +1,45 @@
+<!-- templates/youth_wing/leadership_training.html -->
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Leadership Training | TWCC Youth Wing{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="mb-4">Leadership Training Program</h1>
+                
+                <img src="{% static 'images/leadership-training.jpg' %}" class="img-fluid rounded mb-4" alt="Leadership Training">
+                
+                <div class="mb-4">
+                    <h3>Program Overview</h3>
+                    <p>Our 6-month leadership development program is designed to cultivate the next generation of African leaders through a comprehensive curriculum that combines theoretical knowledge with practical application.</p>
+                </div>
+                
+                <div class="mb-4">
+                    <h3>Program Components</h3>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item">Core leadership theory and practice</li>
+                        <li class="list-group-item">One-on-one mentorship from industry leaders</li>
+                        <li class="list-group-item">Community project design and implementation</li>
+                        <li class="list-group-item">Networking opportunities with peers and professionals</li>
+                        <li class="list-group-item">Personal development workshops</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-4">
+                    <h3>Who Should Apply?</h3>
+                    <p>This program is ideal for young Africans aged 18-35 who demonstrate leadership potential and want to develop their skills to make a greater impact in their communities and careers.</p>
+                </div>
+                
+                <div class="text-center mt-5">
+                    <a href="{% url 'get_involved' %}" class="btn btn-primary px-4">Apply Now</a>
+                    <a href="{% url 'youth_programs' %}" class="btn btn-outline-secondary px-4 ms-2">Back to Programs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

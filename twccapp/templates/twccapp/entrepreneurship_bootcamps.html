@@ -1,0 +1,448 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block title %}Entrepreneurship Bootcamps - TWCC{% endblock %}
+
+{% block content %}
+<!-- Hero Header Section -->
+<section class="twcc-header py-5 position-relative overflow-hidden">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Title Column -->
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="title-container">
+          <h1 class="twcc-title">
+            <span class="twcc-word">Entrepreneurship</span>
+            <span class="twcc-word">Bootcamps</span>
+          </h1>
+          <div class="divider-line"></div>
+          <p class="twcc-tagline mt-3">Igniting Innovation, Building Businesses</p>
+        </div>
+      </div>
+      
+      <!-- Image Column -->
+      <div class="col-lg-6">
+        <div class="header-image-container">
+          <img src="{% static 'twccapp/images/entrepreneurship-bootcamp.jpeg' %}" 
+               alt="Entrepreneurship Bootcamp" 
+               class="img-fluid rounded-3 shadow-lg header-image">
+          <div class="image-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bootcamp Overview Section -->
+<section class="bootcamp-overview py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold text-primary">Our Bootcamp Programs</h2>
+        <div class="divider mx-auto"></div>
+        <p class="lead">Intensive, hands-on programs designed to transform ideas into viable businesses</p>
+      </div>
+    </div>
+    
+    <div class="row g-4">
+      <!-- Startup Accelerator -->
+      <div class="col-md-6 col-lg-4">
+        <div class="bootcamp-card h-100">
+          <div class="bootcamp-icon">
+            <i class="bi bi-lightning-charge-fill"></i>
+          </div>
+          <h3>Startup Accelerator</h3>
+          <p class="duration-badge">8 Weeks Intensive</p>
+          <p>For early-stage startups ready to scale, with mentorship from industry leaders.</p>
+          <ul class="bootcamp-features">
+            <li>Market Validation</li>
+            <li>Investor Readiness</li>
+            <li>Pitch Development</li>
+            <li>$10,000 Seed Funding</li>
+          </ul>
+          <a href="#" class="btn btn-primary mt-auto">Apply Now</a>
+        </div>
+      </div>
+      
+      <!-- Women in Business -->
+      <div class="col-md-6 col-lg-4">
+        <div class="bootcamp-card h-100">
+          <div class="bootcamp-icon">
+            <i class="bi bi-gender-female"></i>
+          </div>
+          <h3>Women in Business</h3>
+          <p class="duration-badge">6 Weeks Program</p>
+          <p>Empowering female entrepreneurs with specialized training and networking.</p>
+          <ul class="bootcamp-features">
+            <li>Female Mentors</li>
+            <li>Funding Opportunities</li>
+            <li>Work-Life Balance</li>
+            <li>Childcare Support</li>
+          </ul>
+          <a href="#" class="btn btn-primary mt-auto">Apply Now</a>
+        </div>
+      </div>
+      
+      <!-- Youth Entrepreneurship -->
+      <div class="col-md-6 col-lg-4">
+        <div class="bootcamp-card h-100">
+          <div class="bootcamp-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <h3>Youth Entrepreneurship</h3>
+          <p class="duration-badge">4 Weeks Foundation</p>
+          <p>For young innovators aged 18-25 to launch their first business venture.</p>
+          <ul class="bootcamp-features">
+            <li>Idea Generation</li>
+            <li>Basic Business Skills</li>
+            <li>Peer Networking</li>
+            <li>Scholarships Available</li>
+          </ul>
+          <a href="#" class="btn btn-primary mt-auto">Apply Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Success Stories Section -->
+<section class="success-stories py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold text-primary">Success Stories</h2>
+        <div class="divider mx-auto"></div>
+        <p class="lead">Hear from our alumni who transformed their ideas into thriving businesses</p>
+      </div>
+    </div>
+    
+    <div class="row g-4">
+      <!-- Story 1 -->
+      <div class="col-md-4">
+        <div class="story-card">
+          <div class="story-image">
+            <img src="{% static 'twccapp/images/success1.jpg' %}" alt="Success Story" class="img-fluid">
+          </div>
+          <div class="story-content">
+            <h3>GreenTech Solutions</h3>
+            <p class="story-meta">2023 Accelerator Graduate | $250K Funding</p>
+            <p>"The bootcamp gave us the tools and connections to take our renewable energy idea to market..."</p>
+            <a href="#" class="btn btn-outline-primary">Read Full Story</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Story 2 -->
+      <div class="col-md-4">
+        <div class="story-card">
+          <div class="story-image">
+            <img src="{% static 'twccapp/images/success2.jpg' %}" alt="Success Story" class="img-fluid">
+          </div>
+          <div class="story-content">
+            <h3>Mama's Kitchen</h3>
+            <p class="story-meta">2024 Women's Program | 5 Locations</p>
+            <p>"From home cook to restaurant chain owner - the women's bootcamp changed everything..."</p>
+            <a href="#" class="btn btn-outline-primary">Read Full Story</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Story 3 -->
+      <div class="col-md-4">
+        <div class="story-card">
+          <div class="story-image">
+            <img src="{% static 'twccapp/images/success3.jpg' %}" alt="Success Story" class="img-fluid">
+          </div>
+          <div class="story-content">
+            <h3>EduTech Africa</h3>
+            <p class="story-meta">2022 Youth Program | 50,000 Users</p>
+            <p>"At 22, I never imagined I'd be running an education platform serving schools across 3 countries..."</p>
+            <a href="#" class="btn btn-outline-primary">Read Full Story</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Upcoming Bootcamps Section -->
+<section class="upcoming-bootcamps py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold text-primary">Upcoming Bootcamps</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-hover bootcamp-table">
+            <thead>
+              <tr>
+                <th>Program</th>
+                <th>Start Date</th>
+                <th>Duration</th>
+                <th>Location</th>
+                <th>Fee</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Startup Accelerator</td>
+                <td>June 15, 2025</td>
+                <td>8 Weeks</td>
+                <td>Nairobi</td>
+                <td>$500 <span class="text-success">(Scholarships available)</span></td>
+                <td><a href="#" class="btn btn-sm btn-primary">Apply</a></td>
+              </tr>
+              <tr>
+                <td>Women in Business</td>
+                <td>July 1, 2025</td>
+                <td>6 Weeks</td>
+                <td>Online</td>
+                <td>$300 <span class="text-success">(Early bird $250)</span></td>
+                <td><a href="#" class="btn btn-sm btn-primary">Apply</a></td>
+              </tr>
+              <tr>
+                <td>Youth Entrepreneurship</td>
+                <td>August 10, 2025</td>
+                <td>4 Weeks</td>
+                <td>Mombasa</td>
+                <td class="text-success">Fully Funded</td>
+                <td><a href="#" class="btn btn-sm btn-primary">Apply</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center mb-5">
+        <h2 class="display-4 fw-bold text-primary">What Participants Say</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+        <div class="testimonial-slider">
+          <!-- Testimonial 1 -->
+          <div class="testimonial-item">
+            <div class="testimonial-content">
+              <div class="quote-icon"><i class="bi bi-quote"></i></div>
+              <p class="testimonial-text">The bootcamp completely transformed my approach to business. In just 8 weeks, I went from having an idea to securing my first investment.</p>
+              <div class="testimonial-author">
+                <img src="{% static 'twccapp/images/testimonial1.jpg' %}" alt="Author" class="author-image">
+                <div class="author-info">
+                  <h4>James Mwangi</h4>
+                  <p>Founder, AgriTech Solutions</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Testimonial 2 -->
+          <div class="testimonial-item">
+            <div class="testimonial-content">
+              <div class="quote-icon"><i class="bi bi-quote"></i></div>
+              <p class="testimonial-text">As a young woman in tech, the specialized support and mentorship I received gave me the confidence to launch my app to market.</p>
+              <div class="testimonial-author">
+                <img src="{% static 'twccapp/images/testimonial2.jpg' %}" alt="Author" class="author-image">
+                <div class="author-info">
+                  <h4>Wanjiru Kamau</h4>
+                  <p>CEO, HealthTrack App</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Bootcamp Card Styles */
+  .bootcamp-card {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .bootcamp-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+  
+  .bootcamp-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #2a5a78, #e67e22);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+  }
+  
+  .duration-badge {
+    background: #e67e22;
+    color: white;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+  }
+  
+  .bootcamp-features {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+  }
+  
+  .bootcamp-features li {
+    padding: 5px 0;
+    position: relative;
+    padding-left: 25px;
+  }
+  
+  .bootcamp-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #e67e22;
+    font-weight: bold;
+  }
+  
+  /* Story Card Styles */
+  .story-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    height: 100%;
+  }
+  
+  .story-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .story-image {
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .story-card:hover .story-image img {
+    transform: scale(1.05);
+  }
+  
+  .story-content {
+    padding: 20px;
+  }
+  
+  .story-meta {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+  
+  /* Bootcamp Table Styles */
+  .bootcamp-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  }
+  
+  .bootcamp-table thead {
+    background: #2a5a78;
+    color: white;
+  }
+  
+  .bootcamp-table th {
+    font-weight: 500;
+  }
+  
+  /* Testimonial Styles */
+  .testimonial-item {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin: 15px;
+  }
+  
+  .quote-icon {
+    font-size: 2rem;
+    color: #e67e22;
+    margin-bottom: 15px;
+  }
+  
+  .testimonial-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+  }
+  
+  .author-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+  
+  .author-info h4 {
+    margin-bottom: 0;
+    color: #2a5a78;
+  }
+  
+  .author-info p {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .bootcamp-table {
+      font-size: 0.9rem;
+    }
+    
+    .testimonial-item {
+      padding: 20px;
+    }
+  }
+</style>
+{% endblock %}

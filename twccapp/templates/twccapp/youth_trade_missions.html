@@ -1,0 +1,668 @@
+{% extends 'twccapp/base.html' %}
+
+{% block content %}
+<div class="youth-trade-container">
+    <!-- Hero Section with Gradient Background -->
+    <header class="trade-hero">
+        <div class="hero-content">
+            <h1>Youth Trade Missions</h1>
+            <p class="hero-subtitle">Empowering the next generation of global business leaders</p>
+            <div class="hero-cta">
+                <a href="#apply" class="cta-button">Join Our Next Mission</a>
+                <a href="#learn-more" class="cta-button outline">Learn More</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Upcoming Missions Section -->
+    <section class="upcoming-missions">
+        <div class="section-header">
+            <h2><i class="fas fa-plane-departure"></i> Upcoming Trade Missions</h2>
+            <p class="section-intro">Explore our upcoming international trade opportunities</p>
+        </div>
+        
+        <div class="mission-cards">
+            <!-- Mission Card 1 -->
+            <div class="mission-card">
+                <div class="mission-date">
+                    <span class="date-day">15</span>
+                    <span class="date-month">OCT</span>
+                    <span class="date-year">2023</span>
+                </div>
+                <div class="mission-details">
+                    <h3>ASEAN Youth Trade Summit</h3>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Marina Bay Sands, Singapore</p>
+                    <ul class="mission-benefits">
+                        <li><i class="fas fa-check-circle"></i> B2B matchmaking sessions</li>
+                        <li><i class="fas fa-check-circle"></i> Market entry workshops</li>
+                        <li><i class="fas fa-check-circle"></i> Cultural immersion activities</li>
+                    </ul>
+                    <div class="mission-footer">
+                        <span class="price">From $1,200</span>
+                        <a href="#" class="register-btn">Register Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mission Card 2 -->
+            <div class="mission-card">
+                <div class="mission-date">
+                    <span class="date-day">05</span>
+                    <span class="date-month">NOV</span>
+                    <span class="date-year">2023</span>
+                </div>
+                <div class="mission-details">
+                    <h3>European Innovation Exchange</h3>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Berlin, Germany</p>
+                    <ul class="mission-benefits">
+                        <li><i class="fas fa-check-circle"></i> Tech startup showcase</li>
+                        <li><i class="fas fa-check-circle"></i> Investor pitch sessions</li>
+                        <li><i class="fas fa-check-circle"></i> EU market regulations workshop</li>
+                    </ul>
+                    <div class="mission-footer">
+                        <span class="price">From $1,800</span>
+                        <a href="#" class="register-btn">Register Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program Benefits Section -->
+    <section class="program-benefits">
+        <div class="section-header">
+            <h2><i class="fas fa-award"></i> Why Participate?</h2>
+            <p class="section-intro">Key benefits for young entrepreneurs</p>
+        </div>
+        
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <div class="benefit-icon" style="background-color: #e3f5f8;">
+                    <i class="fas fa-network-wired" style="color: #0d96aa;"></i>
+                </div>
+                <h3>Global Networking</h3>
+                <p>Connect with 100+ international buyers, distributors, and partners in your industry</p>
+            </div>
+            
+            <div class="benefit-item">
+                <div class="benefit-icon" style="background-color: #e3f0ff;">
+                    <i class="fas fa-chart-line" style="color: #2c5cc5;"></i>
+                </div>
+                <h3>Market Expansion</h3>
+                <p>Gain direct access to new markets with our structured business matching program</p>
+            </div>
+            
+            <div class="benefit-item">
+                <div class="benefit-icon" style="background-color: #e0f2ec;">
+                    <i class="fas fa-graduation-cap" style="color: #0a8f6a;"></i>
+                </div>
+                <h3>Expert Training</h3>
+                <p>Learn from trade specialists about export strategies and international business</p>
+            </div>
+            
+            <div class="benefit-item">
+                <div class="benefit-icon" style="background-color: #fff2e5;">
+                    <i class="fas fa-handshake" style="color: #ff7d4d;"></i>
+                </div>
+                <h3>Government Support</h3>
+                <p>Access to trade commissioners and diplomatic networks in target markets</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-header">
+            <h2><i class="fas fa-quote-left"></i> Success Stories</h2>
+            <p class="section-intro">Hear from our alumni</p>
+        </div>
+        
+        <div class="testimonial-cards">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <p class="testimonial-text">"The Youth Trade Mission to Singapore transformed my business. I secured three new international clients and doubled my revenue within six months."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image" style="background-image: url('https://example.com/person1.jpg');"></div>
+                        <div class="author-details">
+                            <h4>Maria Gonzalez</h4>
+                            <p>Founder, EcoTextiles</p>
+                            <div class="author-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <p class="testimonial-text">"As a tech startup founder, the connections I made during the Berlin mission led to our Series A funding and European market entry."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image" style="background-image: url('https://example.com/person2.jpg');"></div>
+                        <div class="author-details">
+                            <h4>David Kim</h4>
+                            <p>CEO, NexTech Solutions</p>
+                            <div class="author-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="final-cta">
+        <div class="cta-container">
+            <h2>Ready to Grow Your Business Globally?</h2>
+            <p>Applications for our 2023-2024 Youth Trade Missions are now open</p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-button">Apply Now</a>
+                <a href="#" class="cta-button white">Request Info Package</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+/* Base Styles */
+.youth-trade-container {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Color Scheme */
+:root {
+    --primary-blue: #2c5cc5;
+    --primary-green: #0a8f6a;
+    --secondary-blue: #0d96aa;
+    --light-blue: #e3f0ff;
+    --light-green: #e0f2ec;
+    --accent-orange: #ff7d4d;
+    --dark-gray: #2d3748;
+    --medium-gray: #4a5568;
+    --light-gray: #f7fafc;
+}
+
+/* Hero Section */
+.trade-hero {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-green) 100%);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.trade-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://example.com/world-map-bg.png') center/cover no-repeat;
+    opacity: 0.1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.trade-hero h1 {
+    font-size: 3.2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Button Styles */
+.cta-button {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.cta-button {
+    background: white;
+    color: var(--primary-blue);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.cta-button.outline {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.cta-button.outline:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.cta-button.white {
+    background: white;
+    color: var(--primary-blue);
+}
+
+/* Section Styles */
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 0 20px;
+}
+
+.section-header h2 {
+    font-size: 2.2rem;
+    color: var(--dark-gray);
+    margin-bottom: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-header h2 i {
+    color: var(--primary-green);
+    font-size: 1.8rem;
+}
+
+.section-intro {
+    font-size: 1.2rem;
+    color: var(--medium-gray);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Mission Cards */
+.upcoming-missions {
+    padding: 80px 20px;
+    background: var(--light-gray);
+}
+
+.mission-cards {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mission-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 550px;
+    display: flex;
+    transition: all 0.3s ease;
+}
+
+.mission-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.mission-date {
+    background: var(--primary-green);
+    color: white;
+    padding: 25px 20px;
+    min-width: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.date-day {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.date-month {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 5px 0;
+}
+
+.date-year {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.mission-details {
+    padding: 25px;
+    flex-grow: 1;
+}
+
+.mission-details h3 {
+    color: var(--dark-gray);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.location {
+    color: var(--medium-gray);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.location i {
+    color: var(--primary-blue);
+}
+
+.mission-benefits {
+    margin: 25px 0;
+    padding-left: 5px;
+}
+
+.mission-benefits li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.mission-benefits i {
+    color: var(--primary-green);
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.mission-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.price {
+    font-weight: 700;
+    color: var(--primary-blue);
+    font-size: 1.1rem;
+}
+
+.register-btn {
+    padding: 10px 25px;
+    background: var(--primary-blue);
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+    background: #1f4bb1;
+    transform: translateY(-2px);
+}
+
+/* Program Benefits */
+.program-benefits {
+    padding: 80px 20px;
+    background: white;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.benefit-item {
+    background: white;
+    border-radius: 12px;
+    padding: 35px 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f4f8;
+}
+
+.benefit-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.benefit-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+}
+
+.benefit-icon i {
+    font-size: 2rem;
+}
+
+.benefit-item h3 {
+    color: var(--dark-gray);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.benefit-item p {
+    color: var(--medium-gray);
+    font-size: 1rem;
+}
+
+/* Testimonials */
+.testimonials {
+    padding: 80px 20px;
+    background: var(--light-gray);
+}
+
+.testimonial-cards {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 550px;
+    padding: 40px;
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.quote-icon {
+    color: var(--primary-green);
+    font-size: 2rem;
+    opacity: 0.3;
+    margin-bottom: 20px;
+}
+
+.testimonial-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--medium-gray);
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.author-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.author-details h4 {
+    margin: 0 0 5px;
+    color: var(--dark-gray);
+}
+
+.author-details p {
+    margin: 0 0 8px;
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+}
+
+.author-rating {
+    color: #fbbf24;
+}
+
+/* Final CTA */
+.final-cta {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-blue) 100%);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.cta-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.final-cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.final-cta p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .trade-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .mission-card {
+        flex-direction: column;
+    }
+    
+    .mission-date {
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 15px;
+        min-width: auto;
+    }
+    
+    .date-day, .date-month, .date-year {
+        margin: 0 5px;
+    }
+    
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .final-cta h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .trade-hero {
+        padding: 80px 20px;
+    }
+    
+    .trade-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .cta-button, .register-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .testimonial-author {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{% endblock %}

@@ -10,7 +10,7 @@ from django.contrib.auth.models import User  # Add this import
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, RecentAdvert, Document, UpcomingEvent, YouthWingContent, YouthProgram, YouthGallery, NewsletterPDF, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
+from .models import News, ImpactStory, Testimonial, Report, RecentAdvert, Document, UpcomingEvent, YouthWingContent, YouthProgram, YouthGallery, NewsletterPDF, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
 from django.contrib.auth.decorators import login_required
 from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
 from django.views.decorators.csrf import csrf_exempt
@@ -611,4 +611,203 @@ def partners_supporters(request):
     context = {
         'partners': partners,
     }
-    return render(request, 'twccapp/partners_supporters.html', context)    
+    return render(request, 'twccapp/partners_supporters.html', context)  
+
+def annual_reports(request):
+    reports = Report.objects.filter(report_type='annual_report')
+    return render(request, 'twccapp/annual_reports.html', {'documents': reports})
+
+def research_papers(request):
+    reports = Report.objects.filter(report_type='research_paper')
+    return render(request, 'twccapp/research_papers_studies.html', {'documents': reports})
+
+def strategic_plans(request):
+    reports = Report.objects.filter(report_type='strategic_plan')
+    return render(request, 'twccapp/strategic_plans.html', {'documents': reports})
+
+def newsletters(request):
+    reports = Report.objects.filter(report_type='newsletter')
+    return render(request, 'twccapp/newsletters.html', {'documents': reports})
+
+def press_releases(request):
+    reports = Report.objects.filter(report_type='press_release')
+    return render(request, 'twccapp/press_releases.html', {'documents': reports})
+
+def member_registration(request):
+    return render(request, 'twccapp/membership_registration.html')
+
+def membership_benefits(request):
+    return render(request, 'twccapp/membership_benefits.html')
+
+def membership_categories(request):
+    return render(request, 'twccapp/membership_categories.html')
+
+def member_testimonials(request):
+    return render(request, 'twccapp/membership_testimonials.html')
+
+def impact_stories(request):
+    """Main landing page showing all impact stories"""
+    featured = ImpactStory.objects.filter(featured=True).order_by('-date_published')[:3]
+    recent = ImpactStory.objects.all().order_by('-date_published')[:6]
+    return render(request, 'twccapp/all_stories.html', {
+        'featured_stories': featured,
+        'recent_stories': recent,
+        'category': 'All Impact Stories',
+        'description': 'Real stories of transformation and success from our community'
+    })
+
+def story_detail(request, pk):  # Changed from slug to pk
+    """Detail view for individual stories"""
+    story = get_object_or_404(ImpactStory, pk=pk)  # Now using primary key
+    related = ImpactStory.objects.filter(category=story.category).exclude(pk=pk)[:3]
+    return render(request, 'twccapp/story_detail.html', {
+        'story': story,
+        'related_stories': related
+    })
+
+def sustainable_fashion(request):
+    """Women in Sustainable Fashion stories"""
+    stories = ImpactStory.objects.filter(category='fashion').order_by('-date_published')
+    return render(request, 'twccapp/sustainable_fashion.html', {
+        'stories': stories,
+        'category': 'Women in Sustainable Fashion',
+        'description': 'Innovators creating eco-friendly fashion solutions',
+        'icon': 'fas fa-tshirt'
+    })
+
+def regional_markets(request):
+    """Women in Regional Markets stories"""
+    stories = ImpactStory.objects.filter(category='markets').order_by('-date_published')
+    return render(request, 'twccapp/regional_markets.html', {
+        'stories': stories,
+        'category': 'Women in Regional Markets',
+        'description': 'Breaking barriers in cross-border trade and commerce',
+        'icon': 'fas fa-globe-africa'
+    })
+
+def youth_innovations(request):
+    """Youth-Led Innovations stories"""
+    stories = ImpactStory.objects.filter(category='youth').order_by('-date_published')
+    return render(request, 'twccapp/youth_innovations.html', {
+        'stories': stories,
+        'category': 'Youth-Led Innovations',
+        'description': 'Young entrepreneurs driving Tanzania\'s digital future',
+        'icon': 'fas fa-lightbulb'
+    })
+
+def women_agriculture(request):
+    """Women in Agriculture stories"""
+    stories = ImpactStory.objects.filter(category='agriculture').order_by('-date_published')
+    return render(request, 'twccapp/women_agriculture.html', {
+        'stories': stories,
+        'category': 'Women in Agriculture',
+        'description': 'Transforming agribusiness through innovation and leadership',
+        'icon': 'fas fa-tractor'
+    })
+
+def other_sectors(request):
+    """Other Sectors stories"""
+    stories = ImpactStory.objects.filter(category='other').order_by('-date_published')
+    return render(request, 'twccapp/other_sectors.html', {
+        'stories': stories,
+        'category': 'Other Sectors',
+        'description': 'Success stories across diverse industries',
+        'icon': 'fas fa-industry'
+    })
+
+def featured_stories(request):
+    """Special featured stories view"""
+    stories = ImpactStory.objects.filter(featured=True).order_by('-date_published')
+    return render(request, 'twccapp/featured.html', {
+        'stories': stories,
+        'category': 'Featured Stories',
+        'description': 'Highlighting exceptional success stories from our network'
+    })
+
+def member_testimonials(request):
+    featured_testimonials = Testimonial.objects.filter(is_featured=True)
+    all_testimonials = Testimonial.objects.all()
+    
+    context = {
+        'featured_testimonials': featured_testimonials,
+        'all_testimonials': all_testimonials,
+    }
+    return render(request, 'twccapp/membership_testimonials.html', context)
+
+def youth_wing(request):
+    return render(request, 'twccapp/youth_wing.html', {
+        'title': 'Youth Wing Overview',
+        'active': 'youth_wing'
+    })
+
+def youth_programs(request):
+    return render(request, 'twccapp/youth_programs.html', {
+        'title': 'Youth Programs',
+        'active': 'youth_programs'
+    })
+
+def leadership_training(request):
+    return render(request, 'twccapp/leadership_training.html', {
+        'title': 'Leadership Training',
+        'active': 'leadership_training'
+    })
+
+def entrepreneurship_bootcamps(request):
+    return render(request, 'twccapp/entrepreneurship_bootcamps.html', {
+        'title': 'Entrepreneurship Bootcamps',
+        'active': 'entrepreneurship_bootcamps'
+    })
+
+def digital_skills_workshops(request):
+    return render(request, 'twccapp/digital_skills_workshops.html', {
+        'title': 'Digital Skills Workshops',
+        'active': 'digital_skills_workshops'
+    })
+
+def youth_trade_missions(request):
+    return render(request, 'twccapp/youth_trade_missions.html', {
+        'title': 'Youth Trade Missions',
+        'active': 'youth_trade_missions'
+    })
+
+def youth_success_stories(request):
+    return render(request, 'twccapp/youth_success_stories.html', {
+        'title': 'Youth Success Stories',
+        'active': 'youth_success_stories'
+    })
+
+def youth_events(request):
+    return render(request, 'twccapp/youth_events.html', {
+        'title': 'Youth Events & Activities',
+        'active': 'youth_events'
+    })
+
+def get_involved(request):
+    return render(request, 'twccapp/get_involved.html', {
+        'title': 'Get Involved',
+        'active': 'get_involved',
+        'page_header': 'Join Our Community',  # Added for better page structure
+        'page_description': 'Discover ways to contribute and make a difference'  # Added for context
+    })
+
+def youth_resources(request):
+    return render(request, 'twccapp/youth_resources.html', {
+        'title': 'Youth Resources',
+        'active': 'youth_resources'
+    })
+
+def board_directors(request):
+    leaders = Leadership.objects.filter(is_active=True).order_by('order')[:50]
+    context = {
+        'leaders' : leaders
+    }
+    return render(request, 'twccapp/board_directors.html', context)
+
+
+def management_team(request):
+    leaders = Leadership.objects.filter(is_active=True).order_by('order')[:50]
+    context = {
+        'leaders' : leaders
+    }
+    return render(request, 'twccapp/management.html', context)
+

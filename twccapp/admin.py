@@ -1,7 +1,7 @@
 # twccapp/admin.py
 from django.contrib import admin
 from django.utils.safestring import mark_safe 
-from .models import Member, RecentAdvert, Document, YouthWingContent, UpcomingEvent, YouthProgram, YouthGallery, NewsletterPDF, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+from .models import Member, ImpactStory, Testimonial, Report, RecentAdvert, Document, YouthWingContent, UpcomingEvent, YouthProgram, YouthGallery, NewsletterPDF, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
 
 @admin.register(NewsletterPDF)
 class NewsletterPDFAdmin(admin.ModelAdmin):
@@ -202,3 +202,36 @@ admin.site.register(YouthGallery, YouthGalleryAdmin)
 class DocumentAdmin(admin.ModelAdmin):
     list_display = ('document_type', 'updated_at')
     readonly_fields = ('updated_at',)
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ('title', 'report_type', 'updated_at')
+    list_filter = ('report_type',)
+    search_fields = ('title',)
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ('name', 'company', 'rating', 'is_featured', 'created_at')
+    list_filter = ('is_featured', 'rating')
+    search_fields = ('name', 'company', 'content')
+    list_editable = ('is_featured',)
+    date_hierarchy = 'created_at'
+
+@admin.register(ImpactStory)
+class ImpactStoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'featured', 'date_published', 'author')
+    list_filter = ('category', 'featured')
+    search_fields = ('title', 'content')
+    list_editable = ('featured',)  # Allows quick editing in list view
+    
+    # Simple field display (no fieldsets/groups)
+    fields = [
+        'title',
+        'author',
+        'category',
+        'featured',
+        'image',
+        'summary',
+        'content',
+        'date_published'
+    ]

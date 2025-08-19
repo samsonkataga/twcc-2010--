@@ -31,27 +31,86 @@
         About
     </a>
     <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
-        <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
-        <li><a class="dropdown-item" href="{% url 'mission_vision' %}">Our Mission & Vision</a></li>
-        <li><a class="dropdown-item" href="{% url 'team' %}">Our Team</a></li>
-        <li><a class="dropdown-item" href="{% url 'partners_supporters' %}">Partners & Supporters</a></li>
-        <li><a class="dropdown-item" href="{% url 'governance' %}">Our Governance</a></li>
-        <li><a class="dropdown-item" href="{% url 'impact' %}">Our Impact</a></li>
-        <li><a class="dropdown-item" href="{% url 'history' %}">Our History</a></li>
+    <li><a class="dropdown-item" href="{% url 'about' %}">Our History</a></li>
+    <li><a class="dropdown-item" href="{% url 'mission_vision' %}">Our Mission & Vision</a></li>
+    <li class="dropdown-submenu">
+        <a class="dropdown-item dropdown-toggle" href="{% url 'team' %}">Our Team</a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'board_directors' %}">Board of Directors</a></li>
+            <li><a class="dropdown-item" href="{% url 'management_team' %}">Management Team</a></li>
+        </ul>
+    </li>
+    <li><a class="dropdown-item" href="{% url 'partners_supporters' %}">Partners & Supporters</a></li>
+    <li><a class="dropdown-item" href="{% url 'governance' %}">Our Governance</a></li>
+    <li><a class="dropdown-item" href="{% url 'impact' %}">Our Impact</a></li>
+    <!-- <li><a class="dropdown-item" href="{% url 'history' %}">Our History</a></li> -->
+</ul>
+</li>
+                <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="servicesProgramsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Services & Programs
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="servicesProgramsDropdown">
+        <li><a class="dropdown-item" href="{% url 'services' %}">Services</a></li>
+        <li><a class="dropdown-item" href="{% url 'projects_programs' %}">Projects & Programs</a></li>
     </ul>
 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'services' %}">Services</a>
-                </li>
-                
-                <!-- Single link to Projects & Programs page -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'projects_programs' %}">Projects & Programs</a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'youth_wing' %}">YouthWing</a>
-                </li>
+                <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="{% url 'youth_wing' %}" id="youthDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Youth Wing
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="youthDropdown">
+        <!-- Overview & Mission -->
+        <li><a class="dropdown-item" href="{% url 'youth_wing' %}">Overview & Mission</a></li>
+
+        <!-- Programs & Initiatives (Nested Dropdown) -->
+        <li class="dropdown-submenu">
+            <a class="dropdown-item dropdown-toggle" href="#" id="programsDropdown">Youth Programs & Initiatives</a>
+            <ul class="dropdown-menu" aria-labelledby="programsDropdown">
+                <li><a class="dropdown-item" href="{% url 'youth_programs' %}">Youth Programs</a></li>
+                <li><a class="dropdown-item" href="{% url 'leadership_training' %}">Leadership Training</a></li>
+                <li><a class="dropdown-item" href="{% url 'entrepreneurship_bootcamps' %}">Entrepreneurship Bootcamps</a></li>
+                <li><a class="dropdown-item" href="{% url 'digital_skills_workshops' %}">Digital Skills Workshops</a></li>
+                <li><a class="dropdown-item" href="{% url 'youth_trade_missions' %}">Youth Trade Missions</a></li>
+            </ul>
+        </li>
+
+        <!-- Other Links -->
+        <li><a class="dropdown-item" href="{% url 'youth_success_stories' %}">Youth Success Stories</a></li>
+        <li><a class="dropdown-item" href="{% url 'youth_events' %}">Events & Activities</a></li>
+        <li><a class="dropdown-item" href="{% url 'get_involved' %}">Get Involved</a></li>
+        <li><a class="dropdown-item" href="{% url 'youth_resources' %}">Resources for Youth</a></li>
+    </ul>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="{% url 'membership_benefits' %}" id="membershipDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Membership
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="membershipDropdown">
+        <li><a class="dropdown-item" href="https://db.twcc-tz.org/signup">Membership Registration</a></li>
+        <li><a class="dropdown-item" href="{% url 'membership_benefits' %}">Membership Benefits</a></li>
+        <li><a class="dropdown-item" href="{% url 'membership_categories' %}">Membership Categories & Fees</a></li>
+        <li><a class="dropdown-item" href="{% url 'member_testimonials' %}">Member Testimonials</a></li>
+    </ul>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="{% url 'impact_stories' %}" id="impactDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Impact
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="impactDropdown">
+        <li><a class="dropdown-item" href="{% url 'impact_stories' %}">All Stories</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{% url 'sustainable_fashion' %}">Women in Sustainable Fashion</a></li>
+        <li><a class="dropdown-item" href="{% url 'regional_markets' %}">Women in Regional Markets</a></li>
+        <li><a class="dropdown-item" href="{% url 'youth_innovations' %}">Youth-Led Innovations</a></li>
+        <li><a class="dropdown-item" href="{% url 'women_agriculture' %}">Women in Agriculture</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="{% url 'other_sectors' %}">Other Sectors</a></li>
+    </ul>
+</li>
                 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="{% url 'gallery' %}" id="galleryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -62,9 +121,18 @@
     </ul>
 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'publications_list' %}">Publications</a>
-                </li>
+                <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="publicationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Publications
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="publicationsDropdown">
+        <li><a class="dropdown-item" href="{% url 'annual_reports' %}">Annual Reports</a></li>
+        <li><a class="dropdown-item" href="{% url 'research_papers' %}">Research Papers & Studies</a></li>
+        <li><a class="dropdown-item" href="{% url 'strategic_plans' %}">Strategic Plans</a></li>
+        <li><a class="dropdown-item" href="{% url 'newsletters' %}">Newsletters</a></li>
+        <li><a class="dropdown-item" href="{% url 'press_releases' %}">Press Releases</a></li>
+    </ul>
+</li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         News
@@ -94,7 +162,7 @@
                     <a href="{% url 'logout' %}" class="btn btn-outline-light">Logout</a>
                 {% else %}
                     <a href="https://db.twcc-tz.org/login" class="btn btn-light me-2">Login</a>
-                    <a href="https://db.twcc-tz.org/signup" class="btn btn-light me-2">Register</a>
+                    <!-- <a href="https://db.twcc-tz.org/signup" class="btn btn-light me-2">Register</a> -->
                 {% endif %}
             </div>
         </div>

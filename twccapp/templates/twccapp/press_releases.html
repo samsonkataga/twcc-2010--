@@ -1,0 +1,29 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Press Releases</h1>
+    {% if documents %}
+        <div class="row">
+            {% for doc in documents %}
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doc.title }}</h5>
+                            <a href="{{ doc.pdf_file.url }}" class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-download me-1"></i> Download PDF
+                            </a>
+                            <small class="text-muted d-block mt-2">
+                                Last updated: {{ doc.updated_at|date:"M d, Y" }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">No press releases published yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

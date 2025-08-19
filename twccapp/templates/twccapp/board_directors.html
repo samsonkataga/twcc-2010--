@@ -1,0 +1,426 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- <div class="container">
+    <h1 style="text-align: center;">Our Team</h1>
+    <!- Add your team content here --> -->
+    <section>
+  <div class="board-container compact-board">
+    <h3 class="text-center mb-3 section-subtitle">
+      <i class="bi bi-people-fill me-2"></i> Board of Directors
+    </h3>
+    
+    <div class="org-chart">
+      <!-- Level 1: Chief Executive -->
+      <div class="org-level">
+        {% for leader in leaders %}
+          {% if "chairperson" in leader.position.lower %}
+          <div class="org-card">
+            <div class="org-image">
+              {% if leader.image %}
+              <img src="{{ leader.image.url }}" alt="{{ leader.name }}">
+              {% else %}
+              <i class="bi bi-person-fill"></i>
+              {% endif %}
+            </div>
+            <h4 class="org-name">{{ leader.name }}</h4>
+            <p class="org-position">{{ leader.position }}</p>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      <!-- Arrow from directors to chairperson -->
+      <div class="arrow-level">
+        <div class="arrow-up"></div>
+      </div>
+      
+      <!-- Level 2: Directors -->
+      <div class="org-level">
+        {% for leader in leaders %}
+          {% if "director" in leader.position.lower %}
+          <div class="org-card">
+            <div class="org-image">
+              {% if leader.image %}
+              <img src="{{ leader.image.url }}" alt="{{ leader.name }}">
+              {% else %}
+              <i class="bi bi-person-fill"></i>
+              {% endif %}
+            </div>
+            <h4 class="org-name">{{ leader.name }}</h4>
+            <p class="org-position">{{ leader.position }}</p>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+      <!-- Arrow from regionals to directors -->
+      <div class="arrow-level">
+        <div class="arrow-up"></div>
+      </div>
+      
+      <!-- Level 3: Regional -->
+      <div class="org-level">
+        {% for leader in leaders %}
+          {% if "regional" in leader.position.lower %}
+          <div class="org-card">
+            <div class="org-image">
+              {% if leader.image %}
+              <img src="{{ leader.image.url }}" alt="{{ leader.name }}">
+              {% else %}
+              <i class="bi bi-person-fill"></i>
+              {% endif %}
+            </div>
+            <h4 class="org-name">{{ leader.name }}</h4>
+            <p class="org-position">{{ leader.position }}</p>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+<style>
+/* Organizational Chart Styles */
+.compact-board {
+  max-width: 100%;
+  padding: 20px;
+}
+
+.org-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.org-level {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  position: relative;
+}
+
+.arrow-level {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 20px;
+  position: relative;
+}
+
+.arrow-up {
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 15px solid #adb5bd;
+}
+
+.org-card {
+  width: 110px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.org-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.org-image {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px solid #007bff;
+}
+
+.org-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.org-image i {
+  font-size: 1.8rem;
+  color: #6c757d;
+}
+
+.org-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+  line-height: 1.2;
+}
+
+.org-position {
+  font-size: 0.7rem;
+  color: #495057;
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+
+@media (max-width: 768px) {
+  .org-card {
+    width: 95px;
+    padding: 8px;
+  }
+  
+  .org-image {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .org-name {
+    font-size: 0.75rem;
+  }
+  
+  .org-position {
+    font-size: 0.65rem;
+  }
+  
+  .org-level {
+    gap: 10px;
+  }
+}
+</style>
+</section>
+
+<!-- Staff Members Section -->
+<!-- <section>
+<div class="board-container compact-board">
+    <h3 class="text-center mb-3 section-subtitle">
+      <i class="bi bi-briefcase-fill me-2"></i> TWCC MANAGEMENT
+
+    </h3>
+ -->
+<!-- <section>
+  <div class="compact-tree">
+      <!- Level 1: Chief Executive -->
+      <!-- <div class="tree-level compact-level-1">
+        {% for leader in leaders %}
+          {% if "chief executive" in leader.position.lower %}
+          <div class="leader-card compact-node">
+            <div class="leader-image compact-img">
+              {% if leader.image %}
+              <img src="{{ leader.image.url }}" alt="{{ leader.name }}">
+              {% else %} -->
+             <!--  <i class="bi bi-person-fill"></i>
+              {% endif %}
+            </div> -->
+            <!-- <h4 class="compact-name">{{ leader.name }}</h4>
+            <p class="compact-position">{{ leader.position }}</p>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div> --> 
+      
+      <!-- Level 2: Managers -->
+      <!-- <div class="tree-level compact-level-2">
+        {% for leader in leaders %}
+          {% if "manager" in leader.position.lower and "officer" not in leader.position.lower %}
+          <div class="leader-card compact-node">
+            <div class="leader-image compact-img">
+              {% if leader.image %} -->
+             <!--  <img src="{{ leader.image.url }}" alt="{{ leader.name }}">
+              {% else %}
+              <i class="bi bi-person-fill"></i>
+              {% endif %}
+            </div>
+            <h4 class="compact-name">{{ leader.name }}</h4>
+            <p class="compact-position">{{ leader.position }}</p>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div> -->
+      
+      <!-- Level 3: Officers -->
+      <!-- <div class="tree-level compact-level-3">
+        {% for leader in leaders %}
+          {% if "officer" in leader.position.lower %}
+          <div class="leader-card compact-node">
+            <div class="leader-image compact-img">
+              {% if leader.image %}
+              <img src="{{ leader.image.url }}" alt="{{ leader.name }}">
+              {% else %}
+              <i class="bi bi-person-fill"></i>
+              {% endif %}
+            </div> -->
+            <!-- <h4 class="compact-name">{{ leader.name }}</h4>
+            <p class="compact-position">{{ leader.position }}</p>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div> -->
+
+
+      <!-- Level 4: staff -->
+      <!-- <div class="org-level">
+        {% for leader in leaders %}
+          {% if "position" in leader.position.lower %}
+          <div class="org-card">
+            <div class="org-image">
+              {% if leader.image %}
+              <img src="{{ leader.image.url }}" alt="{{ leader.name }}">
+              {% else %}
+              <i class="bi bi-person-fill"></i>
+              {% endif %}
+            </div>
+            <h4 class="org-name">{{ leader.name }}</h4>
+            <p class="org-position">{{ leader.position }}</p>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+ -->
+<!-- </div>
+
+</section> -->
+
+
+<style>
+/* Compact Organizational Chart Styles */
+.compact-board {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 10px;
+}
+
+.compact-tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.tree-level {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.compact-level-1 {
+  margin-bottom: 15px;
+}
+
+.compact-level-2 {
+  margin-bottom: 10px;
+}
+
+
+.compact-node {
+  width: 100px;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.compact-node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.compact-img {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 5px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.compact-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compact-img i {
+  font-size: 1.5rem;
+  color: #6c757d;
+}
+
+.compact-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.compact-position {
+  font-size: 0.65rem;
+  color: #6c757d;
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+
+/* Connecting lines */
+.compact-tree::before {
+  content: '';
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  width: 1px;
+  height: 15px;
+  background-color: #adb5bd;
+}
+
+.compact-level-2::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #adb5bd;
+}
+
+@media (max-width: 768px) {
+  .compact-node {
+    width: 85px;
+    padding: 6px;
+  }
+  
+  .compact-img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .compact-name {
+    font-size: 0.7rem;
+  }
+  
+  .compact-position {
+    font-size: 0.6rem;
+  }
+}
+
+</style>
+</section>
+</div>
+{% endblock %}

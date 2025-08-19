@@ -9,7 +9,32 @@ from django.db import models
 from django.db.models.signals import post_save  # Add this import
 from django.dispatch import receiver  
 from django.core.validators import FileExtensionValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    position = models.CharField(max_length=100, blank=True, null=True)
+    company = models.CharField(max_length=100, blank=True, null=True)
+    content = models.TextField()
+    rating = models.PositiveIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        default=5
+    )
+    image = models.ImageField(
+        upload_to='testimonials/',
+        blank=True,
+        null=True,
+        help_text="Upload a profile photo of the person giving the testimonial"
+    )
+    is_featured = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"Testimonial by {self.name}"
+    
+    class Meta:
+        ordering = ['-created_at']
 
 
 class CompanyProfile(models.Model):
@@ -472,3 +497,48 @@ class Document(models.Model):
     class Meta:
         verbose_name = "Document"
         verbose_name_plural = "Documents"
+
+class Report(models.Model):
+    TYPE_CHOICES = [
+        ('annual_report', 'Annual Report'),
+        ('research_paper', 'Research Paper & Study'),
+        ('strategic_plan', 'Strategic Plan'),
+        ('newsletter', 'Newsletter'),
+        ('press_release', 'Press Release'),
+        # ... (your existing choices)
+    ]
+    
+    report_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+    title = models.CharField(max_length=200, help_text="Report title (e.g., '2023 Annual Report')")  # New field
+    pdf_file = models.FileField(upload_to='report/')
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.get_report_type_display()} - {self.title}"
+
+    class Meta:
+        ordering = ['-updated_at']  # Newest first
+
+class ImpactStory(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    summary = models.TextField()
+    image = models.ImageField(upload_to='impact_stories/')
+    category = models.CharField(max_length=50, choices=[
+        ('all', 'All Stories'),
+        ('fashion', 'Women in Sustainable Fashion'),
+        ('markets', 'Women in Regional Markets'),
+        ('youth', 'Youth-Led Innovations'),
+        ('agriculture', 'Women in Agriculture'),
+        ('other', 'Other Sectors'),
+    ])
+    featured = models.BooleanField(default=False)
+    date_published = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "Impact Stories"
+        ordering = ['-date_published']

@@ -1,0 +1,97 @@
+{% extends 'twccapp/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-primary">{{ page_header }}</h1>
+        <p class="lead text-muted">{{ page_description }}</p>
+    </div>
+
+    <div class="row">
+        <!-- Volunteer Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3><i class="fas fa-hands-helping mr-2"></i> Volunteer</h3>
+                </div>
+                <div class="card-body">
+                    <p>Join our team of dedicated volunteers and make a direct impact in our community.</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success mr-2"></i> Flexible hours</li>
+                        <li><i class="fas fa-check text-success mr-2"></i> Training provided</li>
+                        <li><i class="fas fa-check text-success mr-2"></i> Meet like-minded people</li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <a href="#" class="btn btn-success btn-block">Sign Up</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donate Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3><i class="fas fa-donate mr-2"></i> Donate</h3>
+                </div>
+                <div class="card-body">
+                    <p>Your financial support helps us continue our important work in the community.</p>
+                    <div class="progress mb-3">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="small text-muted">$15,000 of $25,000 goal raised</p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <a href="#" class="btn btn-success btn-block">Donate Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Card -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3><i class="fas fa-calendar-alt mr-2"></i> Events</h3>
+                </div>
+                <div class="card-body">
+                    <p>Participate in our upcoming events and activities.</p>
+                    <div class="border-left border-success pl-3 mb-3">
+                        <h5 class="text-primary">Community Cleanup</h5>
+                        <p class="small text-muted mb-1"><i class="far fa-clock text-success"></i> June 15, 2023</p>
+                    </div>
+                    <div class="border-left border-success pl-3">
+                        <h5 class="text-primary">Fundraising Gala</h5>
+                        <p class="small text-muted mb-1"><i class="far fa-clock text-success"></i> July 22, 2023</p>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <a href="#" class="btn btn-success btn-block">View All Events</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Involvement Section -->
+    <div class="row mt-5">
+        <div class="col-lg-6">
+            <div class="bg-light p-4 rounded border border-success">
+                <h3 class="text-primary mb-3">Partner With Us</h3>
+                <p>Businesses and organizations can partner with us to create meaningful change.</p>
+                <a href="#" class="btn btn-outline-primary">Learn About Partnerships</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="bg-light p-4 rounded border border-primary">
+                <h3 class="text-success mb-3">Spread the Word</h3>
+                <p>Help us grow our community by sharing our mission with your network.</p>
+                <div class="social-icons mt-3">
+                    <a href="#" class="btn btn-outline-success mr-2"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="btn btn-outline-success mr-2"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="btn btn-outline-success mr-2"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="btn btn-outline-success"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
