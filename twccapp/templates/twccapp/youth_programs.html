@@ -1,61 +1,93 @@
-<!-- templates/youth_wing/programs.html -->
-{% extends 'twccapp/base.html' %}
+{% extends "twccapp/base.html" %}
 {% load static %}
 
 {% block title %}Youth Programs & Initiatives | TWCC{% endblock %}
 
 {% block content %}
-<section class="py-5">
+<!-- Programs Section -->
+<section id="programs" class="youth-programs py-5">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center">
-                <h1 class="mb-4">Youth Programs & Initiatives</h1>
-                <p class="lead">Comprehensive programs designed to empower young Africans</p>
-            </div>
+        <div class="section-header text-center mb-5">
+            <h2 class="display-5 fw-bold">Our Youth Programs</h2>
+            <div class="divider mx-auto my-3 bg-primary"></div>
+            <p class="lead text-muted">Designed to challenge and inspire young Tanzanian leaders</p>
         </div>
 
-        <div class="row mt-5">
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="{% static 'images/leadership-program.jpg' %}" class="card-img-top" alt="Leadership Training">
+        <div class="row g-4">
+            {% for program in programs %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card youth-card h-100 border-0 shadow-sm hover-zoom">
+                    {% if program.image %}
+                    <div class="card-img-top-container position-relative">
+                        <img src="{{ program.image.url }}" 
+                             class="card-img-top" 
+                             alt="{{ program.title }}"
+                             style="height: 180px; object-fit: cover;">
+                        <span class="card-badge bg-primary position-absolute top-0 end-0 m-2">
+                            <i class="fas fa-calendar me-1"></i>Program
+                        </span>
+                    </div>
+                    {% else %}
+                    <div class="card-img-top-container position-relative">
+                        <img src="{% static 'twccapp/images/wing.png' %}" 
+                             class="card-img-top" 
+                             alt="{{ program.title }}"
+                             style="height: 180px; object-fit: cover;">
+                        <span class="card-badge bg-primary position-absolute top-0 end-0 m-2">
+                            <i class="fas fa-calendar me-1"></i>Program
+                        </span>
+                    </div>
+                    {% endif %}
+                    
                     <div class="card-body">
-                        <h3 class="card-title">Leadership Training</h3>
-                        <p class="card-text">Develop essential leadership skills through our intensive training programs and mentorship opportunities.</p>
-                        <a href="{% url 'leadership_training' %}" class="btn btn-outline-primary">Learn More</a>
+                        <div class="d-flex justify-content-between mb-2">
+                            {% if program.start_date %}
+                            <small class="text-muted">
+                                <i class="far fa-calendar me-1"></i>{{ program.start_date|date:"M Y" }}
+                            </small>
+                            {% endif %}
+                            {% if program.is_active %}
+                            <span class="badge bg-success">
+                                <i class="fas fa-check-circle me-1"></i>Active
+                            </span>
+                            {% endif %}
+                        </div>
+                        <h3 class="card-title h5">{{ program.title }}</h3>
+                        <p class="card-text text-muted">
+                            {{ program.description|truncatechars:120 }}
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-transparent border-0 pt-0">
+                        <a href="{% url 'youth_program_detail' program.id %}" 
+                           class="btn btn-primary stretched-link">
+                            Learn More <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="{% static 'images/entrepreneurship-program.jpg' %}" class="card-img-top" alt="Entrepreneurship Bootcamps">
-                    <div class="card-body">
-                        <h3 class="card-title">Entrepreneurship Bootcamps</h3>
-                        <p class="card-text">Turn your business ideas into reality with our hands-on entrepreneurship training and startup support.</p>
-                        <a href="{% url 'entrepreneurship_bootcamps' %}" class="btn btn-outline-primary">Learn More</a>
-                    </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-primary text-center py-4">
+                    <i class="fas fa-calendar-day fa-2x mb-3"></i>
+                    <h4>No programs available at the moment</h4>
+                    <p>Exciting youth programs coming soon! Check back later for updates.</p>
                 </div>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="{% static 'images/digital-skills.jpg' %}" class="card-img-top" alt="Digital Skills Workshops">
-                    <div class="card-body">
-                        <h3 class="card-title">Digital Skills Workshops</h3>
-                        <p class="card-text">Gain in-demand digital skills from coding to digital marketing in our practical workshops.</p>
-                        <a href="{% url 'digital_skills_workshops' %}" class="btn btn-outline-primary">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="{% static 'images/trade-mission.jpg' %}" class="card-img-top" alt="Youth Trade Missions">
-                    <div class="card-body">
-                        <h3 class="card-title">Youth Trade Missions</h3>
-                        <p class="card-text">Connect with regional and international markets through our organized trade missions.</p>
-                        <a href="{% url 'youth_trade_missions' %}" class="btn btn-outline-primary">Learn More</a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Your existing CSS styles */
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Your existing JavaScript
+</script>
 {% endblock %}

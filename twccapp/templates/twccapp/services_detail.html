@@ -5,36 +5,174 @@
 
 {% block content %}
 <section class="py-5">
-    <div class="container">
+    <div class="container-fluid px-4 px-lg-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <article>
-                    <h1 class="mb-4">{{ services_item.title }}</h1>
-                    
-                    <div class="mb-4 text-muted">
-                        <span>Posted on {{ services_item.date_posted|date:"F j, Y" }}</span>
-                        {% if services_item.author %}
-                        <span class="mx-2">|</span>
-                        <span>By {{ services_item.author.get_full_name }}</span>
+            <div class="col-12">
+                <!-- Category badge -->
+                <div class="mb-4 text-center">
+                    <span class="badge bg-primary px-3 py-2">
+                        <i class="fas {{ services_item.icon|default:'fa-handshake' }} me-2"></i>
+                        {{ services_item.get_category_display }}
+                    </span>
+                </div>
+                
+                <article class="service-detail-container">
+                    <div class="text-center mb-5">
+                        <h1 class="display-4 fw-bold mb-3">{{ services_item.title }}</h1>
+                        
+                        {% if services_item.summary %}
+                        <div class="lead px-3 px-md-5 mx-auto mb-4" style="max-width: 800px;">
+                            {{ services_item.summary }}
+                        </div>
                         {% endif %}
+                        
+                        <div class="text-muted mb-4">
+                            <span><i class="far fa-calendar me-1"></i> Posted on {{ services_item.date_posted|date:"F j, Y" }}</span>
+                            {% if services_item.author %}
+                            <span class="mx-2">|</span>
+                            <span><i class="fas fa-user me-1"></i> By {{ services_item.author.get_full_name }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                     
                     {% if services_item.image %}
-                    <img src="{{ services_item.image.url }}" alt="{{ services_item.title }}" class="img-fluid mb-4 rounded">
+                    <div class="text-center mb-5">
+                        <img src="{{ services_item.image.url }}" alt="{{ services_item.title }}" class="img-fluid rounded shadow" style="max-height: 500px; width: auto;">
+                    </div>
                     {% endif %}
                     
-                    <div class="services-content">
-                        {{ services_item.content|linebreaks }}
+                    <div class="services-content px-3 px-md-0">
+                        <div class="content-container mx-auto">
+                            {{ services_item.content|linebreaks }}
+                        </div>
                     </div>
                     
-                    <div class="mt-5">
-                        <a href="{% url 'services' %}" class="btn btn-outline-primary">
-                            <i class="fas fa-arrow-left me-2"></i>Back to services
-                        </a>
+                    <div class="text-center mt-5 pt-4">
+                        <!-- Dynamic back button based on service category -->
+                        {% if services_item.category == 'market_access' %}
+                            <a href="{% url 'market_access' %}" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Market Access Services
+                            </a>
+                        {% elif services_item.category == 'financial_linkage' %}
+                            <a href="{% url 'financial_linkage' %}" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Financial Linkage Services
+                            </a>
+                        {% elif services_item.category == 'networking_marketing' %}
+                            <a href="{% url 'networking_marketing' %}" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Networking & Marketing Services
+                            </a>
+                        {% elif services_item.category == 'capacity_building' %}
+                            <a href="{% url 'capacity_building' %}" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Capacity Building Services
+                            </a>
+                        {% elif services_item.category == 'advocacy' %}
+                            <a href="{% url 'advocacy' %}" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Advocacy Services
+                            </a>
+                        {% else %}
+                            <a href="/" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Home
+                            </a>
+                        {% endif %}
                     </div>
                 </article>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+    .service-detail-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .content-container {
+        max-width: 900px;
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+    
+    .services-content h2,
+    .services-content h3,
+    .services-content h4 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+    
+    .services-content p {
+        margin-bottom: 1.5rem;
+    }
+    
+    .services-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+    }
+    
+    .services-content ul,
+    .services-content ol {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+    }
+    
+    .services-content li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .services-content blockquote {
+        border-left: 4px solid #3498db;
+        padding-left: 1.5rem;
+        margin-left: 0;
+        font-style: italic;
+        color: #7f8c8d;
+    }
+    
+    .services-content table {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        border-collapse: collapse;
+    }
+    
+    .services-content table th,
+    .services-content table td {
+        padding: 0.75rem;
+        border: 1px solid #dee2e6;
+    }
+    
+    .services-content table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+    
+    .btn-outline-primary {
+        border-width: 2px;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-outline-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    @media (max-width: 768px) {
+        .service-detail-container {
+            padding: 0 15px;
+        }
+        
+        .display-4 {
+            font-size: 2.2rem;
+        }
+        
+        .content-container {
+            font-size: 1rem;
+        }
+    }
+</style>
 {% endblock %}

@@ -1,9 +1,21 @@
 # twccapp/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Member, ContactMessage, Subscriber
+from .models import Member, ContactMessage, Subscriber, Donation
 from .models import VideoUpdate
 from django.contrib.auth.models import User
+
+
+class DonationForm(forms.ModelForm):
+    class Meta:
+        model = Donation
+        fields = ['name', 'email', 'amount', 'message']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Your Email'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Amount', 'min': '1'}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Optional Message', 'rows': 4}),
+        }
 
 class VideoUpdateForm(forms.ModelForm):
     class Meta:

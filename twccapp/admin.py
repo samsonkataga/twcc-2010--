@@ -1,7 +1,16 @@
 # twccapp/admin.py
 from django.contrib import admin
 from django.utils.safestring import mark_safe 
-from .models import Member, ImpactStory, Testimonial, Report, RecentAdvert, Document, YouthWingContent, UpcomingEvent, YouthProgram, YouthGallery, NewsletterPDF, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+from .models import Member, Donation, YouthStory, ImpactStory, Testimonial, Report, RecentAdvert, Document, YouthWingContent, UpcomingEvent, YouthProgram, YouthGallery, NewsletterPDF, CompanyProfile, Advertisement, Newsletter, Partner, Project, News, Leadership, Services, FAQ, ContactMessage, Subscriber,SliderImage, VideoUpdate, Publication, GalleryImage
+
+@admin.register(Donation)
+class DonationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'amount', 'donated_at', 'is_processed')
+    list_filter = ('is_processed', 'donated_at')
+    list_editable = ('is_processed',)
+
+
+
 
 @admin.register(NewsletterPDF)
 class NewsletterPDFAdmin(admin.ModelAdmin):
@@ -219,6 +228,25 @@ class TestimonialAdmin(admin.ModelAdmin):
 
 @admin.register(ImpactStory)
 class ImpactStoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'featured', 'date_published', 'author')
+    list_filter = ('category', 'featured')
+    search_fields = ('title', 'content')
+    list_editable = ('featured',)  # Allows quick editing in list view
+    
+    # Simple field display (no fieldsets/groups)
+    fields = [
+        'title',
+        'author',
+        'category',
+        'featured',
+        'image',
+        'summary',
+        'content',
+        'date_published'
+]
+    
+@admin.register(YouthStory)
+class YouthStoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'featured', 'date_published', 'author')
     list_filter = ('category', 'featured')
     search_fields = ('title', 'content')

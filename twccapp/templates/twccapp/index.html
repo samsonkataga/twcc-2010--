@@ -22,34 +22,7 @@
 <section class="slider-section">
     <div class="container-fluid px-0">
         <div class="row g-0">
-            <!-- Advertisement Column - Left Side (20% width) -->
-            <!-- <div class="col-md-2 advert-column">
-                <div class="advert-container">
-                    {% if advertisements %}
-                        {% for ad in advertisements %}
-                        <div class="advert-item">
-                            <div class="advert-content">
-                                <h5 class="advert-title">{{ ad.title }}</h5>
-                                {% if ad.image %}
-                                <img src="{{ ad.image.url }}" alt="{{ ad.title }}" class="img-fluid advert-image">
-                                {% endif %}
-                                {% if ad.url %}
-                                <a href="{{ ad.url }}" class="stretched-link" target="_blank"></a>
-                                {% endif %}
-                            </div>
-                        </div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="advert-placeholder">
-                            <p></p>
-                        </div>
-                    {% endif %}
-                </div>
-            </div> -->
-
-        
-            
-            <!-- Slider Column - Right Side (80% width) -->
+            <!-- Slider Column - Full width -->
             <div class="col-md-12">
                 <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="6000">
                     {% if slider_images %}
@@ -63,34 +36,39 @@
                     </div>
                     
                     <!-- Slides -->
-                   <div class="carousel-inner">
-    {% for image in slider_images %}
-    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-        <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" style="height: 90vh; object-fit: cover; object-position: center;">
-        <div class="carousel-caption" style="bottom: 40px; padding: 0; display: block !important;">
-            <div class="caption-container p-1" style="
-    background: #4CAF50; /* Green background */
-    color: white; /* White text */
-    border-radius: 3px;
-    position: absolute;
-    bottom: 20px; /* Position from bottom */
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 40px); /* Full width minus padding */
-    max-width: 800px; /* Optional: set max width if needed */
-    padding: 10px 20px;
-    box-sizing: border-box;
-    text-align: center;
-">
-    <h3 class="caption-title" style="font-size: 0.8rem; margin-bottom: 0.2rem; line-height: 1.1;">{{ image.title }}</h3>
-    <p class="caption-text" style="font-size: 1.3rem; margin-bottom: 0; line-height: 1.1;">{{ image.caption }}</p>
-</div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
+                    <div class="carousel-inner">
+                        {% for image in slider_images %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <!-- Hidden redirect link covering entire slide except controls area -->
+                            {% if image.redirect_url %}
+                            <a href="{{ image.redirect_url }}" class="redirect-link" target="_blank"></a>
+                            {% endif %}
+                            
+                            <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}" style="height: 90vh; object-fit: cover; object-position: center;">
+                            <div class="carousel-caption" style="bottom: 40px; padding: 0; display: block !important;">
+                                <div class="caption-container p-1" style="
+                                    background: #4CAF50;
+                                    color: white;
+                                    border-radius: 3px;
+                                    position: absolute;
+                                    bottom: 20px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    width: calc(100% - 40px);
+                                    max-width: 800px;
+                                    padding: 10px 20px;
+                                    box-sizing: border-box;
+                                    text-align: center;
+                                ">
+                                    <h3 class="caption-title" style="font-size: 0.8rem; margin-bottom: 0.2rem; line-height: 1.1;">{{ image.title }}</h3>
+                                    <p class="caption-text" style="font-size: 1.3rem; margin-bottom: 0; line-height: 1.1;">{{ image.caption }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                     
-                    <!-- Controls -->
+                    <!-- Controls with enhanced styling -->
                     <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
@@ -98,56 +76,169 @@
                     <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
-                        <span></span>
                     </button>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
-<style>
-    .slider-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-}
-
- /* Mobile-specific slider styles */
-    @media (max-width: 768px) {
+    <style>
         .slider-section {
-            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
         }
         
-        .carousel-item img {
-            height: 50vh !important;
-            object-fit: contain !important;
-            object-position: center;
+        /* Hidden redirect link styling */
+        .carousel-item {
+            position: relative;
+            cursor: pointer;
         }
         
-        .carousel-caption {
-            bottom: 10px !important;
-            left: 5%;
-            right: 5%;
-            width: 90%;
-            padding: 0 !important;
+        .carousel-item a.redirect-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            text-decoration: none;
+            opacity: 0;
         }
         
         .caption-container {
-            padding: 8px !important;
-            background: rgba(0,0,0,0.8) !important;
+            z-index: 10;
+            position: relative;
         }
         
-        .caption-title {
-            font-size: 0.9rem !important;
-            margin-bottom: 0.1rem !important;
+        /* Enhanced carousel controls */
+        .carousel-control-prev, 
+        .carousel-control-next {
+            z-index: 20;
+            width: 10%;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
         }
         
-        .caption-text {
-            font-size: 0.7rem !important;
+        .carousel-control-prev:hover, 
+        .carousel-control-next:hover {
+            opacity: 0.9;
+            background: rgba(0, 0, 0, 0.2);
         }
-    }
-</style>
+        
+        .carousel-control-prev {
+            left: 0;
+            background: linear-gradient(to right, rgba(0,0,0,0.3), transparent);
+        }
+        
+        .carousel-control-next {
+            right: 0;
+            background: linear-gradient(to left, rgba(0,0,0,0.3), transparent);
+        }
+        
+        /* Hover indicator for redirect area */
+        .carousel-item:hover::after {
+            content: "Click to visit link";
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 6;
+            pointer-events: none;
+        }
+        
+        /* Mobile-specific slider styles */
+        @media (max-width: 768px) {
+            .slider-section {
+                padding: 10px 0;
+            }
+            
+            .carousel-item img {
+                height: 50vh !important;
+                object-fit: contain !important;
+                object-position: center;
+            }
+            
+            .carousel-caption {
+                bottom: 10px !important;
+                left: 5%;
+                right: 5%;
+                width: 90%;
+                padding: 0 !important;
+            }
+            
+            .caption-container {
+                padding: 8px !important;
+                background: rgba(0,0,0,0.8) !important;
+            }
+            
+            .caption-title {
+                font-size: 0.9rem !important;
+                margin-bottom: 0.1rem !important;
+            }
+            
+            .caption-text {
+                font-size: 0.7rem !important;
+            }
+            
+            /* Hide hover indicator on mobile */
+            .carousel-item:hover::after {
+                display: none;
+            }
+            
+            /* Larger touch targets for mobile */
+            .carousel-control-prev, 
+            .carousel-control-next {
+                width: 15%;
+            }
+        }
+    </style>
+    <script>
+        // JavaScript to handle the click event on carousel items
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('mainCarousel');
+            const carouselItems = document.querySelectorAll('.carousel-item');
+            
+            // Add event listener to the entire carousel
+            carousel.addEventListener('click', function(e) {
+                // Check if the click is on a control element
+                const isControl = e.target.closest('.carousel-control-prev') || 
+                                 e.target.closest('.carousel-control-next') ||
+                                 e.target.closest('.carousel-indicators');
+                
+                // Check if the click is on the caption area
+                const isCaption = e.target.closest('.caption-container');
+                
+                // If it's a control element or caption, don't redirect
+                if (isControl || isCaption) {
+                    return;
+                }
+                
+                // Find the active slide
+                const activeSlide = document.querySelector('.carousel-item.active');
+                if (activeSlide) {
+                    // Find the redirect link in the active slide
+                    const link = activeSlide.querySelector('.redirect-link');
+                    if (link && link.href) {
+                        window.open(link.href, '_blank');
+                    }
+                }
+            });
+            
+            // Prevent redirect when clicking on indicators
+            const indicators = document.querySelectorAll('.carousel-indicators button');
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        });
+    </script>
 </section>
 
 <section class="advertisement-section">
@@ -679,9 +770,9 @@
         }
     }
 }
+
 </style>
 </section>
-
 <!-- Our Guiding Principles Section -->
 <!--<section class="principles-section py-5 position-relative">
   <div class="container">
@@ -1066,7 +1157,7 @@ h2 {
   </div>
 </section>
 
- <!-- Testimonials Section -->
+ <!-- Testimonials Section
     <section class="youth-testimonials py-4 py-md-6 bg-dark text-white">
         <div class="container">
             <div class="text-center mb-4 mb-md-5">
@@ -1122,7 +1213,56 @@ h2 {
                 </div>
             </div>
         </div>
+    </section> -->
+
+
+<!-- Featured Stories -->
+    <section id="featured-stories" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-header mb-5 text-center">
+                <h2 class="section-title fw-bold">Featured Stories</h2>
+                <div class="divider mx-auto my-3 bg-primary"></div>
+                <p class="section-subtitle text-muted">Highlighting exceptional success stories from our network</p>
+            </div>
+
+            <div class="row g-4">
+                {% for story in featured_stories %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card story-card h-100 border-0 shadow-sm hover-shadow transition">
+                        {% if story.image %}
+                        <div class="card-img-top-container">
+                            <img src="{{ story.image.url }}" class="card-img-top" alt="{{ story.title }}">
+                            <div class="card-badge bg-primary text-white">{{ story.category }}</div>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <small class="text-muted">{{ story.date_published|date:"F d, Y" }}</small>
+                                {% if story.featured %}
+                                <span class="badge bg-warning text-dark">Featured</span>
+                                {% endif %}
+                            </div>
+                            <h3 class="card-title h5">{{ story.title }}</h3>
+                            <p class="card-text text-muted">{{ story.summary|truncatechars:150 }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0">
+                            <a href="{% url 'story_detail' story.pk %}" class="btn btn-outline-primary stretched-link">
+                                Read Full Story <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-3">
+            <a href="{% url 'impact_stories' %}" class="btn btn-success btn-sm">
+                <i class="fas fa-eye me-1"></i>View All
+            </a>
+        </div>
+
+        </div>
     </section>
+
 
 <section id="video-updates" class="py-5 {% if not videos %}d-none{% endif %}">
     <div class="container">

@@ -10,11 +10,23 @@ from django.contrib.auth.models import User  # Add this import
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import News, ImpactStory, Testimonial, Report, RecentAdvert, Document, UpcomingEvent, YouthWingContent, YouthProgram, YouthGallery, NewsletterPDF, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
+from .models import News, Donation, YouthStory, ImpactStory, Testimonial, Report, RecentAdvert, Document, UpcomingEvent, YouthWingContent, YouthProgram, YouthGallery, NewsletterPDF, Advertisement, GalleryImage, Newsletter, CompanyProfile, Services, FAQ, Project, ContactMessage, Partner, Leadership, VideoUpdate, SliderImage, Publication
 from django.contrib.auth.decorators import login_required
-from .forms import MemberRegistrationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
+from .forms import MemberRegistrationForm, DonationForm, CustomUserCreationForm, ContactForm, SubscribeForm, VideoUpdateForm 
 from django.views.decorators.csrf import csrf_exempt
 from .utils import send_newsletter_email
+
+def donate(request):
+    if request.method == 'POST':
+        form = DonationForm(request.POST)
+        if form.is_valid():
+            donation = form.save()
+            messages.success(request, 'Thank you for your donation! We appreciate your support.')
+            return redirect('donate')
+    else:
+        form = DonationForm()
+    
+    return render(request, 'twccapp/donation.html', {'form': form})
 
 
 # def gallery_view(request):
@@ -139,6 +151,7 @@ def publication_detail(request, pk):
 
 # views.py
 def index(request):
+    featured = ImpactStory.objects.filter(featured=True).order_by('-date_published')[:3]
     latest_news = News.objects.all().order_by('-date_posted')[:3]
     videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:10]
     slider_images = SliderImage.objects.filter(is_active=True).order_by('order')
@@ -162,6 +175,7 @@ def index(request):
     context = {
         'latest_news': latest_news,
         'company_profile': profile,
+        'featured_stories': featured,
         'slider_images': slider_images,
         'videos': videos,
         'video_form': form,
@@ -190,10 +204,22 @@ def services(request):
     }
     return render(request, 'twccapp/services.html', context)
 
-def services_detail(request, pk):
-    services_item = Services.objects.get(pk=pk)
-    return render(request, 'twccapp/services_detail.html', {'services_item': services_item})
+# def services_detail(request, pk):
+#     services_item = Services.objects.get(pk=pk)
+#     return render(request, 'twccapp/services_detail.html', {'services_item': services_item})
 
+def services_detail(request, pk):
+    try:
+        services_item = get_object_or_404(Services, pk=pk)
+        return render(request, 'twccapp/services_detail.html', {'services_item': services_item})
+    except Http404:
+        # Handle the case where service doesn't exist
+        return render(request, 'twccapp/404.html', {'message': 'The requested service does not exist.'}, status=404)
+    except Exception as e:
+        # Log other errors for debugging
+        print(f"Error in services_detail view: {e}")
+        return render(request, 'twccapp/500.html', status=500)
+        
 def news(request):
     news_list = News.objects.all().order_by('-date_posted')
     videos = VideoUpdate.objects.filter(is_active=True).order_by('-date_posted')[:20]
@@ -485,15 +511,33 @@ def project_detail(request, pk):
 
 
 
+# def youth_wing(request):
+#     # Get or create youth wing content
+#     youth_content, created = YouthWingContent.objects.get_or_create(is_active=True)
+    
+#     # Get active programs
+#     programs = YouthProgram.objects.filter(is_active=True)
+    
+#     # Get active leaders
+       
+#     # Get gallery images
+#     gallery_images = YouthGallery.objects.filter(is_active=True)
+    
+#     context = {
+#         'youth_content': youth_content,
+#         'programs': programs,
+#         'gallery_images': gallery_images,
+#     }
+#     return render(request, 'twccapp/youth_wing.html', context)
+
 def youth_wing(request):
-    # Get or create youth wing content
-    youth_content, created = YouthWingContent.objects.get_or_create(is_active=True)
+    # Get youth wing content (only one active)
+    youth_content = YouthWingContent.objects.filter(is_active=True).first()
     
     # Get active programs
     programs = YouthProgram.objects.filter(is_active=True)
+
     
-    # Get active leaders
-       
     # Get gallery images
     gallery_images = YouthGallery.objects.filter(is_active=True)
     
@@ -504,20 +548,31 @@ def youth_wing(request):
     }
     return render(request, 'twccapp/youth_wing.html', context)
 
-def youth_program_detail(request, pk):
-    """
-    View to display details of a specific youth program
-    """
-    program = get_object_or_404(YouthProgram, id=pk, is_active=True)
-    other_programs = YouthProgram.objects.filter(is_active=True).exclude(id=pk)[:3]  # Get 3 other active programs
+
+def youth_programs(request):
+    # Get all active programs, ordered by creation date (newest first)
+    programs = YouthProgram.objects.filter(is_active=True).order_by('-created_at')
     
-    context = {
+    return render(request, 'twccapp/youth_programs.html', {
+        'title': 'Youth Programs',
+        'active': 'youth_programs',
+        'programs': programs
+    })
+
+def youth_program_detail(request, program_id):
+    # Get the specific program or return 404 if not found
+    program = get_object_or_404(YouthProgram, id=program_id, is_active=True)
+    
+    # Get other active programs (excluding the current one)
+    other_programs = YouthProgram.objects.filter(is_active=True).exclude(id=program_id).order_by('-created_at')[:5]
+    
+    return render(request, 'twccapp/youth_program_detail.html', {
+        'title': program.title,
         'program': program,
-        'other_programs': other_programs,
-    }
-    return render(request, 'twccapp/youth_program_detail.html', context)
+        'other_programs': other_programs
+    })
 
-
+    
 # def governance(request):
     
 #     leaders = Leadership.objects.filter(is_active=True).order_by('order')[:50]
@@ -616,6 +671,10 @@ def partners_supporters(request):
 def annual_reports(request):
     reports = Report.objects.filter(report_type='annual_report')
     return render(request, 'twccapp/annual_reports.html', {'documents': reports})
+
+def company_profile(request):
+    reports = Report.objects.filter(report_type='company_profile')
+    return render(request, 'twccapp/company_profile.html', {'documents': reports})
 
 def research_papers(request):
     reports = Report.objects.filter(report_type='research_paper')
@@ -746,54 +805,93 @@ def youth_programs(request):
         'active': 'youth_programs'
     })
 
-def leadership_training(request):
-    return render(request, 'twccapp/leadership_training.html', {
-        'title': 'Leadership Training',
-        'active': 'leadership_training'
-    })
-
-def entrepreneurship_bootcamps(request):
-    return render(request, 'twccapp/entrepreneurship_bootcamps.html', {
-        'title': 'Entrepreneurship Bootcamps',
-        'active': 'entrepreneurship_bootcamps'
-    })
-
-def digital_skills_workshops(request):
-    return render(request, 'twccapp/digital_skills_workshops.html', {
-        'title': 'Digital Skills Workshops',
-        'active': 'digital_skills_workshops'
-    })
-
-def youth_trade_missions(request):
-    return render(request, 'twccapp/youth_trade_missions.html', {
-        'title': 'Youth Trade Missions',
-        'active': 'youth_trade_missions'
-    })
-
 def youth_success_stories(request):
+    """Youth Success Stories"""
+    stories = YouthStory.objects.filter(category='success').order_by('-date_published')
     return render(request, 'twccapp/youth_success_stories.html', {
-        'title': 'Youth Success Stories',
-        'active': 'youth_success_stories'
+        'stories': stories,
+        'category': 'Youth Success Stories',
+        'description': 'Celebrating the achievements of Tanzania\'s young innovators',
+        'icon': 'fas fa-trophy'
     })
 
-def youth_events(request):
-    return render(request, 'twccapp/youth_events.html', {
-        'title': 'Youth Events & Activities',
-        'active': 'youth_events'
+def youth_story_detail(request, pk):
+    """Detail view for individual youth stories"""
+    story = get_object_or_404(YouthStory, pk=pk)
+    related = YouthStory.objects.filter(category=story.category).exclude(pk=pk)[:3]
+    return render(request, 'twccapp/youth_story_detail.html', {
+        'story': story,
+        'related_stories': related
     })
 
 def get_involved(request):
+    """Get Involved stories"""
+    stories = YouthStory.objects.filter(category='involved').order_by('-date_published')
     return render(request, 'twccapp/get_involved.html', {
-        'title': 'Get Involved',
-        'active': 'get_involved',
-        'page_header': 'Join Our Community',  # Added for better page structure
-        'page_description': 'Discover ways to contribute and make a difference'  # Added for context
+        'stories': stories,
+        'category': 'Get Involved',
+        'description': 'Opportunities for youth to participate and make a difference',
+        'icon': 'fas fa-hands-helping'
+    })
+
+def youth_events(request):
+    """Youth Events stories"""
+    stories = YouthStory.objects.filter(category='events').order_by('-date_published')
+    return render(request, 'twccapp/youth_events.html', {
+        'stories': stories,
+        'category': 'Youth Events & Activities',
+        'description': 'Upcoming events and activities for Tanzanian youth',
+        'icon': 'fas fa-calendar-alt'
     })
 
 def youth_resources(request):
+    """Youth Resources stories"""
+    stories = YouthStory.objects.filter(category='resources').order_by('-date_published')
     return render(request, 'twccapp/youth_resources.html', {
-        'title': 'Youth Resources',
-        'active': 'youth_resources'
+        'stories': stories,
+        'category': 'Resources for Youth',
+        'description': 'Valuable resources to support youth development',
+        'icon': 'fas fa-book-open'
+    })
+
+def leadership_training(request):
+    """Leadership Training stories"""
+    stories = YouthStory.objects.filter(category='leadership').order_by('-date_published')
+    return render(request, 'twccapp/leadership_training.html', {
+        'stories': stories,
+        'category': 'Leadership Training',
+        'description': 'Developing the next generation of Tanzanian leaders',
+        'icon': 'fas fa-users'
+    })
+
+def entrepreneurship_bootcamps(request):
+    """Entrepreneurship Bootcamps stories"""
+    stories = YouthStory.objects.filter(category='entrepreneurship').order_by('-date_published')
+    return render(request, 'twccapp/entrepreneurship_bootcamps.html', {
+        'stories': stories,
+        'category': 'Entrepreneurship Bootcamps',
+        'description': 'Empowering young entrepreneurs with skills and resources',
+        'icon': 'fas fa-chart-line'
+    })
+
+def digital_skills_workshops(request):
+    """Digital Skills Workshops stories"""
+    stories = YouthStory.objects.filter(category='digital').order_by('-date_published')
+    return render(request, 'twccapp/digital_skills_workshops.html', {
+        'stories': stories,
+        'category': 'Digital Skills Workshops',
+        'description': 'Building digital literacy for the 21st century economy',
+        'icon': 'fas fa-laptop-code'
+    })
+
+def youth_trade_missions(request):
+    """Youth Trade Missions stories"""
+    stories = YouthStory.objects.filter(category='trade').order_by('-date_published')
+    return render(request, 'twccapp/youth_trade_missions.html', {
+        'stories': stories,
+        'category': 'Youth Trade Missions',
+        'description': 'Expanding market access for young Tanzanian businesses',
+        'icon': 'fas fa-globe-africa'
     })
 
 def board_directors(request):
@@ -810,4 +908,29 @@ def management_team(request):
         'leaders' : leaders
     }
     return render(request, 'twccapp/management.html', context)
+
+# View for Financial Linkage services
+def financial_linkage(request):
+    services = Services.objects.filter(category='financial_linkage')
+    return render(request, 'twccapp/financial_linkage.html', {'services': services})
+
+# View for Networking and Marketing services
+def networking_marketing(request):
+    services = Services.objects.filter(category='networking_marketing')
+    return render(request, 'twccapp/networking_marketing.html', {'services': services})
+
+# View for Capacity Building services
+def capacity_building(request):
+    services = Services.objects.filter(category='capacity_building')
+    return render(request, 'twccapp/capacity_building.html', {'services': services})
+
+# View for Advocacy services
+def advocacy(request):
+    services = Services.objects.filter(category='advocacy')
+    return render(request, 'twccapp/advocacy.html', {'services': services})
+
+# View for Market Access services
+def market_access(request):
+    services = Services.objects.filter(category='market_access')
+    return render(request, 'twccapp/market_access.html', {'services': services})
 

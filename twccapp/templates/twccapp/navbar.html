@@ -7,7 +7,50 @@
         color: yellow;
     }
     
+    /* Hover dropdown styles */
+    .navbar .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+    
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+        left: 100%;
+        top: 0;
+        margin-top: -6px;
+        margin-left: -1px;
+    }
+    
+    /* Hamburger menu style */
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 4px 0;
+        background-color: white;
+    }
+    
+    /* Mobile responsiveness - ensure click toggle still works */
+    @media (max-width: 991.98px) {
+        .navbar .dropdown:hover .dropdown-menu {
+            display: none;
+        }
+        
+        .navbar .dropdown.show .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-submenu:hover > .dropdown-menu {
+            left: 0;
+            top: 100%;
+        }
+    }
 </style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand" href="{% url 'index' %}">
@@ -26,113 +69,139 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'index' %}">Home</a>
                 </li>
-                <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="{% url 'about' %}" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        About
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
-    <li><a class="dropdown-item" href="{% url 'about' %}">Our History</a></li>
-    <li><a class="dropdown-item" href="{% url 'mission_vision' %}">Our Mission & Vision</a></li>
-    <li class="dropdown-submenu">
-        <a class="dropdown-item dropdown-toggle" href="{% url 'team' %}">Our Team</a>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'board_directors' %}">Board of Directors</a></li>
-            <li><a class="dropdown-item" href="{% url 'management_team' %}">Management Team</a></li>
-        </ul>
-    </li>
-    <li><a class="dropdown-item" href="{% url 'partners_supporters' %}">Partners & Supporters</a></li>
-    <li><a class="dropdown-item" href="{% url 'governance' %}">Our Governance</a></li>
-    <li><a class="dropdown-item" href="{% url 'impact' %}">Our Impact</a></li>
-    <!-- <li><a class="dropdown-item" href="{% url 'history' %}">Our History</a></li> -->
-</ul>
-</li>
-                <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="servicesProgramsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Services & Programs
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="servicesProgramsDropdown">
-        <li><a class="dropdown-item" href="{% url 'services' %}">Services</a></li>
-        <li><a class="dropdown-item" href="{% url 'projects_programs' %}">Projects & Programs</a></li>
-    </ul>
-</li>
-
-                <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="{% url 'youth_wing' %}" id="youthDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Youth Wing
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="youthDropdown">
-        <!-- Overview & Mission -->
-        <li><a class="dropdown-item" href="{% url 'youth_wing' %}">Overview & Mission</a></li>
-
-        <!-- Programs & Initiatives (Nested Dropdown) -->
-        <li class="dropdown-submenu">
-            <a class="dropdown-item dropdown-toggle" href="#" id="programsDropdown">Youth Programs & Initiatives</a>
-            <ul class="dropdown-menu" aria-labelledby="programsDropdown">
-                <li><a class="dropdown-item" href="{% url 'youth_programs' %}">Youth Programs</a></li>
-                <li><a class="dropdown-item" href="{% url 'leadership_training' %}">Leadership Training</a></li>
-                <li><a class="dropdown-item" href="{% url 'entrepreneurship_bootcamps' %}">Entrepreneurship Bootcamps</a></li>
-                <li><a class="dropdown-item" href="{% url 'digital_skills_workshops' %}">Digital Skills Workshops</a></li>
-                <li><a class="dropdown-item" href="{% url 'youth_trade_missions' %}">Youth Trade Missions</a></li>
-            </ul>
-        </li>
-
-        <!-- Other Links -->
-        <li><a class="dropdown-item" href="{% url 'youth_success_stories' %}">Youth Success Stories</a></li>
-        <li><a class="dropdown-item" href="{% url 'youth_events' %}">Events & Activities</a></li>
-        <li><a class="dropdown-item" href="{% url 'get_involved' %}">Get Involved</a></li>
-        <li><a class="dropdown-item" href="{% url 'youth_resources' %}">Resources for Youth</a></li>
-    </ul>
-</li>
-
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="{% url 'membership_benefits' %}" id="membershipDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Membership
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="membershipDropdown">
-        <li><a class="dropdown-item" href="https://db.twcc-tz.org/signup">Membership Registration</a></li>
-        <li><a class="dropdown-item" href="{% url 'membership_benefits' %}">Membership Benefits</a></li>
-        <li><a class="dropdown-item" href="{% url 'membership_categories' %}">Membership Categories & Fees</a></li>
-        <li><a class="dropdown-item" href="{% url 'member_testimonials' %}">Member Testimonials</a></li>
-    </ul>
-</li>
-
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="{% url 'impact_stories' %}" id="impactDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Impact
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="impactDropdown">
-        <li><a class="dropdown-item" href="{% url 'impact_stories' %}">All Stories</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="{% url 'sustainable_fashion' %}">Women in Sustainable Fashion</a></li>
-        <li><a class="dropdown-item" href="{% url 'regional_markets' %}">Women in Regional Markets</a></li>
-        <li><a class="dropdown-item" href="{% url 'youth_innovations' %}">Youth-Led Innovations</a></li>
-        <li><a class="dropdown-item" href="{% url 'women_agriculture' %}">Women in Agriculture</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="{% url 'other_sectors' %}">Other Sectors</a></li>
-    </ul>
-</li>
                 
+                <!-- About Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'about' %}" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        About
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                        <li><a class="dropdown-item" href="{% url 'about' %}">Our History</a></li>
+                        <li><a class="dropdown-item" href="{% url 'mission_vision' %}">Our Mission & Vision</a></li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="{% url 'team' %}">Our Team</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'board_directors' %}">Board of Directors</a></li>
+                                <li><a class="dropdown-item" href="{% url 'management_team' %}">Management Team</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'partners_supporters' %}">Partners & Supporters</a></li>
+                        <li><a class="dropdown-item" href="{% url 'governance' %}">Our Governance</a></li>
+                        <li><a class="dropdown-item" href="{% url 'impact' %}">Our Impact</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Services Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="servicesProgramsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Services
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="servicesProgramsDropdown">
+                        <li><a class="dropdown-item" href="{% url 'services' %}">Women Empowerment Initiatives & Projects</a></li>
+                        <li><a class="dropdown-item" href="{% url 'services' %}">Mentorship Programs</a></li>
+                        <li><a class="dropdown-item" href="{% url 'services' %}">Policy Advocacy</a></li>
+                        <li><a class="dropdown-item" href="{% url 'services' %}">Training & Capacity Building</a></li>
+                        <li><a class="dropdown-item" href="{% url 'services' %}">Finance Linkages & Support</a></li>
+                        <li><a class="dropdown-item" href="{% url 'services' %}">Trade Missions & Market Access</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Programs Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="servicesProgramsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Programs
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="servicesProgramsDropdown">
+                        <li><a class="dropdown-item" href="{% url 'projects_programs' %}">Wezesha Binti</a></li>
+                        <li><a class="dropdown-item" href="{% url 'projects_programs' %}">The CLARITY project</a></li>
+                        <li><a class="dropdown-item" href="{% url 'projects_programs' %}">Accelerating sustainable growth of rural women SMEs in Honey Sector - TABORA</a></li>
+                        <li><a class="dropdown-item" href="{% url 'projects_programs' %}">Green and smart cities (SASA ) Program</a></li>
+                        <li><a class="dropdown-item" href="{% url 'projects_programs' %}">Bid for Sucess</a></li>
+                        <li><a class="dropdown-item" href="{% url 'projects_programs' %}">Twende Sokoni Africa Program</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Youth Wing Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'youth_wing' %}" id="youthDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Youth Wing
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="youthDropdown">
+                        <li><a class="dropdown-item" href="{% url 'youth_wing' %}">Overview & Mission</a></li>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item dropdown-toggle" href="#" id="programsDropdown">Youth Programs & Initiatives</a>
+                            <ul class="dropdown-menu" aria-labelledby="programsDropdown">
+                                <li><a class="dropdown-item" href="{% url 'youth_programs' %}">Youth Programs</a></li>
+                                <li><a class="dropdown-item" href="{% url 'leadership_training' %}">Leadership Training</a></li>
+                                <li><a class="dropdown-item" href="{% url 'entrepreneurship_bootcamps' %}">Entrepreneurship Bootcamps</a></li>
+                                <li><a class="dropdown-item" href="{% url 'digital_skills_workshops' %}">Digital Skills Workshops</a></li>
+                                <li><a class="dropdown-item" href="{% url 'youth_trade_missions' %}">Youth Trade Missions</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'youth_success_stories' %}">Youth Success Stories</a></li>
+                        <li><a class="dropdown-item" href="{% url 'youth_events' %}">Events & Activities</a></li>
+                        <li><a class="dropdown-item" href="{% url 'get_involved' %}">Get Involved</a></li>
+                        <li><a class="dropdown-item" href="{% url 'youth_resources' %}">Resources for Youth</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Membership Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'membership_benefits' %}" id="membershipDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Membership
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="membershipDropdown">
+                        <li><a class="dropdown-item" href="https://db.twcc-tz.org/signup">Membership Registration</a></li>
+                        <li><a class="dropdown-item" href="{% url 'membership_benefits' %}">Membership Benefits</a></li>
+                        <li><a class="dropdown-item" href="{% url 'membership_categories' %}">Membership Categories & Fees</a></li>
+                        <li><a class="dropdown-item" href="{% url 'member_testimonials' %}">Member Testimonials</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Impact Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{% url 'impact_stories' %}" id="impactDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Impact
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="impactDropdown">
+                        <li><a class="dropdown-item" href="{% url 'impact_stories' %}">All Stories</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'sustainable_fashion' %}">Women in Sustainable Fashion</a></li>
+                        <li><a class="dropdown-item" href="{% url 'regional_markets' %}">Women in Regional Markets</a></li>
+                        <li><a class="dropdown-item" href="{% url 'youth_innovations' %}">Youth-Led Innovations</a></li>
+                        <li><a class="dropdown-item" href="{% url 'women_agriculture' %}">Women in Agriculture</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'other_sectors' %}">Other Sectors</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Gallery Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="{% url 'gallery' %}" id="galleryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Gallery</a>
-    <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
-        <li><a class="dropdown-item" href="{% url 'gallery' %}">Photo Albums</a></li>
-        <li><a class="dropdown-item" href="{% url 'video_update' %}">Video Highlights</a></li>
-    </ul>
-</li>
-
+                        Gallery
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
+                        <li><a class="dropdown-item" href="{% url 'gallery' %}">Photo Albums</a></li>
+                        <li><a class="dropdown-item" href="{% url 'video_update' %}">Video Highlights</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Publications Dropdown -->
                 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="publicationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Publications
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="publicationsDropdown">
-        <li><a class="dropdown-item" href="{% url 'annual_reports' %}">Annual Reports</a></li>
-        <li><a class="dropdown-item" href="{% url 'research_papers' %}">Research Papers & Studies</a></li>
-        <li><a class="dropdown-item" href="{% url 'strategic_plans' %}">Strategic Plans</a></li>
-        <li><a class="dropdown-item" href="{% url 'newsletters' %}">Newsletters</a></li>
-        <li><a class="dropdown-item" href="{% url 'press_releases' %}">Press Releases</a></li>
-    </ul>
-</li>
+                    <a class="nav-link dropdown-toggle" href="#" id="publicationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Publications
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="publicationsDropdown">
+                        <li><a class="dropdown-item" href="{% url 'annual_reports' %}">Annual Reports</a></li>
+                        <li><a class="dropdown-item" href="{% url 'research_papers' %}">Research Papers & Studies</a></li>
+                        <li><a class="dropdown-item" href="{% url 'strategic_plans' %}">Strategic Plans</a></li>
+                        <li><a class="dropdown-item" href="{% url 'newsletters' %}">Newsletters</a></li>
+                        <li><a class="dropdown-item" href="{% url 'press_releases' %}">Reports</a></li>
+                        <li><a class="dropdown-item" href="{% url 'company_profile' %}">Company Profile</a></li>
+                    </ul>
+                </li>
+                
+                <!-- News Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         News
@@ -142,9 +211,8 @@
                         <li><a class="dropdown-item" href="{% url 'news' %}">Recent Update</a></li>
                     </ul>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="{% url 'faqs' %}">FAQs</a>
-                </li> -->
+                
+                <!-- Contact Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Contact
@@ -161,10 +229,36 @@
                     <a href="{% url 'dashboard' %}" class="btn btn-light me-2">Dashboard</a>
                     <a href="{% url 'logout' %}" class="btn btn-outline-light">Logout</a>
                 {% else %}
-                    <a href="https://db.twcc-tz.org/login" class="btn btn-light me-2">Login</a>
-                    <!-- <a href="https://db.twcc-tz.org/signup" class="btn btn-light me-2">Register</a> -->
+                    <a href="{% url 'donate' %}" class="btn btn-light me-2">Donation</a>
                 {% endif %}
             </div>
         </div>
     </div>
 </nav>
+
+<!-- Add a small JavaScript to handle submenu toggle on mobile -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // For mobile devices, ensure submenus work with clicks
+    if (window.innerWidth < 992) {
+        document.querySelectorAll('.dropdown-submenu > a').forEach(function(element) {
+            element.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const submenu = this.nextElementSibling;
+                const isShowing = submenu.classList.contains('show');
+                
+                // Close all other submenus
+                document.querySelectorAll('.dropdown-submenu .dropdown-menu').forEach(function(menu) {
+                    menu.classList.remove('show');
+                });
+                
+                // Toggle this submenu
+                if (!isShowing) {
+                    submenu.classList.add('show');
+                }
+            });
+        });
+    }
+});
+</script>

@@ -11,6 +11,17 @@ from django.dispatch import receiver
 from django.core.validators import FileExtensionValidator
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+class Donation(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    message = models.TextField(blank=True)
+    donated_at = models.DateTimeField(auto_now_add=True)
+    is_processed = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"{self.name} - ${self.amount}"
+
 class Testimonial(models.Model):
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=100, blank=True, null=True)
@@ -59,6 +70,7 @@ class Project(models.Model):
 class SliderImage(models.Model):
     title = models.CharField(max_length=100, blank=True)
     image = models.ImageField(upload_to='slider_images/')
+    redirect_url = models.URLField(max_length=500, blank=True, null=True, default=None)  # Added URL field
     caption = models.CharField(max_length=755, blank=True)
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
@@ -122,26 +134,45 @@ class UpcomingEvent(models.Model):
     def __str__(self):
         return self.title 
 
-class Services(models.Model):
-    ICON_CHOICES = [
-        ('fa-money-bill-wave', 'Financial (money bill)'),
-        ('fa-handshake', 'Networking (handshake)'),
-        ('fa-chart-line', 'Capacity (growth chart)'),
-        ('fa-bullhorn', 'Advocacy (megaphone)'),
-        ('fa-users', 'Team (users)'),
-        ('fa-globe', 'Global (globe)'),
-        # Add more icons as needed
-    ]
+# class Services(models.Model):
+#     ICON_CHOICES = [
+#         ('fa-money-bill-wave', 'Financial (money bill)'),
+#         ('fa-handshake', 'Networking (handshake)'),
+#         ('fa-chart-line', 'Capacity (growth chart)'),
+#         ('fa-bullhorn', 'Advocacy (megaphone)'),
+#         ('fa-users', 'Team (users)'),
+#         ('fa-globe', 'Global (globe)'),
+#         # Add more icons as needed
+#     ]
 
+#     title = models.CharField(max_length=200)
+#     icon = models.CharField(max_length=50, choices=ICON_CHOICES, default='fa-handshake')
+#     content = models.TextField()
+#     summary = models.TextField(default=True)
+#     date_posted = models.DateTimeField(default=timezone.now)
+#     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+#     def __str__(self):
+#         return self.title 
+
+class Services(models.Model):
+    CATEGORY_CHOICES = [
+        ('financial_linkage', 'Financial Linkage'),
+        ('networking_marketing', 'Networking and Marketing'),
+        ('capacity_building', 'Capacity Building'),
+        ('advocacy', 'Advocacy'),
+        ('market_access', 'Market Access and Digitalization'),
+    ]
+    
     title = models.CharField(max_length=200)
-    icon = models.CharField(max_length=50, choices=ICON_CHOICES, default='fa-handshake')
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default=True)
     content = models.TextField()
-    summary = models.TextField(default=True)
+    summary = models.TextField(default="Service summary")
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.title 
+        return self.title
 
 class FAQ(models.Model):
     question = models.CharField(max_length=200)
@@ -444,6 +475,7 @@ class YouthProgram(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        
 
 # class YouthLeader(models.Model):
 #     name = models.CharField(max_length=100)
@@ -505,6 +537,7 @@ class Report(models.Model):
         ('strategic_plan', 'Strategic Plan'),
         ('newsletter', 'Newsletter'),
         ('press_release', 'Press Release'),
+        ('company_profile', 'Company Profile'),
         # ... (your existing choices)
     ]
     
@@ -541,4 +574,32 @@ class ImpactStory(models.Model):
 
     class Meta:
         verbose_name_plural = "Impact Stories"
+        ordering = ['-date_published']
+
+class YouthStory(models.Model):
+    YOUTH_CATEGORIES = [
+        ('success', 'Youth Success Stories'),
+        ('involved', 'Get Involved'),
+        ('events', 'Events & Activities'),
+        ('resources', 'Resources for Youth'),
+        ('leadership', 'Leadership Training'),
+        ('entrepreneurship', 'Entrepreneurship Bootcamp'),
+        ('digital', 'Digital Skills Workshops'),
+        ('trade', 'Youth Trade Missions'),
+    ]
+    
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    summary = models.TextField()
+    image = models.ImageField(upload_to='youth_stories/')
+    category = models.CharField(max_length=50, choices=YOUTH_CATEGORIES)
+    featured = models.BooleanField(default=False)
+    date_published = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "Youth Stories"
         ordering = ['-date_published']

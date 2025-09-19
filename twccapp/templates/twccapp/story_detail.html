@@ -11,21 +11,20 @@
     </div>
 
     <!-- Main Story Card -->
-    <article class="card border-0">
-        <!-- Story Image - Now properly sized -->
+    <article class="card border-0 shadow-sm">
+        <!-- Story Image - Now much larger and properly sized -->
         {% if story.image %}
-        <div class="text-center mb-3">
+        <div class="text-center mb-4 p-3 bg-light rounded-top">
             <img src="{{ story.image.url }}" 
-                 class="img-fluid rounded story-image" 
-                 alt="{{ story.title }}"
-                 style="max-height: 300px; width: auto;">
+                 class="img-fluid rounded story-main-image" 
+                 alt="{{ story.title }}">
         </div>
         {% endif %}
         
-        <div class="card-body px-0">
+        <div class="card-body px-4">
             <!-- Story Meta -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-primary">{{ story.category }}</span>
+                <span class="badge bg-primary fs-6 py-2">{{ story.category }}</span>
                 <div>
                     <small class="text-muted">{{ story.date_published|date:"M j, Y" }}</small>
                     {% if story.featured %}
@@ -35,11 +34,24 @@
             </div>
             
             <!-- Story Title -->
-            <h1 class="h2 mb-3">{{ story.title }}</h1>
+            <h1 class="display-5 mb-4 fw-bold">{{ story.title }}</h1>
             
             <!-- Story Content -->
-            <div class="story-content">
+            <div class="story-content fs-5">
                 {{ story.content|linebreaks }}
+            </div>
+        </div>
+        
+        <!-- Social Sharing -->
+        <div class="card-footer bg-transparent border-0 px-4 pb-4">
+            <div class="d-flex align-items-center">
+                <span class="me-2 text-muted">Share this story:</span>
+                <div class="btn-group" role="group">
+                    <a href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="btn btn-outline-info btn-sm"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="btn btn-outline-success btn-sm"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="btn btn-outline-danger btn-sm"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
         </div>
     </article>
@@ -47,7 +59,7 @@
     <!-- Related Stories Section -->
     {% if related_stories %}
     <section class="mt-5 pt-4 border-top">
-        <h3 class="h4 mb-3">More Stories You Might Like</h3>
+        <h3 class="h4 mb-4 fw-bold">More Stories You Might Like</h3>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for related in related_stories %}
             <div class="col">
@@ -55,7 +67,8 @@
                     {% if related.image %}
                     <img src="{{ related.image.url }}" 
                          class="card-img-top related-story-img" 
-                         alt="{{ related.title }}">
+                         alt="{{ related.title }}"
+                         style="height: 200px; object-fit: cover;">
                     {% endif %}
                     <div class="card-body">
                         <span class="badge bg-primary mb-2">{{ related.category }}</span>
@@ -78,39 +91,56 @@
 
 {% block extra_css %}
 <style>
-    /* Main story image styling */
-    .story-image {
-        max-width: 200%;
+    /* Main story image styling - Now much larger */
+    .story-main-image {
+        max-width: 100%;
+        max-height: 500px;
+        width: auto;
         height: auto;
         border: 1px solid #dee2e6;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        object-fit: contain;
     }
 
-    /* Related story images */
-    .related-story-img {
-        height: 180px;
-        object-fit: cover;
-        width: 100%;
+    /* Responsive adjustments for the main image */
+    @media (max-width: 768px) {
+        .story-main-image {
+            max-height: 350px;
+        }
     }
-
 
     /* Content styling */
     .story-content {
-        font-size: 1.05rem;
-        line-height: 1.7;
+        line-height: 1.8;
+        color: #333;
     }
     
     .story-content p {
-        margin-bottom: 1.2rem;
+        margin-bottom: 1.5rem;
     }
     
-    /* Card hover effect */
+    /* Card styling */
     .card {
-        transition: transform 0.2s;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .card:hover {
-        transform: translateY(-3px);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* Related story images */
+    .related-story-img {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+    
+    /* Badge styling */
+    .badge {
+        font-weight: 500;
     }
 </style>
 {% endblock %}

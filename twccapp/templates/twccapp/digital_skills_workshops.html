@@ -1,536 +1,194 @@
-{% extends 'twccapp/base.html' %}
+{% extends "twccapp/base.html" %}
 {% load static %}
 
-{% block title %}Digital Skills Workshops - TWCC{% endblock %}
-
 {% block content %}
-<!-- Hero Header Section -->
-<section class="twcc-header py-5 position-relative overflow-hidden">
-  <div class="container">
-    <div class="row align-items-center">
-      <!-- Title Column -->
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <div class="title-container">
-          <h1 class="twcc-title">
-            <span class="twcc-word">Digital</span>
-            <span class="twcc-word">Skills</span>
-            <span class="twcc-word">Workshops</span>
-          </h1>
-          <div class="divider-line"></div>
-          <p class="twcc-tagline mt-3">Empowering the Workforce of Tomorrow</p>
-        </div>
-      </div>
-      
-      <!-- Image Column -->
-      <div class="col-lg-6">
-        <div class="header-image-container">
-          <img src="{% static 'twccapp/images/digital-skills.jpg' %}" 
-               alt="Digital Skills Workshop" 
-               class="img-fluid rounded-3 shadow-lg header-image">
-          <div class="image-overlay"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="youth-success-page">
+    <!-- Success Stories -->
+    <section id="success-stories" class="py-5">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="display-5 fw-bold">Youth Digital Skills</h2>
+                <div class="divider mx-auto my-3 bg-primary"></div>
+                <p class="lead text-muted">Stories of young Tanzanians making a difference in their communities</p>
+            </div>
 
-<!-- Workshop Categories Section -->
-<section class="workshop-categories py-5 bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center mb-5">
-        <h2 class="display-4 fw-bold text-primary">Our Workshop Categories</h2>
-        <div class="divider mx-auto"></div>
-        <p class="lead">Hands-on training in essential digital competencies for all skill levels</p>
-      </div>
-    </div>
-    
-    <div class="row g-4">
-      <!-- Digital Literacy -->
-      <div class="col-md-6 col-lg-3">
-        <div class="workshop-card h-100">
-          <div class="workshop-icon">
-            <i class="bi bi-laptop"></i>
-          </div>
-          <h3>Digital Literacy</h3>
-          <p>Foundational computer and internet skills for beginners</p>
-          <ul class="workshop-features">
-            <li>Basic Computer Operations</li>
-            <li>Internet Navigation</li>
-            <li>Email Communication</li>
-            <li>Online Safety</li>
-          </ul>
-          <div class="workshop-level beginner">Beginner</div>
+            <div class="row g-4">
+                {% for story in stories %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card youth-card h-100 border-0 shadow-sm hover-zoom">
+                        {% if story.image %}
+                        <div class="card-img-top-container position-relative">
+                            <img src="{{ story.image.url }}" 
+                                 class="card-img-top" 
+                                 alt="{{ story.title }}"
+                                 style="height: 180px; object-fit: cover;">
+                            <span class="card-badge bg-primary position-absolute top-0 end-0 m-2">
+                                <i class="fas fa-trophy me-1"></i>Success Story
+                            </span>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <small class="text-muted">
+                                    {{ story.date_published|date:"M Y" }}
+                                </small>
+                                {% if story.featured %}
+                                <span class="badge bg-warning text-dark">
+                                    <i class="fas fa-star me-1"></i>Featured
+                                </span>
+                                {% endif %}
+                            </div>
+                            <h3 class="card-title h5">{{ story.title }}</h3>
+                            <p class="card-text text-muted">
+                                {{ story.summary|truncatechars:120 }}
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0">
+                            <a href="{% url 'youth_story_detail' story.pk %}" 
+                               class="btn btn-primary stretched-link">
+                                Read Story <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-primary text-center py-4">
+                        <i class="fas fa-trophy fa-2x mb-3"></i>
+                        <h4>No success stories yet</h4>
+                        <p>Check back soon for inspiring stories from Tanzania's youth!</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-      </div>
-      
-      <!-- Professional Tools -->
-      <div class="col-md-6 col-lg-3">
-        <div class="workshop-card h-100">
-          <div class="workshop-icon">
-            <i class="bi bi-briefcase"></i>
-          </div>
-          <h3>Professional Tools</h3>
-          <p>Master workplace productivity software</p>
-          <ul class="workshop-features">
-            <li>Microsoft Office Suite</li>
-            <li>Google Workspace</li>
-            <li>Project Management Tools</li>
-            <li>Collaboration Platforms</li>
-          </ul>
-          <div class="workshop-level intermediate">Intermediate</div>
-        </div>
-      </div>
-      
-      <!-- Digital Marketing -->
-      <div class="col-md-6 col-lg-3">
-        <div class="workshop-card h-100">
-          <div class="workshop-icon">
-            <i class="bi bi-megaphone"></i>
-          </div>
-          <h3>Digital Marketing</h3>
-          <p>Build your online presence and reach customers</p>
-          <ul class="workshop-features">
-            <li>Social Media Marketing</li>
-            <li>SEO Fundamentals</li>
-            <li>Content Creation</li>
-            <li>Email Campaigns</li>
-          </ul>
-          <div class="workshop-level intermediate">Intermediate</div>
-        </div>
-      </div>
-      
-      <!-- Coding & Development -->
-      <div class="col-md-6 col-lg-3">
-        <div class="workshop-card h-100">
-          <div class="workshop-icon">
-            <i class="bi bi-code-square"></i>
-          </div>
-          <h3>Coding & Development</h3>
-          <p>Introduction to programming and web development</p>
-          <ul class="workshop-features">
-            <li>HTML/CSS Basics</li>
-            <li>JavaScript Fundamentals</li>
-            <li>Website Building</li>
-            <li>Intro to Python</li>
-          </ul>
-          <div class="workshop-level advanced">Advanced</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
+</div>
+{% endblock %}
 
-<!-- Workshop Schedule Section -->
-<section class="workshop-schedule py-5">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center mb-5">
-        <h2 class="display-4 fw-bold text-primary">Upcoming Workshop Schedule</h2>
-        <div class="divider mx-auto"></div>
-        <p class="lead">Join our hands-on training sessions led by industry experts</p>
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="col-12">
-        <div class="schedule-tabs">
-          <ul class="nav nav-tabs" id="scheduleTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly" type="button" role="tab">Monthly Series</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="quarterly-tab" data-bs-toggle="tab" data-bs-target="#quarterly" type="button" role="tab">Quarterly Intensives</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="corporate-tab" data-bs-toggle="tab" data-bs-target="#corporate" type="button" role="tab">Corporate Training</button>
-            </li>
-          </ul>
-          
-          <div class="tab-content" id="scheduleTabContent">
-            <!-- Monthly Workshops -->
-            <div class="tab-pane fade show active" id="monthly" role="tabpanel">
-              <div class="table-responsive">
-                <table class="table workshop-table">
-                  <thead>
-                    <tr>
-                      <th>Workshop</th>
-                      <th>Date</th>
-                      <th>Duration</th>
-                      <th>Format</th>
-                      <th>Price</th>
-                      <th>Register</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Excel for Business</td>
-                      <td>June 5, 2025</td>
-                      <td>3 Hours</td>
-                      <td>In-Person</td>
-                      <td>$25</td>
-                      <td><a href="#" class="btn btn-sm btn-primary">Sign Up</a></td>
-                    </tr>
-                    <tr>
-                      <td>Social Media Basics</td>
-                      <td>June 12, 2025</td>
-                      <td>2 Hours</td>
-                      <td>Virtual</td>
-                      <td>Free</td>
-                      <td><a href="#" class="btn btn-sm btn-primary">Sign Up</a></td>
-                    </tr>
-                    <tr>
-                      <td>Website Building with WordPress</td>
-                      <td>June 19, 2025</td>
-                      <td>4 Hours</td>
-                      <td>Hybrid</td>
-                      <td>$40</td>
-                      <td><a href="#" class="btn btn-sm btn-primary">Sign Up</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            
-            <!-- Quarterly Intensives -->
-            <div class="tab-pane fade" id="quarterly" role="tabpanel">
-              <div class="table-responsive">
-                <table class="table workshop-table">
-                  <thead>
-                    <tr>
-                      <th>Workshop</th>
-                      <th>Date</th>
-                      <th>Duration</th>
-                      <th>Format</th>
-                      <th>Price</th>
-                      <th>Register</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Digital Marketing Certification</td>
-                      <td>July 7-9, 2025</td>
-                      <td>3 Days</td>
-                      <td>In-Person</td>
-                      <td>$150</td>
-                      <td><a href="#" class="btn btn-sm btn-primary">Sign Up</a></td>
-                    </tr>
-                    <tr>
-                      <td>Python Programming Bootcamp</td>
-                      <td>August 15-16, 2025</td>
-                      <td>2 Days</td>
-                      <td>Virtual</td>
-                      <td>$120</td>
-                      <td><a href="#" class="btn btn-sm btn-primary">Sign Up</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            
-            <!-- Corporate Training -->
-            <div class="tab-pane fade" id="corporate" role="tabpanel">
-              <div class="corporate-training-content">
-                <h3>Customized Corporate Digital Training</h3>
-                <p>We offer tailored digital skills training programs for organizations looking to upskill their workforce. Our corporate packages include:</p>
-                <ul>
-                  <li>Needs assessment and customized curriculum</li>
-                  <li>Flexible scheduling for your team</li>
-                  <li>On-site or virtual delivery options</li>
-                  <li>Progress tracking and reporting</li>
-                </ul>
-                <a href="#" class="btn btn-primary">Request Corporate Training</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="testimonials py-5 bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center mb-5">
-        <h2 class="display-4 fw-bold text-primary">What Participants Say</h2>
-        <div class="divider mx-auto"></div>
-      </div>
-    </div>
-    
-    <div class="row g-4">
-      <!-- Testimonial 1 -->
-      <div class="col-md-4">
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            <div class="quote-icon"><i class="bi bi-quote"></i></div>
-            <p class="testimonial-text">"The Excel workshop transformed how I manage data at work. I've already automated reports that used to take me hours!"</p>
-            <div class="testimonial-author">
-              <img src="{% static 'twccapp/images/testimonial1.jpg' %}" alt="Participant" class="author-image">
-              <div class="author-info">
-                <h4>Sarah Johnson</h4>
-                <p>Office Administrator</p>
-                <div class="workshop-attended">Excel for Business Workshop</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Testimonial 2 -->
-      <div class="col-md-4">
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            <div class="quote-icon"><i class="bi bi-quote"></i></div>
-            <p class="testimonial-text">"After the digital marketing intensive, I launched my small business online and doubled my customers in two months."</p>
-            <div class="testimonial-author">
-              <img src="{% static 'twccapp/images/testimonial2.jpg' %}" alt="Participant" class="author-image">
-              <div class="author-info">
-                <h4>Michael Omondi</h4>
-                <p>Small Business Owner</p>
-                <div class="workshop-attended">Digital Marketing Intensive</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Testimonial 3 -->
-      <div class="col-md-4">
-        <div class="testimonial-card">
-          <div class="testimonial-content">
-            <div class="quote-icon"><i class="bi bi-quote"></i></div>
-            <p class="testimonial-text">"As a senior citizen, I was nervous about technology. The patient instructors made learning computers enjoyable."</p>
-            <div class="testimonial-author">
-              <img src="{% static 'twccapp/images/testimonial3.jpg' %}" alt="Participant" class="author-image">
-              <div class="author-info">
-                <h4>Grace Wambui</h4>
-                <p>Retired Teacher</p>
-                <div class="workshop-attended">Digital Literacy Basics</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Certification Section -->
-<section class="certification py-5">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <img src="{% static 'twccapp/images/certificate.jpg' %}" alt="Workshop Certificate" class="img-fluid rounded shadow">
-      </div>
-      <div class="col-lg-6">
-        <h2 class="display-4 fw-bold text-primary mb-4">Earn Recognized Certification</h2>
-        <p>All our workshops include a certificate of completion to showcase your new skills to employers or clients. Our intensive programs offer professional certifications recognized by industry partners.</p>
-        <ul class="certification-features">
-          <li><i class="bi bi-check-circle-fill"></i> Digital badge for online profiles</li>
-          <li><i class="bi bi-check-circle-fill"></i> Verifiable credentials</li>
-          <li><i class="bi bi-check-circle-fill"></i> LinkedIn integration</li>
-          <li><i class="bi bi-check-circle-fill"></i> Employer recognition</li>
-        </ul>
-        <a href="#" class="btn btn-primary btn-lg mt-3">Learn About Certifications</a>
-      </div>
-    </div>
-  </div>
-</section>
-
+{% block extra_css %}
 <style>
-  /* Workshop Card Styles */
-  .workshop-card {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
-    height: 100%;
-  }
-  
-  .workshop-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  }
-  
-  .workshop-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #2a5a78, #e67e22);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 1.5rem;
-  }
-  
-  .workshop-features {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-    text-align: left;
-  }
-  
-  .workshop-features li {
-    padding: 5px 0;
-    position: relative;
-    padding-left: 25px;
-  }
-  
-  .workshop-features li::before {
-    content: '•';
-    position: absolute;
-    left: 10px;
-    color: #e67e22;
-    font-weight: bold;
-  }
-  
-  .workshop-level {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    margin-top: 10px;
-  }
-  
-  .workshop-level.beginner {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  .workshop-level.intermediate {
-    background-color: #fff3cd;
-    color: #856404;
-  }
-  
-  .workshop-level.advanced {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  
-  /* Schedule Table Styles */
-  .workshop-table {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  }
-  
-  .workshop-table thead {
-    background: #2a5a78;
-    color: white;
-  }
-  
-  .workshop-table th {
-    font-weight: 500;
-  }
-  
-  /* Testimonial Card Styles */
-  .testimonial-card {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    height: 100%;
-  }
-  
-  .quote-icon {
-    font-size: 2rem;
-    color: #e67e22;
-    margin-bottom: 15px;
-  }
-  
-  .testimonial-text {
-    font-style: italic;
-    margin-bottom: 20px;
-  }
-  
-  .testimonial-author {
-    display: flex;
-    align-items: center;
-  }
-  
-  .author-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 15px;
-  }
-  
-  .author-info h4 {
-    margin-bottom: 0;
-    color: #2a5a78;
-  }
-  
-  .author-info p {
-    color: #6c757d;
-    font-size: 0.9rem;
-    margin-bottom: 0;
-  }
-  
-  .workshop-attended {
-    font-size: 0.8rem;
-    color: #e67e22;
-    font-weight: 500;
-    margin-top: 5px;
-  }
-  
-  /* Certification Section Styles */
-  .certification-features {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .certification-features li {
-    padding: 8px 0;
-    position: relative;
-    padding-left: 35px;
-  }
-  
-  .certification-features li i {
-    position: absolute;
-    left: 10px;
-    color: #e67e22;
-    font-size: 1.2rem;
-  }
-  
-  /* Tab Styles */
-  .nav-tabs .nav-link {
-    color: #2a5a78;
-    font-weight: 500;
-  }
-  
-  .nav-tabs .nav-link.active {
-    color: #e67e22;
-    border-bottom: 3px solid #e67e22;
-  }
-  
-  .corporate-training-content {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  }
-  
-  @media (max-width: 768px) {
-    .workshop-table {
-      font-size: 0.85rem;
+    /* Color Variables */
+    :root {
+        --youth-primary: #007bff;
+        --light-blue: #f0f8ff;
     }
     
-    .testimonial-author {
-      flex-direction: column;
-      text-align: center;
+    /* Hero Section */
+    .youth-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), 
+                    url('{% static "twccapp/images/youth-bg.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        padding: 6rem 0;
     }
     
-    .author-image {
-      margin-right: 0;
-      margin-bottom: 10px;
+    /* Stats */
+    .stat-card {
+        transition: all 0.3s ease;
     }
-  }
+    
+    .stat-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-3px);
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+    
+    /* Youth Cards */
+    .youth-card {
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .hover-zoom:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2) !important;
+    }
+    
+    /* Card image container - fixed height */
+    .card-img-top-container {
+        height: 180px; /* Reduced from 200px */
+        overflow: hidden;
+        background-color: #f8f9fa;
+    }
+    
+    .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .hover-zoom:hover .card-img-top {
+        transform: scale(1.05);
+    }
+    
+    .card-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        z-index: 10;
+    }
+    
+    /* Backgrounds */
+    .bg-light-blue {
+        background-color: var(--light-blue);
+    }
+    
+    /* Divider */
+    .divider {
+        width: 80px;
+        height: 4px;
+    }
+    
+    /* Innovation List */
+    .innovation-item {
+        padding: 1rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .innovation-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    /* Card title optimization */
+    .card-title {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 3rem;
+    }
 </style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Smooth scroll for anchor links
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    });
+</script>
 {% endblock %}

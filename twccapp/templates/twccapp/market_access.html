@@ -1,0 +1,88 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Centered heading -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <h1>Market Access & Digitalization Services</h1>
+            <p class="lead text-muted">Explore our services designed to help your business thrive in digital marketplaces</p>
+        </div>
+    </div>
+    
+    {% if services %}
+        <!-- Centered services grid -->
+        <div class="row justify-content-center">
+            {% for service in services %}
+                <div class="col-lg-8 col-md-10 mb-4">
+                    <div class="card h-100 service-card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas {{ service.icon }} fa-2x text-primary me-3"></i>
+                                <h5 class="card-title mb-0">{{ service.title }}</h5>
+                            </div>
+                            <p class="card-text">{{ service.summary }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{% url 'services_detail' service.pk %}" class="btn btn-primary">
+                                    <i class="fas fa-book-open me-1"></i> Read More
+                                </a>
+                                <small class="text-muted">
+                                    {{ service.date_posted|date:"M d, Y" }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Centered alert message -->
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle fa-2x mb-3"></i>
+                    <h4>No Services Available</h4>
+                    <p class="mb-0">No market access services have been published yet. Please check back later.</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+
+<style>
+    .service-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+    
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-title {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+    
+    .btn-primary {
+        background-color: #3498db;
+        border-color: #3498db;
+        border-radius: 30px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background-color: #2980b9;
+        border-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+</style>
+{% endblock %}

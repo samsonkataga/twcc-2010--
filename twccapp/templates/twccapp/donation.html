@@ -1,0 +1,525 @@
+{% extends 'twccapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="impact-hero section-padding" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{% static 'twccapp/images/Logo.jpg' %}'); background-size: cover; background-position: center; color: white;">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-4">Support TWCC's Mission</h1>
+        <p class="lead">Your generous donation empowers Tanzanian women and youth through education, skills development, and economic opportunities that transform communities.</p>
+    </div>
+</section>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                
+                <div class="row">
+                    <!-- Donation Form -->
+                    <div class="col-lg-8">
+                        <div class="donation-card shadow-sm rounded p-4 mb-4">
+                            <h3 class="mb-4 text-center">Support TWCC's Initiatives</h3>
+                            <form method="post" id="donation-form">
+                                {% csrf_token %}
+                                
+                                <!-- Personal Information -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Full Name *</label>
+                                        {{ form.name }}
+                                        {% if form.name.errors %}
+                                        <div class="text-danger">
+                                            {% for error in form.name.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email Address *</label>
+                                        {{ form.email }}
+                                        {% if form.email.errors %}
+                                        <div class="text-danger">
+                                            {% for error in form.email.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <!-- Donation Amount -->
+                                <div class="mb-4">
+                                    <label class="form-label">Donation Amount *</label>
+                                    <div class="row">
+                                        <div class="col-4 mb-2">
+                                            <button type="button" class="btn btn-outline-primary w-100 amount-btn" data-amount="5">$5</button>
+                                        </div>
+                                        <div class="col-4 mb-2">
+                                            <button type="button" class="btn btn-outline-primary w-100 amount-btn" data-amount="15">$15</button>
+                                        </div>
+                                        <div class="col-4 mb-2">
+                                            <button type="button" class="btn btn-outline-primary w-100 amount-btn" data-amount="25">$25</button>
+                                        </div>
+                                        <div class="col-4 mb-2">
+                                            <button type="button" class="btn btn-outline-primary w-100 amount-btn" data-amount="50">$50</button>
+                                        </div>
+                                        <div class="col-4 mb-2">
+                                            <button type="button" class="btn btn-outline-primary w-100 amount-btn" data-amount="100">$100</button>
+                                        </div>
+                                        <div class="col-4 mb-2">
+                                            <button type="button" class="btn btn-outline-primary w-100 amount-btn" data-amount="250">$250</button>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        {{ form.amount }}
+                                        {% if form.amount.errors %}
+                                        <div class="text-danger">
+                                            {% for error in form.amount.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                               <!-- Payment Method -->
+<div class="mb-4">
+    <label class="form-label">Payment Method *</label>
+    <div class="btn-group w-100" role="group">
+        <button type="button" class="btn btn-outline-primary payment-btn active" data-method="card">
+            <i class="fas fa-credit-card me-2"></i>Credit Card
+        </button>
+        <button type="button" class="btn btn-outline-primary payment-btn" data-method="paypal">
+            <i class="fab fa-paypal me-2"></i>PayPal
+        </button>
+        <button type="button" class="btn btn-outline-primary payment-btn" data-method="bank">
+            <i class="fas fa-university me-2"></i>Bank Transfer
+        </button>
+    </div>
+    <input type="hidden" id="payment-method" name="payment_method" value="card">
+</div>
+
+<!-- Card Details (Initially shown) -->
+<div class="payment-method" id="card-details">
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Card Number *</label>
+            <input type="text" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19" name="card_number" id="card-number">
+        </div>
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Expiry Date *</label>
+            <input type="text" class="form-control" placeholder="MM/YY" maxlength="5" name="expiry_date" id="expiry-date">
+        </div>
+        <div class="col-md-4 mb-3">
+            <label class="form-label">CVV *</label>
+            <input type="text" class="form-control" placeholder="123" maxlength="3" name="cvv" id="cvv">
+        </div>
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Cardholder Name *</label>
+            <input type="text" class="form-control" placeholder="As on card" name="cardholder_name" id="cardholder-name">
+        </div>
+    </div>
+</div>
+
+<!-- PayPal Instructions (Initially hidden) -->
+<div class="payment-method d-none" id="paypal-details">
+    <div class="alert alert-info">
+        <p class="mb-0">You will be redirected to PayPal to complete your payment after submitting this form.</p>
+    </div>
+</div>
+
+<!-- Bank Transfer Details (Initially hidden) -->
+<div class="payment-method d-none" id="bank-details">
+    <div class="alert alert-info">
+        <h6 class="alert-heading">Bank Transfer Instructions</h6>
+        <p class="mb-2">Please transfer the payment to the following bank account:</p>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="mb-1"><strong>Bank Name:</strong> CRDB Bank Tanzania</p>
+                <p class="mb-1"><strong>Account Name:</strong> Tanzania Women and Youth Chamber of Commerce</p>
+                <p class="mb-1"><strong>Account Number:</strong> 0152 34567890</p>
+            </div>
+            <div class="col-md-6">
+                <p class="mb-1"><strong>SWIFT/BIC:</strong> CORUTZTZ</p>
+                <p class="mb-1"><strong>Branch Code:</strong> 0152</p>
+                <p class="mb-1"><strong>Reference:</strong> TWCC Donation</p>
+            </div>
+        </div>
+        <hr>
+        <p class="mb-0 mt-2">After making the transfer, please upload the proof of payment below.</p>
+    </div>
+    
+    <div class="row mt-3">
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Transfer Date *</label>
+            <input type="date" class="form-control" name="transfer_date" id="transfer-date">
+        </div>
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Reference Number (from bank) *</label>
+            <input type="text" class="form-control" placeholder="Bank reference number" name="bank_reference" id="bank-reference">
+        </div>
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Upload Proof of Payment *</label>
+            <input type="file" class="form-control" accept=".jpg,.jpeg,.png,.pdf" name="proof_of_payment" id="proof-of-payment">
+            <div class="form-text">Upload a screenshot or scan of your bank transfer receipt (JPG, PNG or PDF)</div>
+        </div>
+    </div>
+</div>
+
+<!-- Billing Address -->
+<div class="mb-4">
+    <h6 class="mb-3">Billing Address</h6>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Country *</label>
+            <select class="form-select" name="country" id="country">
+                <option value="">Select Country</option>
+                <option value="US">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="TZ">Tanzania</option>
+                <option value="KE">Kenya</option>
+                <option value="ZA">South Africa</option>
+                <!-- Add more countries as needed -->
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Currency *</label>
+            <select class="form-select" name="currency" id="currency">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="GBP">GBP (£)</option>
+                <option value="TZS">TZS (TSh)</option>
+            </select>
+        </div>
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control" placeholder="Street address" name="address" id="address">
+        </div>
+    </div>
+</div>
+                                
+                                <!-- Message -->
+                                <div class="mb-4">
+                                    <label class="form-label">Message (Optional)</label>
+                                    {{ form.message }}
+                                    {% if form.message.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.message.errors %}
+                                            <small>{{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Terms and Submit -->
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                                        <label class="form-check-label" for="terms">
+                                            I agree to the terms and conditions and privacy policy
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="fas fa-lock me-2"></i>Donate Securely
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Impact Information -->
+                    <div class="col-lg-4">
+                        <div class="impact-sidebar">
+                            <h4 class="mb-4">Your Donation's Impact</h4>
+                            
+                            <div class="impact-item mb-4">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="impact-icon me-3">
+                                        <i class="fas fa-user-graduate fa-2x text-success"></i>
+                                    </div>
+                                    <h5 class="mb-0">Youth Education</h5>
+                                </div>
+                                <p class="text-muted">$5 provides educational materials for one youth for a month</p>
+                            </div>
+                            
+                            <div class="impact-item mb-4">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="impact-icon me-3">
+                                        <i class="fas fa-briefcase fa-2x text-primary"></i>
+                                    </div>
+                                    <h5 class="mb-0">Business Training</h5>
+                                </div>
+                                <p class="text-muted">$15 funds business skills training for one woman entrepreneur</p>
+                            </div>
+                            
+                            <div class="impact-item mb-4">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="impact-icon me-3">
+                                        <i class="fas fa-hands-helping fa-2x text-warning"></i>
+                                    </div>
+                                    <h5 class="mb-0">Mentorship Programs</h5>
+                                </div>
+                                <p class="text-muted">$25 supports mentorship pairing for youth career development</p>
+                            </div>
+                            
+                            <div class="impact-item mb-4">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="impact-icon me-3">
+                                        <i class="fas fa-microphone fa-2x text-info"></i>
+                                    </div>
+                                    <h5 class="mb-0">Leadership Training</h5>
+                                </div>
+                                <p class="text-muted">$50 sponsors leadership development for one young community leader</p>
+                            </div>
+                            
+                            <div class="impact-item">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="impact-icon me-3">
+                                        <i class="fas fa-handshake fa-2x text-danger"></i>
+                                    </div>
+                                    <h5 class="mb-0">Enterprise Support</h5>
+                                </div>
+                                <p class="text-muted">$100 provides startup resources for a woman-owned small business</p>
+                            </div>
+                            
+                            <div class="security-badge mt-4 text-center">
+                                <i class="fas fa-lock fa-2x text-success mb-2"></i>
+                                <p class="small text-muted">256-bit SSL Encryption<br>Secure Payment Processing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.donation-card {
+    background: white;
+    border-radius: 15px;
+}
+
+.impact-sidebar {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 15px;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+}
+
+.impact-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.05);
+    border-radius: 10px;
+}
+
+.amount-btn {
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.amount-btn.active {
+    background-color: #2E8B57;
+    border-color: #2E8B57;
+    color: white;
+}
+
+.payment-btn {
+    border-radius: 8px;
+}
+
+.payment-btn.active {
+    background-color: #2E8B57;
+    border-color: #2E8B57;
+    color: white;
+}
+
+.payment-method {
+    transition: all 0.3s ease;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 12px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #2E8B57;
+    box-shadow: 0 0 0 0.2rem rgba(46, 139, 87, 0.25);
+}
+
+.btn-primary {
+    background-color: #2E8B57;
+    border-color: #2E8B57;
+    border-radius: 25px;
+    padding: 15px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #228B22;
+    border-color: #228B22;
+    transform: translateY(-2px);
+}
+
+.security-badge {
+    border-top: 2px solid #dee2e6;
+    padding-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .impact-sidebar {
+        position: relative;
+        top: 0;
+        margin-top: 2rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Amount buttons
+    const amountButtons = document.querySelectorAll('.amount-btn');
+    const amountInput = document.querySelector('#id_amount');
+    
+    amountButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            amountButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            amountInput.value = this.dataset.amount;
+        });
+    });
+    
+    // Payment method buttons
+    const paymentButtons = document.querySelectorAll('.payment-btn');
+    const paymentMethodInput = document.querySelector('#payment-method');
+    const cardDetails = document.querySelector('#card-details');
+    const paypalDetails = document.querySelector('#paypal-details');
+    const bankDetails = document.querySelector('#bank-details');
+    
+    paymentButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            paymentButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            const method = this.dataset.method;
+            paymentMethodInput.value = method;
+            
+            // Hide all payment method details
+            cardDetails.classList.add('d-none');
+            paypalDetails.classList.add('d-none');
+            bankDetails.classList.add('d-none');
+            
+            // Show selected payment method details
+            if (method === 'card') {
+                cardDetails.classList.remove('d-none');
+            } else if (method === 'paypal') {
+                paypalDetails.classList.remove('d-none');
+            } else if (method === 'bank') {
+                bankDetails.classList.remove('d-none');
+            }
+        });
+    });
+    
+    // Form validation
+    const donationForm = document.querySelector('#donation-form');
+    donationForm.addEventListener('submit', function(e) {
+        // Basic validation for required fields
+        const nameInput = document.querySelector('#id_name');
+        const emailInput = document.querySelector('#id_email');
+        const amountInput = document.querySelector('#id_amount');
+        const paymentMethod = document.querySelector('#payment-method').value;
+        const termsCheckbox = document.querySelector('#terms');
+        
+        let isValid = true;
+        
+        if (!nameInput.value.trim()) {
+            alert('Please enter your name');
+            isValid = false;
+            nameInput.focus();
+        } else if (!emailInput.value.trim()) {
+            alert('Please enter your email address');
+            isValid = false;
+            emailInput.focus();
+        } else if (!amountInput.value || parseFloat(amountInput.value) <= 0) {
+            alert('Please enter a valid donation amount');
+            isValid = false;
+            amountInput.focus();
+        } else if (!termsCheckbox.checked) {
+            alert('Please agree to the terms and conditions');
+            isValid = false;
+            termsCheckbox.focus();
+        }
+        
+        // Validate payment method specific fields
+        if (isValid && paymentMethod === 'card') {
+            const cardNumber = document.querySelector('#card-number').value;
+            const expiryDate = document.querySelector('#expiry-date').value;
+            const cvv = document.querySelector('#cvv').value;
+            const cardholderName = document.querySelector('#cardholder-name').value;
+            
+            if (!cardNumber || cardNumber.replace(/\s/g, '').length < 16) {
+                alert('Please enter a valid card number');
+                isValid = false;
+                document.querySelector('#card-number').focus();
+            } else if (!expiryDate || !/^\d{2}\/\d{2}$/.test(expiryDate)) {
+                alert('Please enter a valid expiry date in MM/YY format');
+                isValid = false;
+                document.querySelector('#expiry-date').focus();
+            } else if (!cvv || cvv.length < 3) {
+                alert('Please enter a valid CVV');
+                isValid = false;
+                document.querySelector('#cvv').focus();
+            } else if (!cardholderName.trim()) {
+                alert('Please enter the cardholder name');
+                isValid = false;
+                document.querySelector('#cardholder-name').focus();
+            }
+        }
+        
+        if (isValid && paymentMethod === 'bank') {
+            const transferDate = document.querySelector('#transfer-date').value;
+            const bankReference = document.querySelector('#bank-reference').value;
+            const proofOfPayment = document.querySelector('#proof-of-payment').value;
+            
+            if (!transferDate) {
+                alert('Please enter the transfer date');
+                isValid = false;
+                document.querySelector('#transfer-date').focus();
+            } else if (!bankReference.trim()) {
+                alert('Please enter the bank reference number');
+                isValid = false;
+                document.querySelector('#bank-reference').focus();
+            } else if (!proofOfPayment) {
+                alert('Please upload proof of payment');
+                isValid = false;
+                document.querySelector('#proof-of-payment').focus();
+            }
+        }
+        
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+{% endblock %}
